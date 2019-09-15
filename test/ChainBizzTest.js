@@ -141,33 +141,5 @@ contract('ChainBizz', async accounts => {
       ProjectStatus.Published,
       'status must be ' + ProjectStatus.Published
     );
-
-    // publish the project
-    try {
-      receipt = await contractInstance.publishProject(projectId, {
-        from: accounts[1]
-      });
-    } catch (err) {
-      assert.equal(
-        err.reason,
-        errorPublished,
-        'status must be ' + errorPublished
-      );
-    }
-  });
-
-  it('should let catch exception while re-publish a project', async () => {
-    // try to republish the same project
-    try {
-      receipt = await contractInstance.publishProject(projectId, {
-        from: accounts[1]
-      });
-    } catch (err) {
-      assert.equal(
-        err.reason,
-        errorPublished,
-        'status must be ' + errorPublished
-      );
-    }
   });
 });
