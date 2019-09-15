@@ -1,6 +1,6 @@
 module.exports = {
   networks: {
-    ganache: {
+    development: {
       host: '127.0.0.1',
       port: 7545,
       network_id: '*'
@@ -15,10 +15,10 @@ module.exports = {
   // Configure your compilers
   compilers: {
     solc: {
-      version: '0.5.1',
+      //version: '0.5.1',
       settings: {
         optimizer: {
-          enabled: false,
+          enabled: true,
           runs: 200
         }
       }
