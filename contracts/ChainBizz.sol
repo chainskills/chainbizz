@@ -120,7 +120,7 @@ contract ChainBizz {
   }
 
   // return all projects owned by the sender
-  function getprojects() view public returns (uint[] memory) {
+  function getAllProjects() view public returns (uint[] memory) {
     if (projectsCounter == 0) {
       return new uint[](0);
     }

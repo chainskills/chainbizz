@@ -20,11 +20,9 @@ contract('ChainBizz', async accounts => {
 
   before('setup contract for each test', async () => {
     contractInstance = await chainBizzContract.deployed();
-  });
 
-  it('should let us add a project', async () => {
-    // add the project
-    const receipt = await contractInstance.addProject(
+    // add a first project
+    await contractInstance.addProject(
       title,
       description,
       web3.utils.toBN(price),
@@ -34,16 +32,15 @@ contract('ChainBizz', async accounts => {
     );
   });
 
-  it('should let us publish a project', async () => {
-    // publish the project
-    const receipt = await contractInstance.publishProject(projectId, {
-      from: accounts[1]
-    });
-  });
-
+  
   it('should throw an exception while re-publish a project', async () => {
     // try to republish the same project
     try {
+      // first, we publish the project
+    const receipt = await contractInstance.publishProject(projectId, {
+      from: accounts[1]
+    });
+
       receipt = await contractInstance.publishProject(projectId, {
         from: accounts[1]
       });
