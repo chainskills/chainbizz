@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.11.1",
     "bootstrap": "^4.3.1",
+    "materialize-css": "^1.0.0",
     "react": "^16.9.0",
-    "react-bootstrap": "^1.0.0-beta.12",
+    "react-blockies": "^1.4.1",
     "react-dom": "^16.9.0",
     "react-scripts": "3.1.2"
   },

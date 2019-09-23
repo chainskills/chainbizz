@@ -1,81 +1,79 @@
 import React from 'react';
 
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
-import NavDropdown from 'react-bootstrap/NavDropdown';
-import Form from 'react-bootstrap/Form';
-import FormControl from 'react-bootstrap/FormControl';
-
-import Button from 'react-bootstrap/Button';
-
+import Blockies from 'react-blockies';
 
 const NavBar = () => {
   return (
     <div>
-     
-      
-      <Navbar bg='light' expand='lg'>
-        <Navbar.Brand href='#home'>React-Bootstrap</Navbar.Brand>
-
-        <Navbar.Toggle aria-controls='basic-navbar-nav' />
-        <Navbar.Collapse id='basic-navbar-nav'>
-          <Nav className='mr-auto'>
-            <Nav.Link href='#home'>Home</Nav.Link>
-            <Nav.Link href='#link'>Link</Nav.Link>
-            <NavDropdown title='Dropdown' id='basic-nav-dropdown'>
-              <NavDropdown.Item href='#action/3.1'>Action</NavDropdown.Item>
-              <NavDropdown.Item href='#action/3.2'>
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Item href='#action/3.3'>Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href='#action/3.4'>
-                Separated link
-              </NavDropdown.Item>
-            </NavDropdown>
-          </Nav>
-          <Form inline>
-            <FormControl type='text' placeholder='Search' className='mr-sm-2' />
-            <Button variant='outline-success'>Search</Button>
-          </Form>
-        </Navbar.Collapse>
-      </Navbar>
-      <ul
-        className='navbar-nav  sidebar sidebar-dark accordion accordionSidebar'
-        id='accordionSidebar'
-      >
-        <a
-          className='sidebar-brand d-flex align-items-center justify-content-center'
-          href='!#'
-        >
-          <div className='sidebar-brand-icon rotate-n-15'>
-            <i className='fas fa-laugh-wink'></i>
+      <nav>
+        <div className='nav-wrapper blue-grey lighten-4'>
+          <form>
+            <div className='input-field'>
+              <input
+                id='search'
+                type='search'
+                placeholder='Search for projects'
+              />
+              <label className='label-icon' htmlFor='search'>
+                <i className='material-icons'>search</i>
+              </label>
+              <i className='material-icons'>close</i>
+            </div>
+          </form>
+        </div>
+      </nav>
+      <ul id='slide-out' className='sidenav sidenav-fixed blue-grey lighten-4'>
+        <li>
+          <div className='user-view' style={{ height: '122px' }}>
+            <div className='background'>
+              <img
+                src='https://source.unsplash.com/Q1p7bh3SHj8/300x176'
+                alt=''
+              />
+            </div>
+            <div className='row'>
+              <div className='col s3'>
+                <Blockies
+                  seed='0xe5b780aE69BCE4f9473B4D5869B9e4771A5aaAEa'
+                  size={10}
+                  scale={5}
+                  className='circle'
+                />
+              </div>
+              <div className='col s9'>
+                <a href='#!'>
+                  <span className='white-text name truncate'>
+                    0xe5b780aE69BCE4f9473B4D5869B9e4771A5aaAEa
+                  </span>
+                </a>
+              </div>
+            </div>
           </div>
-          <div className='sidebar-brand-text mx-3'>ChainBizz</div>
-        </a>
-
-        <hr className='sidebar-divider my-0' />
-
-        <li className='nav-item active'>
-          <a className='nav-link' href='index.html'>
-            <i className='fas fa-fw fa-tachometer-alt'></i>
-            <span>Dashboard</span>
+        </li>
+        <li>
+          <a href='#!'>
+            <i className='material-icons'>cloud</i>Main Network
           </a>
         </li>
-
-        <li className='nav-item'>
-          <a className='nav-link' href='index.html'>
-            <i className='fas fa-fw fa-folder'></i>
-            <span>My projects</span>
-          </a>
+        <li>
+          <a href='#!'>My projects</a>
         </li>
-        <li className='nav-item'>
-          <a className='nav-link' href='index.html'>
-            <i className='fas fa-fw fa-folder'></i>
-            <span>My contracts</span>
+        <li>
+          <a href='#!'>My contracts</a>
+        </li>
+        <li>
+          <div className='divider'></div>
+        </li>
+
+        <li>
+          <a className='waves-effect' href='#!'>
+            Preferences
           </a>
         </li>
       </ul>
+      <a href='#!' data-target='slide-out' className='sidenav-trigger'>
+        <i className='material-icons'>menu</i>
+      </a>
     </div>
   );
 };
