@@ -6,8 +6,15 @@ const NavBar = () => {
   return (
     <div>
       <nav>
-        <div className='nav-wrapper blue-grey lighten-4'>
-          <form>
+        <div className='nav-wrapper blue-grey'>
+          <a
+            href='#!'
+            className='brand-logo'
+            style={{ textDecoration: 'none' }}
+          >
+            ChainBizz
+          </a>
+          <form class=' hide-on-med-and-down' id='formSearch'>
             <div className='input-field'>
               <input
                 id='search'

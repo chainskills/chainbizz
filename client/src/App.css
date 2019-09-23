@@ -12,26 +12,40 @@ nav .label-icon .material-icons {
   color: black !important;
 }
 
+#formSearch {
+  margin-left: 200px;
+}
+
 @media only screen and (max-width: 992px) {
   header,
   main,
-  footer {
+  footer,
+  .container {
     padding-left: 0;
   }
 
   .sidenav {
     top: 64px;
   }
+
+  #formSearch {
+    margin-left: 200px;
+  }
 }
 
 @media only screen and (max-width: 599px) {
   header,
   main,
-  footer {
+  footer,
+  .container {
     padding-left: 0;
   }
 
   .sidenav {
     top: 56px;
+  }
+
+  #formSearch {
+    margin-left: 200px;
   }
 }
