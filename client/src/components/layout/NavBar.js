@@ -14,7 +14,7 @@ const NavBar = () => {
           >
             ChainBizz
           </a>
-          <form class=' hide-on-med-and-down' id='formSearch'>
+          <form className=' hide-on-med-and-down' id='formSearch'>
             <div className='input-field'>
               <input
                 id='search'
@@ -84,6 +84,12 @@ const NavBar = () => {
       <a href='#!' data-target='slide-out' className='sidenav-trigger'>
         <i className='material-icons'>menu</i>
       </a>
+
+      <div className='right-align new-project'>
+        <a className='waves-effect waves-light btn blue-grey btn-small'>
+          <i className='material-icons left'>add</i>New
+        </a>
+      </div>
     </div>
   );
 };

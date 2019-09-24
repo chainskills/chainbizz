@@ -6,6 +6,7 @@ import M from 'materialize-css/dist/js/materialize.min.js';
 import './App.css';
 
 import NavBar from './components/layout/NavBar';
+import Projects from './components/projects/Projects';
 
 const App = () => {
   useEffect(() => {
@@ -15,13 +16,10 @@ const App = () => {
   }, []);
 
   return (
-    <div className='blue-grey lighten-5'>
+    <div>
       <NavBar />
-      <div class='right-align'>
-        <a class='waves-effect waves-light btn blue-grey'>
-          <i class='material-icons left'>add</i>New project
-        </a>
-      </div>
+
+      <Projects />
     </div>
   );
 };
