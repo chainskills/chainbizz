@@ -4,51 +4,71 @@ const Projects = () => {
   return (
     <div className='container'>
       <div className='row'>
-        <div className='col s12 m4'>
-          <div className='card blue-grey darken-1'>
+        <div className='col s12 m6'>
+          <div className='card medium blue-grey darken-1'>
             <div className='card-content white-text'>
-              <span className='card-title'>Card Title</span>
+              <span className='card-title'>Project name</span>
               <p>
-                I am a very simple card. I am good at containing small bits of
-                information. I am convenient because I require little markup to
-                use effectively.
+                <span className='badge blue white-text'>10 ETH</span>
+              </p>
+              <p>
+                This is the description of the projects. This is the description
+                of the projects.{' '}
               </p>
             </div>
             <div className='card-action'>
-              <a href='#'>This is a link</a>
-              <a href='#'>This is a link</a>
+              <a href='#'>More ...</a>
             </div>
           </div>
         </div>
-        <div className='col s12 m4'>
-          <div className='card blue-grey darken-1'>
+        <div className='col s12 m6'>
+          <div className='card medium blue-grey darken-1'>
             <div className='card-content white-text'>
-              <span className='card-title'>Card Title</span>
+              <span className='card-title'>Project name</span>
               <p>
-                I am a very simple card. I am good at containing small bits of
-                information. I am convenient because I require little markup to
-                use effectively.
+                <span className='badge blue white-text'>10 ETH</span>
+              </p>
+              <p>
+                This is the description of the projects. This is the description
+                of the projects.{' '}
               </p>
             </div>
             <div className='card-action'>
-              <a href='#'>This is a link</a>
-              <a href='#'>This is a link</a>
+              <a href='#'>More ...</a>
             </div>
           </div>
         </div>
-        <div className='col s12 m4'>
-          <div className='card blue-grey darken-1'>
+        <div className='col s12 m6'>
+          <div className='card medium blue-grey darken-1'>
             <div className='card-content white-text'>
-              <span className='card-title'>Card Title</span>
+              <span className='card-title'>Project name</span>
               <p>
-                I am a very simple card. I am good at containing small bits of
-                information. I am convenient because I require little markup to
-                use effectively.
+                <span className='badge blue white-text'>10 ETH</span>
+              </p>
+              <p>
+                This is the description of the projects. This is the description
+                of the projects.{' '}
               </p>
             </div>
             <div className='card-action'>
-              <a href='#'>This is a link</a>
-              <a href='#'>This is a link</a>
+              <a href='#'>More ...</a>
+            </div>
+          </div>
+        </div>
+        <div className='col s12 m6'>
+          <div className='card medium blue-grey darken-1'>
+            <div className='card-content white-text'>
+              <span className='card-title'>Project name</span>
+              <p>
+                <span className='badge blue white-text'>10 ETH</span>
+              </p>
+              <p>
+                This is the description of the projects. This is the description
+                of the projects.
+              </p>
+            </div>
+            <div className='card-action'>
+              <a href='#'>More ...</a>
             </div>
           </div>
         </div>
