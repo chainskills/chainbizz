@@ -5,11 +5,11 @@ import Blockies from 'react-blockies';
 const NavBar = () => {
   return (
     <div>
-      <nav>
-        <div className='nav-wrapper blue-grey'>
+      <nav className='z-depth-0'>
+        <div className='nav-wrapper white'>
           <a
             href='#!'
-            className='brand-logo'
+            className='brand-logo black-text'
             style={{ textDecoration: 'none' }}
           >
             ChainBizz
@@ -29,7 +29,10 @@ const NavBar = () => {
           </form>
         </div>
       </nav>
-      <ul id='slide-out' className='sidenav sidenav-fixed blue-grey lighten-4'>
+      <ul
+        id='slide-out'
+        className='sidenav sidenav-fixed blue-grey lighten-5 z-depth-0'
+      >
         <li>
           <div className='user-view' style={{ height: '122px' }}>
             <div className='background'>

@@ -15,7 +15,7 @@ const App = () => {
   }, []);
 
   return (
-    <div className='blue-grey lighten-4'>
+    <div className='blue-grey lighten-5'>
       <NavBar />
       <div class='right-align'>
         <a class='waves-effect waves-light btn blue-grey'>
