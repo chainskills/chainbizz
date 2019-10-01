@@ -2,7 +2,12 @@ import React from 'react';
 
 import Blockies from 'react-blockies';
 
-const NavBar = () => {
+const NavBar = ({ drizzleState }) => {
+  let account = '';
+  if (drizzleState !== null) {
+    account = drizzleState.accounts[0];
+  }
+
   return (
     <div>
       <nav className='z-depth-0'>
@@ -52,9 +57,7 @@ const NavBar = () => {
               </div>
               <div className='col s9'>
                 <a href='#!'>
-                  <span className='white-text name truncate'>
-                    0xe5b780aE69BCE4f9473B4D5869B9e4771A5aaAEa
-                  </span>
+                  <span className='white-text name truncate'>{account}</span>
                 </a>
               </div>
             </div>

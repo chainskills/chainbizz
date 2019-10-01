@@ -13,7 +13,7 @@ const drizzleOptions = {
     ChainBizz: ['NewProject', 'PublishedProject']
   },
   polls: {
-    accounts: 150000
+    accounts: 1500
   }
 };
 

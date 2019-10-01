@@ -20,7 +20,7 @@ const App = ({ drizzleContext }) => {
 
   return (
     <div>
-      <NavBar />
+      <NavBar drizzleState={drizzleState} />
 
       <Projects />
     </div>
