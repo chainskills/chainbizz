@@ -4,8 +4,8 @@ const Projects = () => {
   return (
     <div className='container'>
       <div className='row'>
-        <div className='col s12 m6'>
-          <div className='card medium blue-grey darken-1'>
+        <div className='col s12 m4'>
+          <div className='card medium blue-grey'>
             <div className='card-content white-text'>
               <span className='card-title'>Project name</span>
               <p>
@@ -21,8 +21,8 @@ const Projects = () => {
             </div>
           </div>
         </div>
-        <div className='col s12 m6'>
-          <div className='card medium blue-grey darken-1'>
+        <div className='col s12 m4'>
+          <div className='card medium blue-grey'>
             <div className='card-content white-text'>
               <span className='card-title'>Project name</span>
               <p>
@@ -38,8 +38,8 @@ const Projects = () => {
             </div>
           </div>
         </div>
-        <div className='col s12 m6'>
-          <div className='card medium blue-grey darken-1'>
+        <div className='col s12 m4'>
+          <div className='card medium blue-grey'>
             <div className='card-content white-text'>
               <span className='card-title'>Project name</span>
               <p>
@@ -55,8 +55,8 @@ const Projects = () => {
             </div>
           </div>
         </div>
-        <div className='col s12 m6'>
-          <div className='card medium blue-grey darken-1'>
+        <div className='col s12 m4'>
+          <div className='card medium blue-grey'>
             <div className='card-content white-text'>
               <span className='card-title'>Project name</span>
               <p>

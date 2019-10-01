@@ -85,8 +85,8 @@ const NavBar = () => {
         <i className='material-icons'>menu</i>
       </a>
 
-      <div className='right-align new-project'>
-        <a className='waves-effect waves-light btn blue-grey btn-small'>
+      <div className='container right-align new-project'>
+        <a className='waves-effect waves-light btn blue-grey'>
           <i className='material-icons left'>add</i>New
         </a>
       </div>
