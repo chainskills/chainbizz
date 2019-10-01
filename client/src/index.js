@@ -1,5 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+
+import { DrizzleContext } from '@drizzle/react-plugin';
+import { Drizzle, generateStore } from '@drizzle/store';
+
+import drizzleOptions from './store/drizzle/drizzleOptions';
+
 import App from './App';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+// configure drizzle
+const drizzleStore = generateStore(drizzleOptions);
+const drizzle = new Drizzle(drizzleOptions, drizzleStore);
+
+ReactDOM.render(
+  <DrizzleContext.Provider drizzle={drizzle}>
+    <DrizzleContext.Consumer>
+      {drizzleContext => {
+        return <App drizzleContext={drizzleContext} />;
+      }}
+    </DrizzleContext.Consumer>
+  </DrizzleContext.Provider>,
+  document.getElementById('root')
+);

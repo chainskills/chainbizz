@@ -8,12 +8,15 @@ import './App.css';
 import NavBar from './components/layout/NavBar';
 import Projects from './components/projects/Projects';
 
-const App = () => {
+const App = ({ drizzleContext }) => {
   useEffect(() => {
     // Initialize Materialize JS
     M.AutoInit();
     // eslint-disable-next-line
   }, []);
+
+  const { drizzleState, drizzle, initialized } = drizzleContext;
+  console.log(drizzleContext);
 
   return (
     <div>
