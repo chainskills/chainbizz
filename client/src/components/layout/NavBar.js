@@ -40,25 +40,17 @@ const NavBar = ({ drizzleState }) => {
       >
         <li>
           <div className='user-view' style={{ height: '122px' }}>
-            <div className='background'>
-              <img
-                src='https://source.unsplash.com/Q1p7bh3SHj8/300x176'
-                alt=''
-              />
-            </div>
             <div className='row'>
               <div className='col s3'>
                 <Blockies
-                  seed='0xe5b780aE69BCE4f9473B4D5869B9e4771A5aaAEa'
+                  seed={account}
                   size={10}
                   scale={5}
                   className='circle'
                 />
               </div>
               <div className='col s9'>
-                <a href='#!'>
-                  <span className='white-text name truncate'>{account}</span>
-                </a>
+                <span className='name truncate'>{account}</span>
               </div>
             </div>
           </div>
@@ -87,12 +79,6 @@ const NavBar = ({ drizzleState }) => {
       <a href='#!' data-target='slide-out' className='sidenav-trigger'>
         <i className='material-icons'>menu</i>
       </a>
-
-      <div className='container right-align new-project'>
-        <a className='waves-effect waves-light btn blue-grey'>
-          <i className='material-icons left'>add</i>New
-        </a>
-      </div>
     </div>
   );
 };

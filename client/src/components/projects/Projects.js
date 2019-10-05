@@ -3,6 +3,12 @@ import React from 'react';
 const Projects = () => {
   return (
     <div className='container'>
+      <div className='right-align new-project'>
+        <a className='waves-effect waves-light btn blue-grey'>
+          <i className='material-icons left'>add</i>New
+        </a>
+      </div>
+
       <div className='row'>
         <div className='col s12 m4'>
           <div className='card medium blue-grey'>
