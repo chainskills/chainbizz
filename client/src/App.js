@@ -25,7 +25,7 @@ const App = ({ drizzleContext }) => {
       <Fragment>
         <NavBar drizzleState={drizzleState} />
 
-        <Projects />
+        <Projects drizzle={drizzle} drizzleState={drizzleState}/>
       </Fragment>
     </ProjectState>
   );

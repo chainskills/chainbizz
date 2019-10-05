@@ -6,7 +6,7 @@ import M from 'materialize-css/dist/js/materialize.min.js';
 import ProjectContext from '../context/projects/projectContext';
 import ProjectModal from '../Project/Modal/ProjectModal';
 
-const Projects = () => {
+const Projects = ({ drizzle, drizzleState }) => {
   const projectContect = useContext(ProjectContext);
   const { addProject } = projectContect;
 
@@ -32,9 +32,14 @@ const Projects = () => {
       title: 'Save',
       visible: true,
       add: function(project) {
-        console.log('Add ' + id);
+        console.log('Add ');
+        console.log(project);
+
         setModalProjectOpen(false);
-        addProject(project);
+        console.log(drizzle);
+        console.log(drizzleState);
+
+        addProject(drizzle, drizzleState, project);
       },
       update: function(project) {
         console.log('Update ' + id);
