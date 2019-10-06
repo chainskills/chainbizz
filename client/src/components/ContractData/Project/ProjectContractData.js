@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+
 export default class ProjectContractData extends Component {
   constructor(props) {
     super(props);
@@ -17,7 +18,6 @@ export default class ProjectContractData extends Component {
   }
 
   render() {
-    console.log('Datakey: ' + this.dataKey);
     // Retrieve project details only if the information is available
     let projectDetails = null;
     if (

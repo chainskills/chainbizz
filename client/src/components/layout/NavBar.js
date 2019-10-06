@@ -2,10 +2,16 @@ import React from 'react';
 
 import Blockies from 'react-blockies';
 
-const NavBar = ({ drizzleState }) => {
+import { getNetworkName } from '../../utils/ui';
+
+const NavBar = ({ drizzle, drizzleState }) => {
   let account = '';
   if (drizzleState !== null) {
     account = drizzleState.accounts[0];
+  }
+
+  if (drizzle !== null) {
+    console.log(getNetworkName(drizzle.web3));
   }
 
   return (

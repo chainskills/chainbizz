@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 
 import 'materialize-css/dist/css/materialize.min.css';
-import M from 'materialize-css/dist/js/materialize.min.js';
 
 import ProjectContext from '../context/projects/projectContext';
 import ProjectModal from '../Project/Modal/ProjectModal';
@@ -29,14 +28,11 @@ const Projects = ({ drizzle, drizzleState, initialized }) => {
   useEffect(() => {
     if (initialized) {
       const { ChainBizz } = drizzle.contracts;
-      console.log('222');
-      console.log('contact; ' + drizzleState.accounts[0]);
       setDataKeys(
         ChainBizz.methods.getAllProjects.cacheCall({
           from: drizzleState.accounts[0]
         })
       );
-      console.log('Data keys: ' + dataKeys);
     }
 
     //eslint-disable-next-line
@@ -48,17 +44,10 @@ const Projects = ({ drizzle, drizzleState, initialized }) => {
       title: 'Save',
       visible: true,
       add: function(project) {
-        console.log('Add ');
-        console.log(project);
-
         setModalProjectOpen(false);
-        console.log(drizzle);
-        console.log(drizzleState);
-
         addProject(drizzle, drizzleState, project);
       },
       update: function(project) {
-        console.log('Update ' + id);
         setModalProjectOpen(false);
         //updateProject(project);
       }
@@ -78,45 +67,33 @@ const Projects = ({ drizzle, drizzleState, initialized }) => {
   // prepare projects cards
   let allProjects = [];
   let projectIds = null;
-  console.log('111');
   if (initialized === true && dataKeys !== null) {
-    console.log(drizzleState);
-    console.log('Data keys: ' + dataKeys);
+    if (
+      drizzleState.contracts.ChainBizz.getAllProjects[dataKeys] &&
+      drizzleState.contracts.ChainBizz.getAllProjects[dataKeys].value
+    ) {
+      projectIds =
+        drizzleState.contracts.ChainBizz.getAllProjects[dataKeys].value;
+    }
 
-    if (initialized === true) {
-      console.log('444');
-      console.log(drizzleState.contracts.ChainBizz);
-      if (
-        drizzleState.contracts.ChainBizz.getAllProjects[dataKeys] &&
-        drizzleState.contracts.ChainBizz.getAllProjects[dataKeys].value
-      ) {
-        projectIds =
-          drizzleState.contracts.ChainBizz.getAllProjects[dataKeys].value;
-        console.log('ProjectId: ' + projectIds);
-      }
+    // no certifications
+    if (projectIds !== null) {
+      for (let i = 0; i < projectIds.length; i++) {
+        const projectId = projectIds[i];
 
-      // no certifications
-      if (projectIds !== null) {
-        for (let i = 0; i < projectIds.length; i++) {
-          const projectId = projectIds[i];
-          console.log('Id: ' + projectId);
+        const projectDetail = (
+          <ProjectContractData
+            drizzle={drizzle}
+            drizzleState={drizzleState}
+            projectId={projectId}
+            key={projectId}
+          />
+        );
 
-          const projectDetail = (
-            <ProjectContractData
-              drizzle={drizzle}
-              drizzleState={drizzleState}
-              projectId={projectId}
-              key={projectId}
-            />
-          );
-
-          allProjects.push(projectDetail);
-        }
+        allProjects.push(projectDetail);
       }
     }
   }
-
-  console.log(allProjects);
 
   return (
     <div className='container'>

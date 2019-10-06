@@ -15,7 +15,6 @@ const ProjectModal = ({ dataID, action1, action2, onClose }) => {
 
   const projectContext = useContext(ProjectContext);
   const { current } = projectContext;
-  console.log('Into modal');
 
   const [project, setProject] = useState({
     title: '',

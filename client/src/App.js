@@ -18,14 +18,17 @@ const App = ({ drizzleContext }) => {
   }, []);
 
   const { drizzleState, drizzle, initialized } = drizzleContext;
-  console.log(drizzleContext);
 
   return (
     <ProjectState>
       <Fragment>
-        <NavBar drizzleState={drizzleState} />
+        <NavBar drizzle={drizzle} drizzleState={drizzleState} />
 
-        <Projects drizzle={drizzle} drizzleState={drizzleState} initialized={initialized}/>
+        <Projects
+          drizzle={drizzle}
+          drizzleState={drizzleState}
+          initialized={initialized}
+        />
       </Fragment>
     </ProjectState>
   );
