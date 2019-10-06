@@ -67,19 +67,16 @@ const NavBar = ({ drizzle, drizzleState }) => {
           </a>
         </li>
         <li>
-          <a href='#!'>My projects</a>
-        </li>
-        <li>
-          <a href='#!'>My contracts</a>
+          <a href='#!'>All projects</a>
         </li>
         <li>
           <div className='divider'></div>
         </li>
-
         <li>
-          <a className='waves-effect' href='#!'>
-            Preferences
-          </a>
+          <a href='#!'>My projects</a>
+        </li>
+        <li>
+          <a href='#!'>My contracts</a>
         </li>
       </ul>
       <a href='#!' data-target='slide-out' className='sidenav-trigger'>
