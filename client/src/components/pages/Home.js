@@ -6,11 +6,10 @@ import ProjectContext from '../context/projects/projectContext';
 import ProjectModal from '../Project/Modal/ProjectModal';
 import ProjectContractData from '../ContractData/Project/ProjectContractData';
 
-const Projects = ({ drizzle, drizzleState, initialized }) => {
+const Home = ({ drizzle, drizzleState }) => {
   const projectContect = useContext(ProjectContext);
   const { addProject } = projectContect;
 
-  const [account, setAccount] = useState('');
   const [dataKeys, setDataKeys] = useState(null);
 
   const [modalProjectOpen, setModalProjectOpen] = useState(false);
@@ -26,17 +25,15 @@ const Projects = ({ drizzle, drizzleState, initialized }) => {
   });
 
   useEffect(() => {
-    if (initialized) {
-      const { ChainBizz } = drizzle.contracts;
-      setDataKeys(
-        ChainBizz.methods.getAllProjects.cacheCall({
-          from: drizzleState.accounts[0]
-        })
-      );
-    }
+    const { ChainBizz } = drizzle.contracts;
+    setDataKeys(
+      ChainBizz.methods.getAllProjects.cacheCall({
+        from: drizzleState.accounts[0]
+      })
+    );
 
     //eslint-disable-next-line
-  }, [initialized]);
+  }, []);
 
   const handleNewProject = id => {
     setModalProjectOpen(true);
@@ -67,7 +64,7 @@ const Projects = ({ drizzle, drizzleState, initialized }) => {
   // prepare projects cards
   let allProjects = [];
   let projectIds = null;
-  if (initialized === true && dataKeys !== null) {
+  if (dataKeys !== null) {
     if (
       drizzleState.contracts.ChainBizz.getAllProjects[dataKeys] &&
       drizzleState.contracts.ChainBizz.getAllProjects[dataKeys].value
@@ -80,6 +77,8 @@ const Projects = ({ drizzle, drizzleState, initialized }) => {
     if (projectIds !== null) {
       for (let i = 0; i < projectIds.length; i++) {
         const projectId = projectIds[i];
+
+        console.log('Project Id: ' + projectId);
 
         const projectDetail = (
           <ProjectContractData
@@ -96,7 +95,7 @@ const Projects = ({ drizzle, drizzleState, initialized }) => {
   }
 
   return (
-    <div className='container'>
+    <div>
       <div className='right-align new-project'>
         <a
           className='waves-effect waves-light btn blue-grey'
@@ -120,4 +119,4 @@ const Projects = ({ drizzle, drizzleState, initialized }) => {
   );
 };
 
-export default Projects;
+export default Home;

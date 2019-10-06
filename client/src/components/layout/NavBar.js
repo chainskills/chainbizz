@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { withRouter } from 'react-router-dom';
+
 import Blockies from 'react-blockies';
 
 import { getNetworkName } from '../../utils/ui';
@@ -14,12 +16,39 @@ const NavBar = ({ drizzle, drizzleState }) => {
     console.log(getNetworkName(drizzle.web3));
   }
 
+  let networkName = '';
+  switch (window.ethereum.networkVersion) {
+    case 1:
+      networkName = 'Main Network';
+      break;
+
+    case 3:
+      networkName = 'Ropsten Test Network';
+      break;
+
+    case 4:
+      networkName = 'Rinkeby Test Network';
+      break;
+
+    case 5:
+      networkName = 'Göerli Test Network';
+      break;
+
+    case 42:
+      networkName = 'Kovan Test Network';
+      break;
+
+    default:
+      networkName = 'Private Network';
+      break;
+  }
+
   return (
     <div>
       <nav className='z-depth-0'>
         <div className='nav-wrapper white'>
           <a
-            href='#!'
+            href='/'
             className='brand-logo black-text'
             style={{ textDecoration: 'none' }}
           >
@@ -63,17 +92,18 @@ const NavBar = ({ drizzle, drizzleState }) => {
         </li>
         <li>
           <a href='#!'>
-            <i className='material-icons'>cloud</i>Main Network
+            <i className='material-icons'>cloud</i>
+            {networkName}
           </a>
         </li>
         <li>
-          <a href='#!'>All projects</a>
+          <a href='/'>All projects</a>
         </li>
         <li>
           <div className='divider'></div>
         </li>
         <li>
-          <a href='#!'>My projects</a>
+          <a href='/myprojects'>My projects</a>
         </li>
         <li>
           <a href='#!'>My contracts</a>
@@ -86,4 +116,4 @@ const NavBar = ({ drizzle, drizzleState }) => {
   );
 };
 
-export default NavBar;
+export default withRouter(NavBar);

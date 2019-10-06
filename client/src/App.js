@@ -1,4 +1,5 @@
 import React, { Fragment, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import 'materialize-css/dist/css/materialize.min.css';
 import M from 'materialize-css/dist/js/materialize.min.js';
@@ -8,7 +9,8 @@ import './App.css';
 import ProjectState from './components/context/projects/ProjectState';
 
 import NavBar from './components/layout/NavBar';
-import Projects from './components/pages/Projects';
+import MyProjects from './components/pages/MyProjects';
+import Home from './components/pages/Home';
 
 const App = ({ drizzleContext }) => {
   useEffect(() => {
@@ -21,15 +23,50 @@ const App = ({ drizzleContext }) => {
 
   return (
     <ProjectState>
-      <Fragment>
-        <NavBar drizzle={drizzle} drizzleState={drizzleState} />
+      <Router>
+        <Fragment>
+          <NavBar drizzle={drizzle} drizzleState={drizzleState} />
 
-        <Projects
-          drizzle={drizzle}
-          drizzleState={drizzleState}
-          initialized={initialized}
-        />
-      </Fragment>
+          <div className='container'>
+            {!initialized && (
+              <div>
+                <h2>Preparing the Dapp</h2>
+                <div className='progress'>
+                  <div className='indeterminate' />
+                </div>
+              </div>
+            )}
+
+            {initialized && (
+              <Switch>
+                <Route
+                  exact
+                  path='/'
+                  render={() => (
+                    <Home drizzle={drizzle} drizzleState={drizzleState} />
+                  )}
+                />
+
+                <Route
+                  exact
+                  path='/myprojects'
+                  render={() => (
+                    <MyProjects drizzle={drizzle} drizzleState={drizzleState} />
+                  )}
+                />
+
+                <Route
+                  exact
+                  path='/home'
+                  render={() => (
+                    <Home drizzle={drizzle} drizzleState={drizzleState} />
+                  )}
+                />
+              </Switch>
+            )}
+          </div>
+        </Fragment>
+      </Router>
     </ProjectState>
   );
 };

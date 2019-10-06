@@ -119,8 +119,28 @@ contract ChainBizz {
       project.status);
   }
 
-  // return all projects owned by the sender
+  // return all projects
   function getAllProjects() view public returns (uint[] memory) {
+    if (projectsCounter == 0) {
+      return new uint[](0);
+    }
+
+    // prepare output array
+    uint256[] memory projectIDs = new uint[](projectsCounter);
+
+    // iterate over projects
+    uint256 numberOfProjects = 0;
+    for (uint i = 1; i <= projectsCounter; i++) {
+      projectIDs[numberOfProjects] = projects[i].id;
+      numberOfProjects = numberOfProjects.add(1);
+    }
+
+    return projectIDs;
+  }
+
+
+  // return all projects owned by the sender
+  function getMyProjects() view public returns (uint[] memory) {
     if (projectsCounter == 0) {
       return new uint[](0);
     }
@@ -147,5 +167,4 @@ contract ChainBizz {
 
     return myProjects;
   }
-
 }

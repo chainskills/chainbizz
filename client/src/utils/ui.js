@@ -11,20 +11,4 @@ export const getNetworkName = async web3 => {
   console.log('Network id: ' + networkId);
 
   let networkName = '';
-  switch (networkId) {
-    case 1:
-      console.log('This is mainnet');
-      break;
-    case 2:
-      console.log('This is the deprecated Morden test network.');
-      break;
-    case 3:
-      console.log('This is the ropsten test network.');
-      break;
-    case 4:
-      console.log('This is the rinkeby test network.');
-      break;
-    default:
-      console.log('This is an unknown network.');
-  }
 };
