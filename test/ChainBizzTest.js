@@ -141,5 +141,9 @@ contract('ChainBizz', async accounts => {
       ProjectStatus.Published,
       'status must be ' + ProjectStatus.Published
     );
+
+    // retrieve the project from the contract
+    const projects = await contractInstance.getAllProjects();
+    console.log('All projects: ' + projects );
   });
 });

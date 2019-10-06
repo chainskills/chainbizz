@@ -15,8 +15,6 @@ const ProjectState = props => {
 
   // Add a project
   const addProject = (drizzle, drizzleState, project) => {
-    console.log('Into addProject');
-
     const { ChainBizz } = drizzle.contracts;
     const account = drizzleState.accounts[0];
     const { title, description, price } = project;

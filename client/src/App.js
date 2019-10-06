@@ -8,7 +8,7 @@ import './App.css';
 import ProjectState from './components/context/projects/ProjectState';
 
 import NavBar from './components/layout/NavBar';
-import Projects from './components/projects/Projects';
+import Projects from './components/pages/Projects';
 
 const App = ({ drizzleContext }) => {
   useEffect(() => {
@@ -25,7 +25,7 @@ const App = ({ drizzleContext }) => {
       <Fragment>
         <NavBar drizzleState={drizzleState} />
 
-        <Projects drizzle={drizzle} drizzleState={drizzleState}/>
+        <Projects drizzle={drizzle} drizzleState={drizzleState} initialized={initialized}/>
       </Fragment>
     </ProjectState>
   );
