@@ -9,6 +9,7 @@ import './App.css';
 import ProjectState from './components/context/projects/ProjectState';
 
 import NavBar from './components/layout/NavBar';
+import Project from './components/pages/Project';
 import MyProjects from './components/pages/MyProjects';
 import Home from './components/pages/Home';
 
@@ -26,6 +27,8 @@ const App = ({ drizzleContext }) => {
       <Router>
         <Fragment>
           <NavBar drizzle={drizzle} drizzleState={drizzleState} />
+
+          <Project drizzle={drizzle} drizzleState={drizzleState} />
 
           <div className='container'>
             {!initialized && (
