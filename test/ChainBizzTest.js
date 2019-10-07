@@ -9,7 +9,11 @@ contract('ChainBizz', async accounts => {
   const priceProject1 = 10000000000000000000;
   const newTitleProject1 = 'Project 1 - updated';
   const newDescriptionProject1 = 'Description for Project 1 - updated';
-  const newPriceProject1 = 20000000000000000000;
+  const newPriceProject1 = 15000000000000000000;
+  const idProject2 = 2;
+  const titleProject2 = 'Project 2';
+  const descriptionProject2 = 'Description for Project 2';
+  const priceProject2 = 20000000000000000000;
   const ProjectStatus = {
     Draft: 0,
     Published: 1,
@@ -121,7 +125,7 @@ contract('ChainBizz', async accounts => {
     assert.equal(
       receipt.logs[0].args._id.toNumber(),
       idProject1,
-      'project id must be 1'
+      'project id must be ' + idProject1
     );
     assert.equal(
       receipt.logs[0].args._owner,
@@ -191,7 +195,7 @@ contract('ChainBizz', async accounts => {
     assert.equal(
       receipt.logs[0].args._id.toNumber(),
       idProject1,
-      'project id must be 1'
+      'project id must be ' + idProject1
     );
     assert.equal(
       receipt.logs[0].args._owner,
@@ -242,6 +246,81 @@ contract('ChainBizz', async accounts => {
       project['_status'],
       ProjectStatus.Published,
       'status must be ' + ProjectStatus.Published
+    );
+  });
+
+  it('should let us add a second project', async () => {
+    // add the second project
+    const receipt = await contractInstance.addProject(
+      titleProject2,
+      descriptionProject2,
+      web3.utils.toBN(priceProject2),
+      {
+        from: accounts[1]
+      }
+    );
+
+    // check that we have received an event
+    assert.equal(receipt.logs.length, 1, 'should have received 1 event');
+    assert.equal(
+      receipt.logs[0].event,
+      'NewProject',
+      'event name should be NewProject'
+    );
+    assert.equal(
+      receipt.logs[0].args._id.toNumber(),
+      idProject2,
+      'project id must be ' + idProject2
+    );
+    assert.equal(
+      receipt.logs[0].args._owner,
+      accounts[1],
+      'customer must be ' + accounts[1]
+    );
+    assert.equal(
+      receipt.logs[0].args._title,
+      titleProject2,
+      'project title must be ' + titleProject2
+    );
+    assert.equal(
+      receipt.logs[0].args._price,
+      priceProject2,
+      'price must be ' + priceProject2
+    );
+
+    // retrieve the project from the contract
+    const project = await contractInstance.getProject(idProject2);
+
+    // check that we have properly stored the project
+    assert.equal(
+      project['_owner'],
+      accounts[1],
+      'customer must be ' + accounts[1]
+    );
+    assert.equal(
+      web3.utils.toBN(project['_provider']),
+      0,
+      'provider must be null'
+    );
+    assert.equal(
+      project['_title'],
+      titleProject2,
+      'project title must be ' + titleProject2
+    );
+    assert.equal(
+      project['_description'],
+      descriptionProject2,
+      'description must be ' + descriptionProject2
+    );
+    assert.equal(
+      project['_price'],
+      priceProject2,
+      'price must be ' + priceProject2
+    );
+    assert.equal(
+      project['_status'],
+      ProjectStatus.Draft,
+      'status must be ' + ProjectStatus.Draft
     );
   });
 });
