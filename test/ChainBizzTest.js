@@ -323,4 +323,44 @@ contract('ChainBizz', async accounts => {
       'status must be ' + ProjectStatus.Draft
     );
   });
+
+  it('should let us remove the second project', async () => {
+    // add the second project
+    const receipt = await contractInstance.removeProject(idProject2, {
+      from: accounts[1]
+    });
+
+    // check that we have received an event
+    assert.equal(receipt.logs.length, 1, 'should have received 1 event');
+    assert.equal(
+      receipt.logs[0].event,
+      'RemoveProject',
+      'event name should be RemoveProject'
+    );
+    assert.equal(
+      receipt.logs[0].args._id.toNumber(),
+      idProject2,
+      'project id must be ' + idProject2
+    );
+    assert.equal(
+      receipt.logs[0].args._owner,
+      accounts[1],
+      'customer must be ' + accounts[1]
+    );
+    assert.equal(
+      receipt.logs[0].args._title,
+      titleProject2,
+      'project title must be ' + titleProject2
+    );
+
+    // retrieve the project from the contract
+    const project = await contractInstance.getProject(idProject2);
+
+    // check that the project has been properly removed
+    assert.equal(
+      web3.utils.toBN(project['_owner']),
+      0,
+      'customer must be null'
+    );
+  });
 });
