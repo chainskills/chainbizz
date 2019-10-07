@@ -12,10 +12,6 @@ const NavBar = ({ drizzle, drizzleState }) => {
     account = drizzleState.accounts[0];
   }
 
-  if (drizzle !== null) {
-    console.log(getNetworkName(drizzle.web3));
-  }
-
   let networkName = '';
   switch (window.ethereum.networkVersion) {
     case 1:

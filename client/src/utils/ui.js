@@ -8,7 +8,5 @@ export const getNetworkName = async web3 => {
   }
   const networkId = await web3.eth.net.getId();
 
-  console.log('Network id: ' + networkId);
-
   let networkName = '';
 };
