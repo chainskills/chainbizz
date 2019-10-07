@@ -44,6 +44,8 @@ contract ChainBizz {
   // Events
   //
   event NewProject(uint256 _id, address _owner, string _title, uint256 _price);
+  event UpdateProject(uint256 _id, address _owner, string _title, uint256 _price);
+  event RemoveProject(uint256 _id, address _owner, string _title);
   event PublishedProject(uint256 _id, address _owner, string _title, uint256 _price);
 
   //
@@ -70,8 +72,67 @@ contract ChainBizz {
     emit NewProject(projectsCounter, msg.sender, _title, _price);
   }
 
+  // Update an unpublished project
+  function updateProject(uint256 _id, string memory _title, string memory _description, uint256 _price) public {
+    
+    // retrieve the project
+    ProjectItem storage project = projects[_id];
+
+    // ensure that this project exists
+    if (project.owner == address(0x0)) {
+      return;
+    }
+ 
+    // do we own this project?
+    require(project.owner == msg.sender, "You are not the owner of this project");
+
+    // ready to be published?
+    require(project.status == ProjectStatus.Draft, "Cannot be updated while published");
+
+    // a title is required
+    bytes memory title = bytes(_title);
+    require(title.length > 0, "A title is required");
+
+    // a description is required
+    bytes memory description = bytes(_description);
+    require(description.length > 0, "A description is required");
+
+    // update the project
+    project.title = _title;
+    project.description = _description;
+    project.price = _price;
+
+    emit UpdateProject(projectsCounter, msg.sender, _title, _price);
+  }
+
+  // Remove an unpublished project
+  function removeProject(uint256 _id) public {
+    
+    // retrieve the project
+    ProjectItem memory project = projects[_id];
+
+    // ensure that this project exists
+    if (project.owner == address(0x0)) {
+      return;
+    }
+ 
+    // do we own this project?
+    require(project.owner == msg.sender, "You are not the owner of this project");
+
+    // ready to be removed?
+    require(project.status == ProjectStatus.Draft, "Cannot be removed while published");
+
+    // keep title for future use
+    string memory title = project.title;
+
+    // remove the project
+    delete projects[_id];
+
+    emit RemoveProject(_id, msg.sender, title);
+  }
+
   // Publish the project to seek for providers
-  function publishProject(uint _id) public {
+  function publishProject(uint256 _id) public {
     
     // retrieve the project
     ProjectItem storage project = projects[_id];
@@ -95,7 +156,7 @@ contract ChainBizz {
 
 
   // Retrieve a project from its id
-  function getProject(uint _id) public view returns (
+  function getProject(uint256 _id) public view returns (
     address _owner,
     address _provider,
     string memory _title,
@@ -120,7 +181,7 @@ contract ChainBizz {
   }
 
   // return all projects
-  function getAllProjects() view public returns (uint[] memory) {
+  function getAllProjects() view public returns (uint256[] memory) {
     if (projectsCounter == 0) {
       return new uint[](0);
     }
@@ -130,7 +191,7 @@ contract ChainBizz {
 
     // iterate over projects
     uint256 numberOfProjects = 0;
-    for (uint i = 1; i <= projectsCounter; i++) {
+    for (uint256 i = 1; i <= projectsCounter; i++) {
       projectIDs[numberOfProjects] = projects[i].id;
       numberOfProjects = numberOfProjects.add(1);
     }
@@ -140,9 +201,9 @@ contract ChainBizz {
 
 
   // return all projects owned by the sender
-  function getMyProjects() view public returns (uint[] memory) {
+  function getMyProjects() view public returns (uint256[] memory) {
     if (projectsCounter == 0) {
-      return new uint[](0);
+      return new uint256[](0);
     }
 
     // prepare output array
