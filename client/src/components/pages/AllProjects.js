@@ -4,7 +4,7 @@ import 'materialize-css/dist/css/materialize.min.css';
 
 import ProjectContractData from '../ContractData/Project/ProjectContractData';
 
-const Home = ({ drizzle, drizzleState }) => {
+const AllProjects = ({ drizzle, drizzleState }) => {
 
   const [dataKeys, setDataKeys] = useState(null);
 
@@ -59,4 +59,4 @@ const Home = ({ drizzle, drizzleState }) => {
   );
 };
 
-export default Home;
+export default AllProjects;
