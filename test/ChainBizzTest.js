@@ -4,10 +4,12 @@ const chainBizzContract = artifacts.require('ChainBizz');
 contract('ChainBizz', async accounts => {
   let contractInstance;
   const projectId = 1;
-  const title = 'Blockchain for Notary';
-  const description =
-    'We are looking for Ethereum developers to create a decentralised platform to notarize legal documents';
+  const title = 'Project 1';
+  const description = 'Description for Project 1';
   const price = 10000000000000000000;
+  const newTitle = 'Project 1 - updated';
+  const newDescription = 'Description for Project 1 - updated';
+  const newPrice = 20000000000000000000;
   const ProjectStatus = {
     Draft: 0,
     Published: 1,
@@ -85,6 +87,78 @@ contract('ChainBizz', async accounts => {
     );
   });
 
+  it('should let us update a project', async () => {
+    // update the project
+    const receipt = await contractInstance.updateProject(
+      projectId,
+      newTitle,
+      newDescription,
+      web3.utils.toBN(newPrice),
+      {
+        from: accounts[1]
+      }
+    );
+
+    // check that we have received an event
+    assert.equal(receipt.logs.length, 1, 'should have received 1 event');
+    assert.equal(
+      receipt.logs[0].event,
+      'UpdateProject',
+      'event name should be UpdateProject'
+    );
+    assert.equal(
+      receipt.logs[0].args._id.toNumber(),
+      projectId,
+      'project id must be 1'
+    );
+    assert.equal(
+      receipt.logs[0].args._owner,
+      accounts[1],
+      'customer must be ' + accounts[1]
+    );
+    assert.equal(
+      receipt.logs[0].args._title,
+      newTitle,
+      'project title must be ' + newTitle
+    );
+    assert.equal(
+      receipt.logs[0].args._price,
+      newPrice,
+      'price must be ' + newPrice
+    );
+
+    // retrieve the project from the contract
+    const project = await contractInstance.getProject(projectId);
+
+    // check that we have properly stored the project
+    assert.equal(
+      project['_owner'],
+      accounts[1],
+      'customer must be ' + accounts[1]
+    );
+    assert.equal(
+      web3.utils.toBN(project['_provider']),
+      0,
+      'provider must be null'
+    );
+    assert.equal(
+      project['_title'],
+      newTitle,
+      'project title must be ' + newTitle
+    );
+    assert.equal(
+      project['_description'],
+      newDescription,
+      'description must be ' + newDescription
+    );
+    assert.equal(project['_price'], newPrice, 'price must be ' + newPrice);
+    assert.equal(
+      project['_status'],
+      ProjectStatus.Draft,
+      'status must be ' + ProjectStatus.Draft
+    );
+  });
+
   it('should let us publish a project', async () => {
     // publish the project
     const receipt = await contractInstance.publishProject(projectId, {
@@ -110,10 +184,14 @@ contract('ChainBizz', async accounts => {
     );
     assert.equal(
       receipt.logs[0].args._title,
-      title,
-      'project title must be ' + title
+      newTitle,
+      'project title must be ' + newTitle
     );
-    assert.equal(receipt.logs[0].args._price, price, 'price must be ' + price);
+    assert.equal(
+      receipt.logs[0].args._price,
+      newPrice,
+      'price must be ' + newPrice
+    );
 
     // retrieve the project from the contract
     const project = await contractInstance.getProject(projectId);
@@ -129,21 +207,21 @@ contract('ChainBizz', async accounts => {
       0,
       'provider must be null'
     );
-    assert.equal(project['_title'], title, 'project title must be ' + title);
+    assert.equal(
+      project['_title'],
+      newTitle,
+      'project title must be ' + newTitle
+    );
     assert.equal(
       project['_description'],
-      description,
-      'description must be ' + description
+      newDescription,
+      'description must be ' + newDescription
     );
-    assert.equal(project['_price'], price, 'price must be ' + price);
+    assert.equal(project['_price'], newPrice, 'price must be ' + newPrice);
     assert.equal(
       project['_status'],
       ProjectStatus.Published,
       'status must be ' + ProjectStatus.Published
     );
-
-    // retrieve the project from the contract
-    const projects = await contractInstance.getAllProjects();
-    console.log('All projects: ' + projects );
   });
 });
