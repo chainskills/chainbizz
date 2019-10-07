@@ -3,13 +3,13 @@ const chainBizzContract = artifacts.require('ChainBizz');
 // test suite
 contract('ChainBizz', async accounts => {
   let contractInstance;
-  const projectId = 1;
-  const title = 'Project 1';
-  const description = 'Description for Project 1';
-  const price = 10000000000000000000;
-  const newTitle = 'Project 1 - updated';
-  const newDescription = 'Description for Project 1 - updated';
-  const newPrice = 20000000000000000000;
+  const idProject1 = 1;
+  const titleProject1 = 'Project 1';
+  const descriptionProject1 = 'Description for Project 1';
+  const priceProject1 = 10000000000000000000;
+  const newTitleProject1 = 'Project 1 - updated';
+  const newDescriptionProject1 = 'Description for Project 1 - updated';
+  const newPriceProject1 = 20000000000000000000;
   const ProjectStatus = {
     Draft: 0,
     Published: 1,
@@ -27,9 +27,9 @@ contract('ChainBizz', async accounts => {
   it('should let us add a project', async () => {
     // add the project
     const receipt = await contractInstance.addProject(
-      title,
-      description,
-      web3.utils.toBN(price),
+      titleProject1,
+      descriptionProject1,
+      web3.utils.toBN(priceProject1),
       {
         from: accounts[1]
       }
@@ -44,7 +44,7 @@ contract('ChainBizz', async accounts => {
     );
     assert.equal(
       receipt.logs[0].args._id.toNumber(),
-      projectId,
+      idProject1,
       'project id must be 1'
     );
     assert.equal(
@@ -54,13 +54,17 @@ contract('ChainBizz', async accounts => {
     );
     assert.equal(
       receipt.logs[0].args._title,
-      title,
-      'project title must be ' + title
+      titleProject1,
+      'project title must be ' + titleProject1
     );
-    assert.equal(receipt.logs[0].args._price, price, 'price must be ' + price);
+    assert.equal(
+      receipt.logs[0].args._price,
+      priceProject1,
+      'price must be ' + priceProject1
+    );
 
     // retrieve the project from the contract
-    const project = await contractInstance.getProject(projectId);
+    const project = await contractInstance.getProject(idProject1);
 
     // check that we have properly stored the project
     assert.equal(
@@ -73,13 +77,21 @@ contract('ChainBizz', async accounts => {
       0,
       'provider must be null'
     );
-    assert.equal(project['_title'], title, 'project title must be ' + title);
+    assert.equal(
+      project['_title'],
+      titleProject1,
+      'project title must be ' + titleProject1
+    );
     assert.equal(
       project['_description'],
-      description,
-      'description must be ' + description
+      descriptionProject1,
+      'description must be ' + descriptionProject1
     );
-    assert.equal(project['_price'], price, 'price must be ' + price);
+    assert.equal(
+      project['_price'],
+      priceProject1,
+      'price must be ' + priceProject1
+    );
     assert.equal(
       project['_status'],
       ProjectStatus.Draft,
@@ -90,10 +102,10 @@ contract('ChainBizz', async accounts => {
   it('should let us update a project', async () => {
     // update the project
     const receipt = await contractInstance.updateProject(
-      projectId,
-      newTitle,
-      newDescription,
-      web3.utils.toBN(newPrice),
+      idProject1,
+      newTitleProject1,
+      newDescriptionProject1,
+      web3.utils.toBN(newPriceProject1),
       {
         from: accounts[1]
       }
@@ -108,7 +120,7 @@ contract('ChainBizz', async accounts => {
     );
     assert.equal(
       receipt.logs[0].args._id.toNumber(),
-      projectId,
+      idProject1,
       'project id must be 1'
     );
     assert.equal(
@@ -118,17 +130,17 @@ contract('ChainBizz', async accounts => {
     );
     assert.equal(
       receipt.logs[0].args._title,
-      newTitle,
-      'project title must be ' + newTitle
+      newTitleProject1,
+      'project title must be ' + newTitleProject1
     );
     assert.equal(
       receipt.logs[0].args._price,
-      newPrice,
-      'price must be ' + newPrice
+      newPriceProject1,
+      'price must be ' + newPriceProject1
     );
 
     // retrieve the project from the contract
-    const project = await contractInstance.getProject(projectId);
+    const project = await contractInstance.getProject(idProject1);
 
     // check that we have properly stored the project
     assert.equal(
@@ -143,15 +155,19 @@ contract('ChainBizz', async accounts => {
     );
     assert.equal(
       project['_title'],
-      newTitle,
-      'project title must be ' + newTitle
+      newTitleProject1,
+      'project title must be ' + newTitleProject1
     );
     assert.equal(
       project['_description'],
-      newDescription,
-      'description must be ' + newDescription
+      newDescriptionProject1,
+      'description must be ' + newDescriptionProject1
     );
-    assert.equal(project['_price'], newPrice, 'price must be ' + newPrice);
+    assert.equal(
+      project['_price'],
+      newPriceProject1,
+      'price must be ' + newPriceProject1
+    );
     assert.equal(
       project['_status'],
       ProjectStatus.Draft,
@@ -161,7 +177,7 @@ contract('ChainBizz', async accounts => {
 
   it('should let us publish a project', async () => {
     // publish the project
-    const receipt = await contractInstance.publishProject(projectId, {
+    const receipt = await contractInstance.publishProject(idProject1, {
       from: accounts[1]
     });
 
@@ -174,7 +190,7 @@ contract('ChainBizz', async accounts => {
     );
     assert.equal(
       receipt.logs[0].args._id.toNumber(),
-      projectId,
+      idProject1,
       'project id must be 1'
     );
     assert.equal(
@@ -184,17 +200,17 @@ contract('ChainBizz', async accounts => {
     );
     assert.equal(
       receipt.logs[0].args._title,
-      newTitle,
-      'project title must be ' + newTitle
+      newTitleProject1,
+      'project title must be ' + newTitleProject1
     );
     assert.equal(
       receipt.logs[0].args._price,
-      newPrice,
-      'price must be ' + newPrice
+      newPriceProject1,
+      'price must be ' + newPriceProject1
     );
 
     // retrieve the project from the contract
-    const project = await contractInstance.getProject(projectId);
+    const project = await contractInstance.getProject(idProject1);
 
     // check that we have properly stored the project
     assert.equal(
@@ -209,15 +225,19 @@ contract('ChainBizz', async accounts => {
     );
     assert.equal(
       project['_title'],
-      newTitle,
-      'project title must be ' + newTitle
+      newTitleProject1,
+      'project title must be ' + newTitleProject1
     );
     assert.equal(
       project['_description'],
-      newDescription,
-      'description must be ' + newDescription
+      newDescriptionProject1,
+      'description must be ' + newDescriptionProject1
     );
-    assert.equal(project['_price'], newPrice, 'price must be ' + newPrice);
+    assert.equal(
+      project['_price'],
+      newPriceProject1,
+      'price must be ' + newPriceProject1
+    );
     assert.equal(
       project['_status'],
       ProjectStatus.Published,
