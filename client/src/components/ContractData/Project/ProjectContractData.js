@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-
 export default class ProjectContractData extends Component {
   constructor(props) {
     super(props);
@@ -18,6 +17,7 @@ export default class ProjectContractData extends Component {
   }
 
   render() {
+    const account = this.props.drizzleState.accounts[0];
     // Retrieve project details only if the information is available
     let projectDetails = null;
     if (
@@ -36,6 +36,9 @@ export default class ProjectContractData extends Component {
 
     const id = this.props.projectId;
 
+    console.log('Owner: ' + projectDetails._owner);
+    console.log('Account: ' + this.props.drizzleState.accounts[0]);
+
     return (
       <div className='col s12 m4'>
         <div className='card medium blue-grey'>
@@ -53,7 +56,24 @@ export default class ProjectContractData extends Component {
             <p>{projectDetails._description}</p>
           </div>
           <div className='card-action'>
-            <a href='#'>More ...</a>
+            {projectDetails._owner === account && (
+              <a href='#!'>
+                <i className='material-icons'>delete</i>
+              </a>
+            )}
+            {projectDetails._owner === account && (
+              <a href='#!'>
+                <i className='material-icons'>edit</i>
+              </a>
+            )}
+            {projectDetails._owner === account && (
+              <a href='#!'>
+                <i className='material-icons'>publish</i>
+              </a>
+            )}
+            <a href='#!'>
+              <i className='material-icons'>more_horiz</i>
+            </a>
           </div>
         </div>
       </div>
