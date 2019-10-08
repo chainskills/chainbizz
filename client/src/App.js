@@ -11,7 +11,7 @@ import ProjectState from './components/context/projects/ProjectState';
 import NavBar from './components/layout/NavBar';
 import Project from './components/pages/Project';
 import MyProjects from './components/pages/MyProjects';
-import AllProjects from './components/pages/AllProjects';
+import PublishedProjects from './components/pages/PublishedProjects';
 
 const App = ({ drizzleContext }) => {
   useEffect(() => {
@@ -46,7 +46,7 @@ const App = ({ drizzleContext }) => {
                   exact
                   path='/'
                   render={() => (
-                    <AllProjects
+                    <PublishedProjects
                       drizzle={drizzle}
                       drizzleState={drizzleState}
                     />
@@ -65,7 +65,7 @@ const App = ({ drizzleContext }) => {
                   exact
                   path='/home'
                   render={() => (
-                    <AllProjects
+                    <PublishedProjects
                       drizzle={drizzle}
                       drizzleState={drizzleState}
                     />

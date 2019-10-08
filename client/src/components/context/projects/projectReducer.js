@@ -2,8 +2,10 @@ import {
   ADD_PROJECT,
   ON_EDIT_PROJECT,
   ON_REMOVE_PROJECT,
+  ON_PUBLISH_PROJECT,
   REMOVE_PROJECT,
   UPDATE_PROJECT,
+  PUBLISH_PROJECT,
   CLEAR_CURRENT_SELECTION,
   GET_PROJECT,
   PROJECT_ERROR
@@ -14,6 +16,7 @@ export default (state, action) => {
     case ADD_PROJECT:
     case UPDATE_PROJECT:
     case REMOVE_PROJECT:
+    case PUBLISH_PROJECT:
       return {
         ...state,
         project: action.payload,
@@ -30,6 +33,12 @@ export default (state, action) => {
         ...state,
         projectId: action.payload,
         showRemove: true
+      };
+    case ON_PUBLISH_PROJECT:
+      return {
+        ...state,
+        projectId: action.payload,
+        showPublish: true
       };
     case GET_PROJECT:
       return {
@@ -49,7 +58,8 @@ export default (state, action) => {
         projectId: null,
         loading: false,
         showEdit: false,
-        showRemove: false
+        showRemove: false,
+        showPublish: false
       };
     default:
       return state;

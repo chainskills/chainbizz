@@ -12,15 +12,21 @@ const Project = ({ drizzle, drizzleState }) => {
     addProject,
     updateProject,
     removeProject,
+    publishProject,
     getProject,
     showEdit,
     showRemove,
+    showPublish,
     clearCurrrentSelection,
     projectId
   } = projectContext;
 
   const [modalConfirmationOpen, setmodalConfirmationOpen] = useState(false);
   const [modalProjectOpen, setModalProjectOpen] = useState(false);
+
+  const [modalTitle, setModalTitle] = useState(null);
+  const [modalDescription, setModalDescription] = useState(null);
+
   const [action1, setAction1] = useState({
     title: '',
     visible: false,
@@ -87,12 +93,33 @@ const Project = ({ drizzle, drizzleState }) => {
   const handleRemove = id => {
     setDataID(id);
     setmodalConfirmationOpen(true);
+
+    setModalTitle('Remove Project');
+    setModalDescription('Are you sure to remove this project?');
+
     setAction1({
       title: 'Yes',
       visible: true,
       handle: function(id) {
         setmodalConfirmationOpen(false);
         removeProject(drizzle, drizzleState, id);
+      }
+    });
+  };
+
+  const handlePublish = id => {
+    setDataID(id);
+    setmodalConfirmationOpen(true);
+
+    setModalTitle('Publish Project');
+    setModalDescription('Are you sure to publish this project?');
+
+    setAction1({
+      title: 'Yes',
+      visible: true,
+      handle: function(id) {
+        setmodalConfirmationOpen(false);
+        publishProject(drizzle, drizzleState, id);
       }
     });
 
@@ -110,10 +137,12 @@ const Project = ({ drizzle, drizzleState }) => {
       handleEditProject(projectId);
     } else if (showRemove === true && projectId !== null) {
       handleRemove(projectId);
+    } else if (showPublish === true && projectId !== null) {
+      handlePublish(projectId);
     }
 
     //eslint-disable-next-line
-  }, [showEdit, showRemove, projectId]);
+  }, [showEdit, showRemove, showPublish, projectId]);
 
   return (
     <div>
@@ -130,8 +159,8 @@ const Project = ({ drizzle, drizzleState }) => {
 
       {modalConfirmationOpen && (
         <ConfirmModal
-          title={'Remove Project'}
-          content={'Are you sure to remove this project?'}
+          title={modalTitle}
+          content={modalDescription}
           dataID={dataID}
           onClose={() => setmodalConfirmationOpen(false)}
           action1={action1}

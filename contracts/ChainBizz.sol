@@ -209,6 +209,36 @@ contract ChainBizz {
   }
 
 
+  // return all published projects
+  function getPublishedProjects() view public returns (uint256[] memory) {
+    if (projectsCounter == 0) {
+      return new uint[](0);
+    }
+
+    // prepare output array
+    uint256[] memory projectIDs = new uint[](projectsCounter);
+
+    // iterate over projects
+    uint256 numberOfProjects = 0;
+    for (uint256 i = 1; i <= projectsCounter; i++) {
+      // get only published and active projects 
+      if ((projects[i].owner != address(0x0)) && (projects[i].status == ProjectStatus.Published)) {
+        projectIDs[numberOfProjects] = projects[i].id;
+        numberOfProjects = numberOfProjects.add(1);
+      }
+    }
+
+    // copy the project ID array into a smaller array
+    uint256[] memory allProjects = new uint[](numberOfProjects);
+    for (uint j = 0; j < numberOfProjects; j++) {
+      allProjects[j] = projectIDs[j];
+    }
+
+    return allProjects;
+  }
+
+
+
   // return all projects owned by the sender
   function getMyProjects() view public returns (uint256[] memory) {
     if (projectsCounter == 0) {

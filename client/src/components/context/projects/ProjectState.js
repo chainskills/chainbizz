@@ -6,8 +6,10 @@ import {
   ADD_PROJECT,
   ON_EDIT_PROJECT,
   ON_REMOVE_PROJECT,
+  ON_PUBLISH_PROJECT,
   UPDATE_PROJECT,
   REMOVE_PROJECT,
+  PUBLISH_PROJECT,
   CLEAR_CURRENT_SELECTION,
   GET_PROJECT,
   PROJECT_ERROR
@@ -20,7 +22,8 @@ const ProjectState = props => {
     error: null,
     projectId: null,
     showEdit: false,
-    showRemove: false
+    showRemove: false,
+    showPublish: false
   };
 
   const [state, dispatch] = useReducer(projectReducer, initialState);
@@ -96,6 +99,26 @@ const ProjectState = props => {
       });
   };
 
+  // Publish a project
+  const publishProject = (drizzle, drizzleState, projectId) => {
+    const { ChainBizz } = drizzle.contracts;
+    const account = drizzleState.accounts[0];
+
+    // publish the project
+    ChainBizz.methods
+      .publishProject(projectId)
+      .send({
+        from: account,
+        gas: 500000
+      })
+      .on('receipt', receipt => {
+        dispatch({ type: PUBLISH_PROJECT, payload: receipt });
+      })
+      .on('error', err => {
+        dispatch({ type: PROJECT_ERROR, payload: err });
+      });
+  };
+
   // Prepare to edit a project
   const onEditProject = projectId => {
     dispatch({ type: ON_EDIT_PROJECT, payload: projectId });
@@ -104,6 +127,11 @@ const ProjectState = props => {
   // Prepare to remove a project
   const onRemoveProject = projectId => {
     dispatch({ type: ON_REMOVE_PROJECT, payload: projectId });
+  };
+
+  // Prepare to publish a project
+  const onPublishProject = projectId => {
+    dispatch({ type: ON_PUBLISH_PROJECT, payload: projectId });
   };
 
   // Get a project
@@ -140,11 +168,14 @@ const ProjectState = props => {
         projectId: state.projectId,
         showEdit: state.showEdit,
         showRemove: state.showRemove,
+        showPublish: state.showPublish,
         addProject,
         updateProject,
         removeProject,
+        publishProject,
         onEditProject,
         onRemoveProject,
+        onPublishProject,
         getProject,
         clearCurrrentSelection
       }}
