@@ -7,7 +7,13 @@ import ProjectModal from '../Project/Modal/ProjectModal';
 
 const Project = ({ drizzle, drizzleState }) => {
   const projectContext = useContext(ProjectContext);
-  const { addProject } = projectContext;
+  const {
+    addProject,
+    updateProject,
+    getProject,
+    clearCurrrentSelection,
+    projectId
+  } = projectContext;
 
   const [modalProjectOpen, setModalProjectOpen] = useState(false);
   const [actionProject1, setActionProject1] = useState({
@@ -20,19 +26,25 @@ const Project = ({ drizzle, drizzleState }) => {
     visible: false,
     handle: null
   });
+  const [dataID, setDataID] = useState(null);
 
-  const handleNewProject = id => {
+  const handleEditProject = id => {
+    setDataID(id);
+    clearCurrrentSelection();
+    if (id !== null) {
+      getProject(drizzle, drizzleState, id);
+    } else {
+      // todo display error notification message
+      return;
+    }
+
     setModalProjectOpen(true);
     setActionProject1({
       title: 'Save',
       visible: true,
-      add: function(project) {
-        setModalProjectOpen(false);
-        addProject(drizzle, drizzleState, project);
-      },
       update: function(project) {
         setModalProjectOpen(false);
-        //updateProject(project);
+        updateProject(drizzle, drizzleState, id, project);
       }
     });
 
@@ -45,12 +57,40 @@ const Project = ({ drizzle, drizzleState }) => {
     });
   };
 
+  const handleNewProject = () => {
+    setModalProjectOpen(true);
+    setActionProject1({
+      title: 'Save',
+      visible: true,
+      add: function(project) {
+        setModalProjectOpen(false);
+        addProject(drizzle, drizzleState, project);
+      }
+    });
+
+    setActionProject2({
+      title: 'Cancel',
+      visible: true,
+      handle: function() {
+        setModalProjectOpen(false);
+      }
+    });
+  };
+
+  useEffect(() => {
+    if (projectId !== null) {
+      handleEditProject(projectId);
+    }
+
+    //eslint-disable-next-line
+  }, [projectId]);
+
   return (
     <div>
       <div className='right-align new-project'>
         <a
           className='waves-effect waves-light btn blue-grey'
-          onClick={() => handleNewProject(null)}
+          onClick={() => handleNewProject()}
         >
           <i className='material-icons left'>add</i>New
         </a>
@@ -58,7 +98,7 @@ const Project = ({ drizzle, drizzleState }) => {
 
       {modalProjectOpen && (
         <ProjectModal
-          dataID={1}
+          dataID={dataID}
           onClose={() => setModalProjectOpen(false)}
           action1={actionProject1}
           action2={actionProject2}

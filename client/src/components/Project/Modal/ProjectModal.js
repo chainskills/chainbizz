@@ -10,13 +10,14 @@ import M from 'materialize-css/dist/js/materialize.min.js';
 
 import './ProjectModal.css';
 
-const ProjectModal = ({ dataID, action1, action2, onClose }) => {
+const ProjectModal = ({ action1, action2, onClose }) => {
   const escPress = useKeyPress('Escape');
 
   const projectContext = useContext(ProjectContext);
   const { current } = projectContext;
 
   const [project, setProject] = useState({
+    id: null,
     title: '',
     description: '',
     price: 0
@@ -83,6 +84,12 @@ const ProjectModal = ({ dataID, action1, action2, onClose }) => {
       action1.update(project);
     }
   };
+
+  console.log('project');
+  console.log(project);
+  console.log('title: ' + title);
+  console.log('description: ' + description);
+  console.log('price: ' + price);
 
   return (
     <div className='container'>

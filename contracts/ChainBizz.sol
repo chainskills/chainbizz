@@ -43,10 +43,10 @@ contract ChainBizz {
   //
   // Events
   //
-  event NewProject(uint256 _id, address _owner, string _title, uint256 _price);
-  event UpdateProject(uint256 _id, address _owner, string _title, uint256 _price);
-  event RemoveProject(uint256 _id, address _owner, string _title);
-  event PublishedProject(uint256 _id, address _owner, string _title, uint256 _price);
+  event NewProject(uint256 id, address owner, string title, uint256 price);
+  event UpdateProject(uint256 id, address owner, string title, uint256 price);
+  event RemoveProject(uint256 id, address owner, string title);
+  event PublishedProject(uint256 id, address owner, string title, uint256 price);
 
   //
   // Implementation
@@ -157,12 +157,12 @@ contract ChainBizz {
 
   // Retrieve a project from its id
   function getProject(uint256 _id) public view returns (
-    address _owner,
-    address _provider,
-    string memory _title,
-    string memory _description,
-    uint256 _price,
-    ProjectStatus _status) {
+    address owner,
+    address provider,
+    string memory title,
+    string memory description,
+    uint256 price,
+    ProjectStatus status) {
 
     ProjectItem memory project = projects[_id];
 

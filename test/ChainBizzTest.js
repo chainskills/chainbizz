@@ -47,22 +47,22 @@ contract('ChainBizz', async accounts => {
       'event name should be NewProject'
     );
     assert.equal(
-      receipt.logs[0].args._id.toNumber(),
+      receipt.logs[0].args.id.toNumber(),
       idProject1,
       'project id must be 1'
     );
     assert.equal(
-      receipt.logs[0].args._owner,
+      receipt.logs[0].args.owner,
       accounts[1],
       'customer must be ' + accounts[1]
     );
     assert.equal(
-      receipt.logs[0].args._title,
+      receipt.logs[0].args.title,
       titleProject1,
       'project title must be ' + titleProject1
     );
     assert.equal(
-      receipt.logs[0].args._price,
+      receipt.logs[0].args.price,
       priceProject1,
       'price must be ' + priceProject1
     );
@@ -72,32 +72,32 @@ contract('ChainBizz', async accounts => {
 
     // check that we have properly stored the project
     assert.equal(
-      project['_owner'],
+      project['owner'],
       accounts[1],
       'customer must be ' + accounts[1]
     );
     assert.equal(
-      web3.utils.toBN(project['_provider']),
+      web3.utils.toBN(project['provider']),
       0,
       'provider must be null'
     );
     assert.equal(
-      project['_title'],
+      project['title'],
       titleProject1,
       'project title must be ' + titleProject1
     );
     assert.equal(
-      project['_description'],
+      project['description'],
       descriptionProject1,
       'description must be ' + descriptionProject1
     );
     assert.equal(
-      project['_price'],
+      project['price'],
       priceProject1,
       'price must be ' + priceProject1
     );
     assert.equal(
-      project['_status'],
+      project['status'],
       ProjectStatus.Draft,
       'status must be ' + ProjectStatus.Draft
     );
@@ -123,22 +123,22 @@ contract('ChainBizz', async accounts => {
       'event name should be UpdateProject'
     );
     assert.equal(
-      receipt.logs[0].args._id.toNumber(),
+      receipt.logs[0].args.id.toNumber(),
       idProject1,
       'project id must be ' + idProject1
     );
     assert.equal(
-      receipt.logs[0].args._owner,
+      receipt.logs[0].args.owner,
       accounts[1],
       'customer must be ' + accounts[1]
     );
     assert.equal(
-      receipt.logs[0].args._title,
+      receipt.logs[0].args.title,
       newTitleProject1,
       'project title must be ' + newTitleProject1
     );
     assert.equal(
-      receipt.logs[0].args._price,
+      receipt.logs[0].args.price,
       newPriceProject1,
       'price must be ' + newPriceProject1
     );
@@ -148,32 +148,32 @@ contract('ChainBizz', async accounts => {
 
     // check that we have properly stored the project
     assert.equal(
-      project['_owner'],
+      project['owner'],
       accounts[1],
       'customer must be ' + accounts[1]
     );
     assert.equal(
-      web3.utils.toBN(project['_provider']),
+      web3.utils.toBN(project['provider']),
       0,
       'provider must be null'
     );
     assert.equal(
-      project['_title'],
+      project['title'],
       newTitleProject1,
       'project title must be ' + newTitleProject1
     );
     assert.equal(
-      project['_description'],
+      project['description'],
       newDescriptionProject1,
       'description must be ' + newDescriptionProject1
     );
     assert.equal(
-      project['_price'],
+      project['price'],
       newPriceProject1,
       'price must be ' + newPriceProject1
     );
     assert.equal(
-      project['_status'],
+      project['status'],
       ProjectStatus.Draft,
       'status must be ' + ProjectStatus.Draft
     );
@@ -193,22 +193,22 @@ contract('ChainBizz', async accounts => {
       'event name should be PublishedProject'
     );
     assert.equal(
-      receipt.logs[0].args._id.toNumber(),
+      receipt.logs[0].args.id.toNumber(),
       idProject1,
       'project id must be ' + idProject1
     );
     assert.equal(
-      receipt.logs[0].args._owner,
+      receipt.logs[0].args.owner,
       accounts[1],
       'customer must be ' + accounts[1]
     );
     assert.equal(
-      receipt.logs[0].args._title,
+      receipt.logs[0].args.title,
       newTitleProject1,
       'project title must be ' + newTitleProject1
     );
     assert.equal(
-      receipt.logs[0].args._price,
+      receipt.logs[0].args.price,
       newPriceProject1,
       'price must be ' + newPriceProject1
     );
@@ -218,32 +218,32 @@ contract('ChainBizz', async accounts => {
 
     // check that we have properly stored the project
     assert.equal(
-      project['_owner'],
+      project['owner'],
       accounts[1],
       'customer must be ' + accounts[1]
     );
     assert.equal(
-      web3.utils.toBN(project['_provider']),
+      web3.utils.toBN(project['provider']),
       0,
       'provider must be null'
     );
     assert.equal(
-      project['_title'],
+      project['title'],
       newTitleProject1,
       'project title must be ' + newTitleProject1
     );
     assert.equal(
-      project['_description'],
+      project['description'],
       newDescriptionProject1,
       'description must be ' + newDescriptionProject1
     );
     assert.equal(
-      project['_price'],
+      project['price'],
       newPriceProject1,
       'price must be ' + newPriceProject1
     );
     assert.equal(
-      project['_status'],
+      project['status'],
       ProjectStatus.Published,
       'status must be ' + ProjectStatus.Published
     );
@@ -268,22 +268,22 @@ contract('ChainBizz', async accounts => {
       'event name should be NewProject'
     );
     assert.equal(
-      receipt.logs[0].args._id.toNumber(),
+      receipt.logs[0].args.id.toNumber(),
       idProject2,
       'project id must be ' + idProject2
     );
     assert.equal(
-      receipt.logs[0].args._owner,
+      receipt.logs[0].args.owner,
       accounts[1],
       'customer must be ' + accounts[1]
     );
     assert.equal(
-      receipt.logs[0].args._title,
+      receipt.logs[0].args.title,
       titleProject2,
       'project title must be ' + titleProject2
     );
     assert.equal(
-      receipt.logs[0].args._price,
+      receipt.logs[0].args.price,
       priceProject2,
       'price must be ' + priceProject2
     );
@@ -293,32 +293,32 @@ contract('ChainBizz', async accounts => {
 
     // check that we have properly stored the project
     assert.equal(
-      project['_owner'],
+      project['owner'],
       accounts[1],
       'customer must be ' + accounts[1]
     );
     assert.equal(
-      web3.utils.toBN(project['_provider']),
+      web3.utils.toBN(project['provider']),
       0,
       'provider must be null'
     );
     assert.equal(
-      project['_title'],
+      project['title'],
       titleProject2,
       'project title must be ' + titleProject2
     );
     assert.equal(
-      project['_description'],
+      project['description'],
       descriptionProject2,
       'description must be ' + descriptionProject2
     );
     assert.equal(
-      project['_price'],
+      project['price'],
       priceProject2,
       'price must be ' + priceProject2
     );
     assert.equal(
-      project['_status'],
+      project['status'],
       ProjectStatus.Draft,
       'status must be ' + ProjectStatus.Draft
     );
@@ -338,17 +338,17 @@ contract('ChainBizz', async accounts => {
       'event name should be RemoveProject'
     );
     assert.equal(
-      receipt.logs[0].args._id.toNumber(),
+      receipt.logs[0].args.id.toNumber(),
       idProject2,
       'project id must be ' + idProject2
     );
     assert.equal(
-      receipt.logs[0].args._owner,
+      receipt.logs[0].args.owner,
       accounts[1],
       'customer must be ' + accounts[1]
     );
     assert.equal(
-      receipt.logs[0].args._title,
+      receipt.logs[0].args.title,
       titleProject2,
       'project title must be ' + titleProject2
     );
@@ -358,7 +358,7 @@ contract('ChainBizz', async accounts => {
 
     // check that the project has been properly removed
     assert.equal(
-      web3.utils.toBN(project['_owner']),
+      web3.utils.toBN(project['owner']),
       0,
       'customer must be null'
     );
