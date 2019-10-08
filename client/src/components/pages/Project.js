@@ -3,25 +3,30 @@ import React, { useState, useEffect, useContext } from 'react';
 import 'materialize-css/dist/css/materialize.min.css';
 
 import ProjectContext from '../context/projects/projectContext';
-import ProjectModal from '../Project/Modal/ProjectModal';
+import ProjectModal from '../dialog/modal/project/ProjectModal';
+import ConfirmModal from '../dialog/modal/confirm/ConfirmModal';
 
 const Project = ({ drizzle, drizzleState }) => {
   const projectContext = useContext(ProjectContext);
   const {
     addProject,
     updateProject,
+    removeProject,
     getProject,
+    showEdit,
+    showRemove,
     clearCurrrentSelection,
     projectId
   } = projectContext;
 
+  const [modalConfirmationOpen, setmodalConfirmationOpen] = useState(false);
   const [modalProjectOpen, setModalProjectOpen] = useState(false);
-  const [actionProject1, setActionProject1] = useState({
+  const [action1, setAction1] = useState({
     title: '',
     visible: false,
     handle: null
   });
-  const [actionProject2, setActionProject2] = useState({
+  const [action2, setAction2] = useState({
     title: '',
     visible: false,
     handle: null
@@ -39,7 +44,7 @@ const Project = ({ drizzle, drizzleState }) => {
     }
 
     setModalProjectOpen(true);
-    setActionProject1({
+    setAction1({
       title: 'Save',
       visible: true,
       update: function(project) {
@@ -48,7 +53,7 @@ const Project = ({ drizzle, drizzleState }) => {
       }
     });
 
-    setActionProject2({
+    setAction2({
       title: 'Cancel',
       visible: true,
       handle: function() {
@@ -58,8 +63,10 @@ const Project = ({ drizzle, drizzleState }) => {
   };
 
   const handleNewProject = () => {
+    setDataID(null);
+    clearCurrrentSelection();
     setModalProjectOpen(true);
-    setActionProject1({
+    setAction1({
       title: 'Save',
       visible: true,
       add: function(project) {
@@ -68,7 +75,7 @@ const Project = ({ drizzle, drizzleState }) => {
       }
     });
 
-    setActionProject2({
+    setAction2({
       title: 'Cancel',
       visible: true,
       handle: function() {
@@ -77,13 +84,36 @@ const Project = ({ drizzle, drizzleState }) => {
     });
   };
 
+  const handleRemove = id => {
+    setDataID(id);
+    setmodalConfirmationOpen(true);
+    setAction1({
+      title: 'Yes',
+      visible: true,
+      handle: function(id) {
+        setmodalConfirmationOpen(false);
+        removeProject(drizzle, drizzleState, id);
+      }
+    });
+
+    setAction2({
+      title: 'No',
+      visible: true,
+      handle: function() {
+        setmodalConfirmationOpen(false);
+      }
+    });
+  };
+
   useEffect(() => {
-    if (projectId !== null) {
+    if (showEdit === true && projectId !== null) {
       handleEditProject(projectId);
+    } else if (showRemove === true && projectId !== null) {
+      handleRemove(projectId);
     }
 
     //eslint-disable-next-line
-  }, [projectId]);
+  }, [showEdit, showRemove, projectId]);
 
   return (
     <div>
@@ -98,12 +128,23 @@ const Project = ({ drizzle, drizzleState }) => {
         </div>
       </div>
 
+      {modalConfirmationOpen && (
+        <ConfirmModal
+          title={'Remove Project'}
+          content={'Are you sure to remove this project?'}
+          dataID={dataID}
+          onClose={() => setmodalConfirmationOpen(false)}
+          action1={action1}
+          action2={action2}
+        />
+      )}
+
       {modalProjectOpen && (
         <ProjectModal
           dataID={dataID}
           onClose={() => setModalProjectOpen(false)}
-          action1={actionProject1}
-          action2={actionProject2}
+          action1={action1}
+          action2={action2}
         />
       )}
     </div>

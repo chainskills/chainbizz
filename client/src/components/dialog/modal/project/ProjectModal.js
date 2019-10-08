@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 
-import ProjectContext from '../../context/projects/projectContext';
+import ProjectContext from '../../../context/projects/projectContext';
 
-import { useKeyPress, useLockBodyScroll } from '../../../hooks/Hooks';
+import { useKeyPress, useLockBodyScroll } from '../../../../hooks/Hooks';
 
 import 'materialize-css/dist/css/materialize.min.css';
 import M from 'materialize-css/dist/js/materialize.min.js';
 
-import './ProjectModal.css';
+import '../Modal.css';
 
 const ProjectModal = ({ action1, action2, onClose }) => {
   const escPress = useKeyPress('Escape');
@@ -85,12 +85,6 @@ const ProjectModal = ({ action1, action2, onClose }) => {
     }
   };
 
-  console.log('project');
-  console.log(project);
-  console.log('title: ' + title);
-  console.log('description: ' + description);
-  console.log('price: ' + price);
-
   return (
     <div className='container'>
       {' '}
@@ -138,9 +132,10 @@ const ProjectModal = ({ action1, action2, onClose }) => {
                     value={price}
                     min={0}
                     onChange={onChange}
+                    step={'.01'}
                   />
                   <label htmlFor='price' className='active'>
-                    Price (CSK tokens)
+                    Price in ETH
                   </label>
                 </div>
               </div>

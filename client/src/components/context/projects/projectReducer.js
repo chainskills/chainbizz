@@ -1,6 +1,8 @@
 import {
   ADD_PROJECT,
-  EDIT_PROJECT,
+  ON_EDIT_PROJECT,
+  ON_REMOVE_PROJECT,
+  REMOVE_PROJECT,
   UPDATE_PROJECT,
   CLEAR_CURRENT_SELECTION,
   GET_PROJECT,
@@ -11,15 +13,23 @@ export default (state, action) => {
   switch (action.type) {
     case ADD_PROJECT:
     case UPDATE_PROJECT:
+    case REMOVE_PROJECT:
       return {
         ...state,
         project: action.payload,
         loading: false
       };
-    case EDIT_PROJECT:
+    case ON_EDIT_PROJECT:
       return {
         ...state,
-        projectId: action.payload
+        projectId: action.payload,
+        showEdit: true
+      };
+    case ON_REMOVE_PROJECT:
+      return {
+        ...state,
+        projectId: action.payload,
+        showRemove: true
       };
     case GET_PROJECT:
       return {
@@ -37,7 +47,9 @@ export default (state, action) => {
         ...state,
         current: null,
         projectId: null,
-        loading: false
+        loading: false,
+        showEdit: false,
+        showRemove: false
       };
     default:
       return state;

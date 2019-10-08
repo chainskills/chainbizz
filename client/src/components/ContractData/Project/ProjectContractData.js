@@ -4,7 +4,7 @@ import ProjectContext from '../../context/projects/projectContext';
 
 const ProjectContractData = ({ projectId, drizzle, drizzleState }) => {
   const projectContext = useContext(ProjectContext);
-  const { editProject } = projectContext;
+  const { onEditProject, onRemoveProject } = projectContext;
 
   const [dataKey, setDataKey] = useState(null);
 
@@ -54,14 +54,18 @@ const ProjectContractData = ({ projectId, drizzle, drizzleState }) => {
         </div>
         <div className='card-action'>
           {projectDetails.owner === account && (
-            <a href='#!'>
+            <a
+              onClick={() => {
+                onRemoveProject(projectId);
+              }}
+            >
               <i className='material-icons'>delete</i>
             </a>
           )}
           {projectDetails.owner === account && (
             <a
               onClick={() => {
-                editProject(projectId);
+                onEditProject(projectId);
               }}
             >
               <i className='material-icons'>edit</i>
