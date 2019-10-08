@@ -58,6 +58,7 @@ const ProjectContractData = ({ projectId, drizzle, drizzleState }) => {
               onClick={() => {
                 onRemoveProject(projectId);
               }}
+              title={'Remove'}
             >
               <i className='material-icons'>delete</i>
             </a>
@@ -67,16 +68,17 @@ const ProjectContractData = ({ projectId, drizzle, drizzleState }) => {
               onClick={() => {
                 onEditProject(projectId);
               }}
+              title={'Edit'}
             >
               <i className='material-icons'>edit</i>
             </a>
           )}
           {projectDetails.owner === account && (
-            <a href='#!'>
+            <a href='#!' title={'Publish'}>
               <i className='material-icons'>publish</i>
             </a>
           )}
-          <a href='#!'>
+          <a href='#!' title={'More'}>
             <i className='material-icons'>more_horiz</i>
           </a>
         </div>
