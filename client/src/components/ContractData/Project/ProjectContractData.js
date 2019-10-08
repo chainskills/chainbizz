@@ -3,6 +3,16 @@ import React, { useEffect, useState, useContext } from 'react';
 import ProjectContext from '../../context/projects/projectContext';
 
 const ProjectContractData = ({ projectId, drizzle, drizzleState }) => {
+  // Project status
+  const projectStatus = {
+    DRAFT: 0,
+    PUBLISHED: 1,
+    ONGOING: 2,
+    COMPLETED: 3,
+    CANCELED: 4,
+    UNKNOWN: 5
+  };
+
   const projectContext = useContext(ProjectContext);
   const { onEditProject, onRemoveProject, onPublishProject } = projectContext;
 
@@ -36,6 +46,8 @@ const ProjectContractData = ({ projectId, drizzle, drizzleState }) => {
     return <span>Initializing...</span>;
   }
 
+  const status = Number(projectDetails.status);
+
   return (
     <div className='col s12 m4'>
       <div className='card medium blue-grey'>
@@ -53,36 +65,51 @@ const ProjectContractData = ({ projectId, drizzle, drizzleState }) => {
           <p>{projectDetails.description}</p>
         </div>
         <div className='card-action'>
-          {projectDetails.owner === account && (
-            <a
-              onClick={() => {
-                onRemoveProject(projectId);
-              }}
-              title={'Remove'}
-            >
-              <i className='material-icons'>delete</i>
-            </a>
-          )}
-          {projectDetails.owner === account && (
-            <a
-              onClick={() => {
-                onEditProject(projectId);
-              }}
-              title={'Edit'}
-            >
-              <i className='material-icons'>edit</i>
-            </a>
-          )}
-          {projectDetails.owner === account && (
-            <a
-              onClick={() => {
-                onPublishProject(projectId);
-              }}
-              title={'Publish'}
-            >
-              <i className='material-icons'>publish</i>
-            </a>
-          )}
+          {projectDetails.owner === account &&
+            status !== projectStatus.PUBLISHED && (
+              <a
+                onClick={() => {
+                  onRemoveProject(projectId);
+                }}
+                title={'Remove'}
+              >
+                <i className='material-icons'>delete</i>
+              </a>
+            )}
+          {projectDetails.owner === account &&
+            status !== projectStatus.PUBLISHED && (
+              <a
+                onClick={() => {
+                  onEditProject(projectId);
+                }}
+                title={'Edit'}
+              >
+                <i className='material-icons'>edit</i>
+              </a>
+            )}
+          {projectDetails.owner === account &&
+            status !== projectStatus.PUBLISHED && (
+              <a
+                onClick={() => {
+                  onPublishProject(projectId);
+                }}
+                title={'Publish'}
+              >
+                <i className='material-icons'>publish</i>
+              </a>
+            )}
+
+          {projectDetails.owner === account &&
+            status === projectStatus.PUBLISHED && (
+              <a
+                onClick={() => {
+                  onPublishProject(projectId);
+                }}
+                title={'Unpublish'}
+              >
+                <i className='material-icons icon-flipped'>publish</i>
+              </a>
+            )}
           <a href='#!' title={'More'}>
             <i className='material-icons'>more_horiz</i>
           </a>
