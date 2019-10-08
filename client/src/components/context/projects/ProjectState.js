@@ -7,9 +7,11 @@ import {
   ON_EDIT_PROJECT,
   ON_REMOVE_PROJECT,
   ON_PUBLISH_PROJECT,
+  ON_UNPUBLISH_PROJECT,
   UPDATE_PROJECT,
   REMOVE_PROJECT,
   PUBLISH_PROJECT,
+  UNPUBLISH_PROJECT,
   CLEAR_CURRENT_SELECTION,
   GET_PROJECT,
   PROJECT_ERROR
@@ -23,7 +25,8 @@ const ProjectState = props => {
     projectId: null,
     showEdit: false,
     showRemove: false,
-    showPublish: false
+    showPublish: false,
+    showUnpublish: false
   };
 
   const [state, dispatch] = useReducer(projectReducer, initialState);
@@ -119,6 +122,26 @@ const ProjectState = props => {
       });
   };
 
+  // Unpublish a project
+  const unpublishProject = (drizzle, drizzleState, projectId) => {
+    const { ChainBizz } = drizzle.contracts;
+    const account = drizzleState.accounts[0];
+
+    // unpublish the project
+    ChainBizz.methods
+      .unpublishProject(projectId)
+      .send({
+        from: account,
+        gas: 500000
+      })
+      .on('receipt', receipt => {
+        dispatch({ type: UNPUBLISH_PROJECT, payload: receipt });
+      })
+      .on('error', err => {
+        dispatch({ type: PROJECT_ERROR, payload: err });
+      });
+  };
+
   // Prepare to edit a project
   const onEditProject = projectId => {
     dispatch({ type: ON_EDIT_PROJECT, payload: projectId });
@@ -132,6 +155,11 @@ const ProjectState = props => {
   // Prepare to publish a project
   const onPublishProject = projectId => {
     dispatch({ type: ON_PUBLISH_PROJECT, payload: projectId });
+  };
+
+  // Prepare to unpublish a project
+  const onUnpublishProject = projectId => {
+    dispatch({ type: ON_UNPUBLISH_PROJECT, payload: projectId });
   };
 
   // Get a project
@@ -169,13 +197,16 @@ const ProjectState = props => {
         showEdit: state.showEdit,
         showRemove: state.showRemove,
         showPublish: state.showPublish,
+        showUnpublish: state.showUnpublish,
         addProject,
         updateProject,
         removeProject,
         publishProject,
+        unpublishProject,
         onEditProject,
         onRemoveProject,
         onPublishProject,
+        onUnpublishProject,
         getProject,
         clearCurrrentSelection
       }}

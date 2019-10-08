@@ -47,6 +47,7 @@ contract ChainBizz {
   event UpdateProject(uint256 id, address owner, string title, uint256 price);
   event RemoveProject(uint256 id, address owner, string title);
   event PublishedProject(uint256 id, address owner, string title, uint256 price);
+  event UnpublishedProject(uint256 id, address owner, string title, uint256 price);
 
   //
   // Implementation
@@ -154,6 +155,30 @@ contract ChainBizz {
     emit PublishedProject(_id, msg.sender, project.title, project.price);
   }
 
+  // Unpublish the project
+  // A project can be unpublished ONLY if it's already published and not already part of a contract 
+  function unpublishProject(uint256 _id) public {
+    
+    // retrieve the project
+    ProjectItem storage project = projects[_id];
+
+    // ensure that this project exists
+    if (project.owner == address(0x0)) {
+      return;
+    }
+ 
+    // do we own this project?
+    require(project.owner == msg.sender, "You are not the owner of this project");
+
+    // ready to be unpublished?
+    require(project.status == ProjectStatus.Published, "Cannot be unpublished");
+
+    // unpublish the project
+    project.status = ProjectStatus.Draft;
+
+    emit UnpublishedProject(_id, msg.sender, project.title, project.price);
+  }
+
 
   // Retrieve a project from its id
   function getProject(uint256 _id) public view returns (
@@ -236,7 +261,6 @@ contract ChainBizz {
 
     return allProjects;
   }
-
 
 
   // return all projects owned by the sender

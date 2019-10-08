@@ -14,7 +14,7 @@ const ProjectContractData = ({ projectId, drizzle, drizzleState }) => {
   };
 
   const projectContext = useContext(ProjectContext);
-  const { onEditProject, onRemoveProject, onPublishProject } = projectContext;
+  const { onEditProject, onRemoveProject, onPublishProject, onUnpublishProject } = projectContext;
 
   const [dataKey, setDataKey] = useState(null);
 
@@ -103,7 +103,7 @@ const ProjectContractData = ({ projectId, drizzle, drizzleState }) => {
             status === projectStatus.PUBLISHED && (
               <a
                 onClick={() => {
-                  onPublishProject(projectId);
+                  onUnpublishProject(projectId);
                 }}
                 title={'Unpublish'}
               >

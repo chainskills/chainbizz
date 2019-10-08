@@ -13,10 +13,12 @@ const Project = ({ drizzle, drizzleState }) => {
     updateProject,
     removeProject,
     publishProject,
+    unpublishProject,
     getProject,
     showEdit,
     showRemove,
     showPublish,
+    showUnpublish,
     clearCurrrentSelection,
     projectId
   } = projectContext;
@@ -132,6 +134,31 @@ const Project = ({ drizzle, drizzleState }) => {
     });
   };
 
+  const handleUnpublish = id => {
+    setDataID(id);
+    setmodalConfirmationOpen(true);
+
+    setModalTitle('Unpublish Project');
+    setModalDescription('Are you sure to unpublish this project?');
+
+    setAction1({
+      title: 'Yes',
+      visible: true,
+      handle: function(id) {
+        setmodalConfirmationOpen(false);
+        unpublishProject(drizzle, drizzleState, id);
+      }
+    });
+
+    setAction2({
+      title: 'No',
+      visible: true,
+      handle: function() {
+        setmodalConfirmationOpen(false);
+      }
+    });
+  };
+
   useEffect(() => {
     if (showEdit === true && projectId !== null) {
       handleEditProject(projectId);
@@ -139,10 +166,12 @@ const Project = ({ drizzle, drizzleState }) => {
       handleRemove(projectId);
     } else if (showPublish === true && projectId !== null) {
       handlePublish(projectId);
+    } else if (showUnpublish === true && projectId !== null) {
+      handleUnpublish(projectId);
     }
 
     //eslint-disable-next-line
-  }, [showEdit, showRemove, showPublish, projectId]);
+  }, [showEdit, showRemove, showPublish, showUnpublish, projectId]);
 
   return (
     <div>
