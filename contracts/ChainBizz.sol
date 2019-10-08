@@ -192,11 +192,20 @@ contract ChainBizz {
     // iterate over projects
     uint256 numberOfProjects = 0;
     for (uint256 i = 1; i <= projectsCounter; i++) {
-      projectIDs[numberOfProjects] = projects[i].id;
-      numberOfProjects = numberOfProjects.add(1);
+      // skip deleted projects
+      if (projects[i].owner != address(0x0)) {
+        projectIDs[numberOfProjects] = projects[i].id;
+        numberOfProjects = numberOfProjects.add(1);
+      }
     }
 
-    return projectIDs;
+    // copy the project ID array into a smaller array
+    uint256[] memory allProjects = new uint[](numberOfProjects);
+    for (uint j = 0; j < numberOfProjects; j++) {
+      allProjects[j] = projectIDs[j];
+    }
+
+    return allProjects;
   }
 
 
