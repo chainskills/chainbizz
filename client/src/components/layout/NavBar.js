@@ -4,8 +4,6 @@ import { withRouter } from 'react-router-dom';
 
 import Blockies from 'react-blockies';
 
-import { getNetworkName } from '../../utils/ui';
-
 const NavBar = ({ drizzle, drizzleState }) => {
   let account = '';
   if (drizzleState !== null) {
@@ -93,7 +91,7 @@ const NavBar = ({ drizzle, drizzleState }) => {
           </a>
         </li>
         <li>
-          <a href='/'>All projects</a>
+          <a href='/'>Available projects</a>
         </li>
         <li>
           <div className='divider'></div>
