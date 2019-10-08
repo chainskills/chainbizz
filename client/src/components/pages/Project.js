@@ -87,13 +87,15 @@ const Project = ({ drizzle, drizzleState }) => {
 
   return (
     <div>
-      <div className='right-align new-project'>
-        <a
-          className='waves-effect waves-light btn blue-grey'
-          onClick={() => handleNewProject()}
-        >
-          <i className='material-icons left'>add</i>New
-        </a>
+      <div className='row container'>
+        <div className='col s12 m4'>
+          <a
+            className='waves-effect waves-light btn blue-grey'
+            onClick={() => handleNewProject()}
+          >
+            <i className='material-icons left'>add</i>New
+          </a>
+        </div>
       </div>
 
       {modalProjectOpen && (
