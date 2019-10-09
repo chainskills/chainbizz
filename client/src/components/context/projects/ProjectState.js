@@ -14,6 +14,12 @@ import {
   UNPUBLISH_PROJECT,
   CLEAR_CURRENT_SELECTION,
   GET_PROJECT,
+  OFFER_SERVICES,
+  ACCEPT_SERVICES,
+  REJECT_SERVICES,
+  ON_ACCEPT_SERVICES,
+  ON_OFFER_SERVICES,
+  ON_REJECT_SERVICES,
   PROJECT_ERROR
 } from '../types';
 
@@ -26,7 +32,10 @@ const ProjectState = props => {
     showEdit: false,
     showRemove: false,
     showPublish: false,
-    showUnpublish: false
+    showUnpublish: false,
+    showOfferServices: false,
+    showAcceptServices: false,
+    showRejectServices: false
   };
 
   const [state, dispatch] = useReducer(projectReducer, initialState);
@@ -142,6 +151,66 @@ const ProjectState = props => {
       });
   };
 
+  // Offer sercices to the project
+  const offerServices = (drizzle, drizzleState, projectId) => {
+    const { ChainBizz } = drizzle.contracts;
+    const account = drizzleState.accounts[0];
+
+    // offer our services
+    ChainBizz.methods
+      .offerServices(projectId)
+      .send({
+        from: account,
+        gas: 500000
+      })
+      .on('receipt', receipt => {
+        dispatch({ type: OFFER_SERVICES, payload: receipt });
+      })
+      .on('error', err => {
+        dispatch({ type: PROJECT_ERROR, payload: err });
+      });
+  };
+
+  // Accept sercices to our project
+  const acceptServices = (drizzle, drizzleState, projectId) => {
+    const { ChainBizz } = drizzle.contracts;
+    const account = drizzleState.accounts[0];
+
+    // accept services
+    ChainBizz.methods
+      .acceptServices(projectId)
+      .send({
+        from: account,
+        gas: 500000
+      })
+      .on('receipt', receipt => {
+        dispatch({ type: ACCEPT_SERVICES, payload: receipt });
+      })
+      .on('error', err => {
+        dispatch({ type: PROJECT_ERROR, payload: err });
+      });
+  };
+
+  // Reject sercices to our project
+  const rejectServices = (drizzle, drizzleState, projectId) => {
+    const { ChainBizz } = drizzle.contracts;
+    const account = drizzleState.accounts[0];
+
+    // reject services
+    ChainBizz.methods
+      .rejectServices(projectId)
+      .send({
+        from: account,
+        gas: 500000
+      })
+      .on('receipt', receipt => {
+        dispatch({ type: REJECT_SERVICES, payload: receipt });
+      })
+      .on('error', err => {
+        dispatch({ type: PROJECT_ERROR, payload: err });
+      });
+  };
+
   // Prepare to edit a project
   const onEditProject = projectId => {
     dispatch({ type: ON_EDIT_PROJECT, payload: projectId });
@@ -160,6 +229,21 @@ const ProjectState = props => {
   // Prepare to unpublish a project
   const onUnpublishProject = projectId => {
     dispatch({ type: ON_UNPUBLISH_PROJECT, payload: projectId });
+  };
+
+  // Prepare to offer services
+  const onOfferServices = projectId => {
+    dispatch({ type: ON_OFFER_SERVICES, payload: projectId });
+  };
+
+  // Prepare to accepts services
+  const onAcceptServices = projectId => {
+    dispatch({ type: ON_ACCEPT_SERVICES, payload: projectId });
+  };
+
+  // Prepare to reject services
+  const onRejectServices = projectId => {
+    dispatch({ type: ON_REJECT_SERVICES, payload: projectId });
   };
 
   // Get a project
@@ -198,6 +282,9 @@ const ProjectState = props => {
         showRemove: state.showRemove,
         showPublish: state.showPublish,
         showUnpublish: state.showUnpublish,
+        showOfferServices: state.showOfferServices,
+        showAcceptServices: state.showAcceptServices,
+        showRejectServices: state.showRejectServices,
         addProject,
         updateProject,
         removeProject,
@@ -207,6 +294,12 @@ const ProjectState = props => {
         onRemoveProject,
         onPublishProject,
         onUnpublishProject,
+        onOfferServices,
+        onAcceptServices,
+        onRejectServices,
+        acceptServices,
+        offerServices,
+        rejectServices,
         getProject,
         clearCurrrentSelection
       }}

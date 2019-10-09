@@ -5,7 +5,6 @@ import 'materialize-css/dist/css/materialize.min.css';
 import ProjectContractData from '../ContractData/Project/ProjectContractData';
 
 const AllProjects = ({ drizzle, drizzleState }) => {
-
   const [dataKeys, setDataKeys] = useState(null);
 
   useEffect(() => {
@@ -33,7 +32,6 @@ const AllProjects = ({ drizzle, drizzleState }) => {
         drizzleState.contracts.ChainBizz.getAllProjects[dataKeys].value;
     }
 
-    // no certifications
     if (projectIds !== null) {
       for (let i = 0; i < projectIds.length; i++) {
         const projectId = projectIds[i];

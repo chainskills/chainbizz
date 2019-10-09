@@ -6,15 +6,21 @@ const ProjectContractData = ({ projectId, drizzle, drizzleState }) => {
   // Project status
   const projectStatus = {
     DRAFT: 0,
-    PUBLISHED: 1,
-    ONGOING: 2,
-    COMPLETED: 3,
-    CANCELED: 4,
-    UNKNOWN: 5
+    AVAILABLE: 1,
+    INREVIEW: 2,
+    ONGOING: 3,
+    COMPLETED: 4,
+    CANCELED: 5,
+    UNKNOWN: 6
   };
 
   const projectContext = useContext(ProjectContext);
-  const { onEditProject, onRemoveProject, onPublishProject, onUnpublishProject } = projectContext;
+  const {
+    onEditProject,
+    onRemoveProject,
+    onPublishProject,
+    onUnpublishProject
+  } = projectContext;
 
   const [dataKey, setDataKey] = useState(null);
 
@@ -66,7 +72,7 @@ const ProjectContractData = ({ projectId, drizzle, drizzleState }) => {
         </div>
         <div className='card-action'>
           {projectDetails.owner === account &&
-            status !== projectStatus.PUBLISHED && (
+            status !== projectStatus.AVAILABLE && (
               <a
                 onClick={() => {
                   onRemoveProject(projectId);
@@ -77,7 +83,7 @@ const ProjectContractData = ({ projectId, drizzle, drizzleState }) => {
               </a>
             )}
           {projectDetails.owner === account &&
-            status !== projectStatus.PUBLISHED && (
+            status !== projectStatus.AVAILABLE && (
               <a
                 onClick={() => {
                   onEditProject(projectId);
@@ -88,7 +94,7 @@ const ProjectContractData = ({ projectId, drizzle, drizzleState }) => {
               </a>
             )}
           {projectDetails.owner === account &&
-            status !== projectStatus.PUBLISHED && (
+            status !== projectStatus.AVAILABLE && (
               <a
                 onClick={() => {
                   onPublishProject(projectId);
@@ -100,19 +106,28 @@ const ProjectContractData = ({ projectId, drizzle, drizzleState }) => {
             )}
 
           {projectDetails.owner === account &&
-            status === projectStatus.PUBLISHED && (
+            status === projectStatus.AVAILABLE && (
               <a
                 onClick={() => {
                   onUnpublishProject(projectId);
                 }}
                 title={'Unpublish'}
               >
-                <i className='material-icons icon-flipped'>publish</i>
+                <i className='material-icons'>get_app</i>
               </a>
             )}
-          <a href='#!' title={'More'}>
-            <i className='material-icons'>more_horiz</i>
-          </a>
+
+          {projectDetails.owner !== account &&
+            status === projectStatus.AVAILABLE && (
+              <a
+                onClick={() => {
+                  onUnpublishProject(projectId);
+                }}
+                title={'Unpublish'}
+              >
+                <i className='material-icons'>get_app</i>
+              </a>
+            )}
         </div>
       </div>
     </div>

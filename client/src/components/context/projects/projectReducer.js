@@ -10,6 +10,12 @@ import {
   UNPUBLISH_PROJECT,
   CLEAR_CURRENT_SELECTION,
   GET_PROJECT,
+  OFFER_SERVICES,
+  ACCEPT_SERVICES,
+  REJECT_SERVICES,
+  ON_ACCEPT_SERVICES,
+  ON_OFFER_SERVICES,
+  ON_REJECT_SERVICES,
   PROJECT_ERROR
 } from '../types';
 
@@ -20,6 +26,9 @@ export default (state, action) => {
     case REMOVE_PROJECT:
     case PUBLISH_PROJECT:
     case UNPUBLISH_PROJECT:
+    case OFFER_SERVICES:
+    case ACCEPT_SERVICES:
+    case REJECT_SERVICES:
       return {
         ...state,
         project: action.payload,
@@ -49,6 +58,24 @@ export default (state, action) => {
         projectId: action.payload,
         showUnpublish: true
       };
+    case ON_OFFER_SERVICES:
+      return {
+        ...state,
+        projectId: action.payload,
+        showOfferServices: true
+      };
+    case ON_ACCEPT_SERVICES:
+      return {
+        ...state,
+        projectId: action.payload,
+        showAcceptServices: true
+      };
+    case ON_REJECT_SERVICES:
+      return {
+        ...state,
+        projectId: action.payload,
+        showRejectServices: true
+      };
     case GET_PROJECT:
       return {
         ...state,
@@ -69,7 +96,10 @@ export default (state, action) => {
         showEdit: false,
         showRemove: false,
         showPublish: false,
-        showUnpublish: false
+        showUnpublish: false,
+        showOfferServices: false,
+        showAcceptServices: false,
+        showRejectServices: false
       };
     default:
       return state;

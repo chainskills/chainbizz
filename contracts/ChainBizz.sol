@@ -12,7 +12,8 @@ contract ChainBizz {
   // Defines the status of the project
   enum ProjectStatus {
     Draft,
-    Published, 
+    Available, 
+    InReview,
     OnGoing, 
     Completed,
     Canceled,
@@ -48,11 +49,19 @@ contract ChainBizz {
   event RemoveProject(uint256 id, address owner, string title);
   event PublishedProject(uint256 id, address owner, string title, uint256 price);
   event UnpublishedProject(uint256 id, address owner, string title, uint256 price);
+  event OfferServices(uint256 id, address owner, string title, uint256 price);
+  event AcceptServices(uint256 id, address owner, address provider, string title, uint256 price);
+  event RejectServices(uint256 id, address owner, address provider, string title, uint256 price);
 
   //
   // Implementation
   //
 
+
+  //
+  // Setters
+  //
+  
   // Add a new project
   function addProject(string memory _title, string memory _description, uint256 _price) public {
     
@@ -149,8 +158,8 @@ contract ChainBizz {
     // ready to be published?
     require(project.status == ProjectStatus.Draft, "Cannot be published");
 
-    // publish the project
-    project.status = ProjectStatus.Published;
+    // publish the project to be available for services
+    project.status = ProjectStatus.Available;
 
     emit PublishedProject(_id, msg.sender, project.title, project.price);
   }
@@ -171,7 +180,7 @@ contract ChainBizz {
     require(project.owner == msg.sender, "You are not the owner of this project");
 
     // ready to be unpublished?
-    require(project.status == ProjectStatus.Published, "Cannot be unpublished");
+    require(project.status == ProjectStatus.Available, "Cannot be unpublished");
 
     // unpublish the project
     project.status = ProjectStatus.Draft;
@@ -179,6 +188,85 @@ contract ChainBizz {
     emit UnpublishedProject(_id, msg.sender, project.title, project.price);
   }
 
+  // Offer services for the project
+  // A provider offers his/her services to perform the project 
+  function offerServices(uint256 _id) public {
+    
+    // retrieve the project
+    ProjectItem storage project = projects[_id];
+
+    // ensure that this project exists
+    if (project.owner == address(0x0)) {
+      return;
+    }
+ 
+    // is the project available?
+    require(project.status == ProjectStatus.Available, "Project no more available");
+
+    // store the address of the provider
+    project.provider = msg.sender;
+
+    // project is under review
+    project.status = ProjectStatus.InReview;
+
+    emit OfferServices(_id, msg.sender, project.title, project.price);
+  }
+
+
+  // Accept services from the provider
+  // The owner accepts the services offered by the provider 
+  function acceptServices(uint256 _id) public {
+    
+    // retrieve the project
+    ProjectItem storage project = projects[_id];
+
+    // ensure that this project exists
+    if (project.owner == address(0x0)) {
+      return;
+    }
+ 
+     // do we own this project?
+    require(project.owner == msg.sender, "You are not the owner of this project");
+
+    // is the project in review?
+    require(project.status == ProjectStatus.InReview, "Project not in review");
+
+    // project is now ongoing
+    project.status = ProjectStatus.OnGoing;
+
+    emit AcceptServices(_id, msg.sender, project.provider, project.title, project.price);
+  }
+
+
+  // Reject services from the provider
+  // The owner rejects the services offered by the provider 
+  function rejectServices(uint256 _id) public {
+    
+    // retrieve the project
+    ProjectItem storage project = projects[_id];
+
+    // ensure that this project exists
+    if (project.owner == address(0x0)) {
+      return;
+    }
+ 
+     // do we own this project?
+    require(project.owner == msg.sender, "You are not the owner of this project");
+
+    // is the project in review?
+    require(project.status == ProjectStatus.InReview, "Project not in review");
+
+    // project is now available
+    address provider = project.provider;
+    project.status = ProjectStatus.Available;
+    project.provider = address(0x0);
+    
+    emit RejectServices(_id, msg.sender, provider, project.title, project.price);
+  }
+
+  //
+  // Getters
+  //
 
   // Retrieve a project from its id
   function getProject(uint256 _id) public view returns (
@@ -247,7 +335,7 @@ contract ChainBizz {
     uint256 numberOfProjects = 0;
     for (uint256 i = 1; i <= projectsCounter; i++) {
       // get only published and active projects 
-      if ((projects[i].owner != address(0x0)) && (projects[i].status == ProjectStatus.Published)) {
+      if ((projects[i].owner != address(0x0)) && (projects[i].status == ProjectStatus.Available)) {
         projectIDs[numberOfProjects] = projects[i].id;
         numberOfProjects = numberOfProjects.add(1);
       }
@@ -290,5 +378,64 @@ contract ChainBizz {
     }
 
     return myProjects;
+  }
+
+  // return all my offers waiting for review
+  function getMyOffers() view public returns (uint256[] memory) {
+    if (projectsCounter == 0) {
+      return new uint256[](0);
+    }
+
+    // prepare output array
+    uint256[] memory projectIDs = new uint[](projectsCounter);
+
+    // iterate over projects
+    uint256 numberOfProjects = 0;
+    for (uint i = 1; i <= projectsCounter; i++) {
+      // keep the ID of the project with the sender as provider and the project still in review process
+      if ((projects[i].provider == msg.sender) && (projects[i].status == ProjectStatus.InReview)) {
+        projectIDs[numberOfProjects] = projects[i].id;
+
+        numberOfProjects = numberOfProjects.add(1);
+      }
+    }
+
+    // copy the project ID array into a smaller array
+    uint256[] memory myOffers = new uint[](numberOfProjects);
+    for (uint j = 0; j < numberOfProjects; j++) {
+      myOffers[j] = projectIDs[j];
+    }
+
+    return myOffers;
+  }
+
+
+  // return all projects waiting for review
+  function getMyReviews() view public returns (uint256[] memory) {
+    if (projectsCounter == 0) {
+      return new uint256[](0);
+    }
+
+    // prepare output array
+    uint256[] memory projectIDs = new uint[](projectsCounter);
+
+    // iterate over projects
+    uint256 numberOfProjects = 0;
+    for (uint i = 1; i <= projectsCounter; i++) {
+      // keep the ID of the project owned by the caller and the project still in review process
+      if ((projects[i].owner == msg.sender) && (projects[i].status == ProjectStatus.InReview)) {
+        projectIDs[numberOfProjects] = projects[i].id;
+
+        numberOfProjects = numberOfProjects.add(1);
+      }
+    }
+
+    // copy the project ID array into a smaller array
+    uint256[] memory myReviews = new uint[](numberOfProjects);
+    for (uint j = 0; j < numberOfProjects; j++) {
+      myReviews[j] = projectIDs[j];
+    }
+
+    return myReviews;
   }
 }

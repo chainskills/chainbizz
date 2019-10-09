@@ -33,7 +33,6 @@ const MyProjects = ({ drizzle, drizzleState }) => {
         drizzleState.contracts.ChainBizz.getMyProjects[dataKeys].value;
     }
 
-    // no certifications
     if (projectIds !== null) {
       for (let i = 0; i < projectIds.length; i++) {
         const projectId = projectIds[i];

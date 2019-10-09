@@ -12,6 +12,8 @@ import NavBar from './components/layout/NavBar';
 import Project from './components/pages/Project';
 import MyProjects from './components/pages/MyProjects';
 import PublishedProjects from './components/pages/PublishedProjects';
+import MyOffers from './components/pages/MyOffers';
+import MyReviews from './components/pages/MyReviews';
 
 const App = ({ drizzleContext }) => {
   useEffect(() => {
@@ -58,6 +60,22 @@ const App = ({ drizzleContext }) => {
                   path='/myprojects'
                   render={() => (
                     <MyProjects drizzle={drizzle} drizzleState={drizzleState} />
+                  )}
+                />
+
+                <Route
+                  exact
+                  path='/myoffers'
+                  render={() => (
+                    <MyOffers drizzle={drizzle} drizzleState={drizzleState} />
+                  )}
+                />
+
+                <Route
+                  exact
+                  path='/myreviews'
+                  render={() => (
+                    <MyReviews drizzle={drizzle} drizzleState={drizzleState} />
                   )}
                 />
 

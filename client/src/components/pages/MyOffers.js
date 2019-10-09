@@ -4,13 +4,13 @@ import 'materialize-css/dist/css/materialize.min.css';
 
 import ProjectContractData from '../ContractData/Project/ProjectContractData';
 
-const PublishedProjects = ({ drizzle, drizzleState }) => {
+const MyOffers = ({ drizzle, drizzleState }) => {
   const [dataKeys, setDataKeys] = useState(null);
 
   useEffect(() => {
     const { ChainBizz } = drizzle.contracts;
     setDataKeys(
-      ChainBizz.methods.getPublishedProjects.cacheCall({
+      ChainBizz.methods.getMyOffers.cacheCall({
         from: drizzleState.accounts[0]
       })
     );
@@ -18,18 +18,18 @@ const PublishedProjects = ({ drizzle, drizzleState }) => {
     //eslint-disable-next-line
   }, []);
 
-  // Retrieve all projects IDs linked to the current owner
+  // Retrieve all projects IDs for which the owner has offer his/her services
 
   // prepare projects cards
   let allProjects = [];
   let projectIds = null;
   if (dataKeys !== null) {
     if (
-      drizzleState.contracts.ChainBizz.getPublishedProjects[dataKeys] &&
-      drizzleState.contracts.ChainBizz.getPublishedProjects[dataKeys].value
+      drizzleState.contracts.ChainBizz.getMyOffers[dataKeys] &&
+      drizzleState.contracts.ChainBizz.getMyOffers[dataKeys].value
     ) {
       projectIds =
-        drizzleState.contracts.ChainBizz.getPublishedProjects[dataKeys].value;
+        drizzleState.contracts.ChainBizz.getMyOffers[dataKeys].value;
     }
 
     if (projectIds !== null) {
@@ -57,4 +57,4 @@ const PublishedProjects = ({ drizzle, drizzleState }) => {
   );
 };
 
-export default PublishedProjects;
+export default MyOffers;
