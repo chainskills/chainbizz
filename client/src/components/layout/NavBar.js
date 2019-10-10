@@ -103,13 +103,13 @@ const NavBar = ({ drizzle, drizzleState }) => {
           <a href='#!'>My contracts</a>
         </li>
         <li>
-          <a href='#!'>My offers</a>
+          <a href='/myoffers'>My offers</a>
         </li>
         <li>
           <div className='divider'></div>
         </li>
         <li>
-          <a href='#!'>Offers to review</a>
+          <a href='/myreviews'>Offers to review</a>
         </li>
       </ul>
       <a href='#!' data-target='slide-out' className='sidenav-trigger'>

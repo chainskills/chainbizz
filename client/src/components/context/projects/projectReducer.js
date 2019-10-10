@@ -11,11 +11,21 @@ import {
   CLEAR_CURRENT_SELECTION,
   GET_PROJECT,
   OFFER_SERVICES,
+  ACCEPT_PROPOSAL,
+  REJECT_PROPOSAL,
   ACCEPT_SERVICES,
   REJECT_SERVICES,
-  ON_ACCEPT_SERVICES,
+  VALIDATE_SERVICES,
+  LEAVE_SERVICES,
+  CANCEL_SERVICES,
   ON_OFFER_SERVICES,
+  ON_ACCEPT_PROPOSAL,
+  ON_REJECT_PROPOSAL,
+  ON_VALIDATE_SERVICES,
+  ON_ACCEPT_SERVICES,
   ON_REJECT_SERVICES,
+  ON_LEAVE_SERVICES,
+  ON_CANCEL_SERVICES,
   PROJECT_ERROR
 } from '../types';
 
@@ -29,6 +39,14 @@ export default (state, action) => {
     case OFFER_SERVICES:
     case ACCEPT_SERVICES:
     case REJECT_SERVICES:
+    case VALIDATE_SERVICES:
+    case ACCEPT_PROPOSAL:
+    case REJECT_PROPOSAL:
+    case LEAVE_SERVICES:
+    case CANCEL_SERVICES:
+    case ACCEPT_SERVICES:
+    case REJECT_SERVICES:
+    case VALIDATE_SERVICES:
       return {
         ...state,
         project: action.payload,
@@ -64,6 +82,24 @@ export default (state, action) => {
         projectId: action.payload,
         showOfferServices: true
       };
+    case ON_ACCEPT_PROPOSAL:
+      return {
+        ...state,
+        projectId: action.payload,
+        showAcceptProposal: true
+      };
+    case ON_REJECT_PROPOSAL:
+      return {
+        ...state,
+        projectId: action.payload,
+        showRejectProposal: true
+      };
+    case ON_VALIDATE_SERVICES:
+      return {
+        ...state,
+        projectId: action.payload,
+        showValidateServices: true
+      };
     case ON_ACCEPT_SERVICES:
       return {
         ...state,
@@ -75,6 +111,18 @@ export default (state, action) => {
         ...state,
         projectId: action.payload,
         showRejectServices: true
+      };
+    case ON_LEAVE_SERVICES:
+      return {
+        ...state,
+        projectId: action.payload,
+        showLeaveServices: true
+      };
+    case ON_CANCEL_SERVICES:
+      return {
+        ...state,
+        projectId: action.payload,
+        showCancelServices: true
       };
     case GET_PROJECT:
       return {
@@ -98,8 +146,13 @@ export default (state, action) => {
         showPublish: false,
         showUnpublish: false,
         showOfferServices: false,
+        showAcceptProposal: false,
+        showRejectProposal: false,
+        showValidateServices: false,
         showAcceptServices: false,
-        showRejectServices: false
+        showRejectServices: false,
+        showLeaveServices: false,
+        showCancelServices: false
       };
     default:
       return state;

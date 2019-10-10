@@ -15,6 +15,7 @@ contract ChainBizz {
     Available, 
     InReview,
     OnGoing, 
+    Validate,
     Completed,
     Canceled,
     Unknown
@@ -50,8 +51,13 @@ contract ChainBizz {
   event PublishedProject(uint256 id, address owner, string title, uint256 price);
   event UnpublishedProject(uint256 id, address owner, string title, uint256 price);
   event OfferServices(uint256 id, address owner, string title, uint256 price);
-  event AcceptServices(uint256 id, address owner, address provider, string title, uint256 price);
+  event AcceptProposal(uint256 id, address owner, address provider, string title, uint256 price);
+  event RejectProposal(uint256 id, address owner, address provider, string title, uint256 price);
+  event ValidateServices(uint256 id, address owner, address provider, string title, uint256 price);
+  event CompletedServices(uint256 id, address owner, address provider, string title, uint256 price);
   event RejectServices(uint256 id, address owner, address provider, string title, uint256 price);
+  event LeaveServices(uint256 id, address owner, address provider, string title, uint256 price);
+  event CancelServices(uint256 id, address owner, address provider, string title, uint256 price);
 
   //
   // Implementation
@@ -215,6 +221,80 @@ contract ChainBizz {
 
   // Accept services from the provider
   // The owner accepts the services offered by the provider 
+  function acceptProposal(uint256 _id) public {
+    
+    // retrieve the project
+    ProjectItem storage project = projects[_id];
+
+    // ensure that this project exists
+    if (project.owner == address(0x0)) {
+      return;
+    }
+ 
+     // do we own this project?
+    require(project.owner == msg.sender, "You are not the owner of this project");
+
+    // is the project in review?
+    require(project.status == ProjectStatus.InReview, "Proposal not in review");
+
+    // project is now ongoing
+    project.status = ProjectStatus.OnGoing;
+
+    emit AcceptProposal(_id, msg.sender, project.provider, project.title, project.price);
+  }
+
+  // Reject proposal from the provider
+  // The owner rejects the services offered by the provider 
+  function rejectProposal(uint256 _id) public {
+    
+    // retrieve the project
+    ProjectItem storage project = projects[_id];
+
+    // ensure that this project exists
+    if (project.owner == address(0x0)) {
+      return;
+    }
+ 
+     // do we own this project?
+    require(project.owner == msg.sender, "You are not the owner of this project");
+
+    // is the project in review?
+    require(project.status == ProjectStatus.InReview , "Proposal not in review");
+
+    // project is now available
+    address provider = project.provider;
+    project.status = ProjectStatus.Available;
+    project.provider = address(0x0);
+    
+    emit RejectProposal(_id, msg.sender, provider, project.title, project.price);
+  }
+
+  // Validate services delivered by the provider
+  // The provider request a validation of the services 
+  function validateServices(uint256 _id) public {
+    
+    // retrieve the project
+    ProjectItem storage project = projects[_id];
+
+    // ensure that this project exists
+    if (project.owner == address(0x0)) {
+      return;
+    }
+ 
+    // are we the service provider?
+    require(project.provider == msg.sender, "You are not the service provider");
+
+    // is the project ongoing?
+    require(project.status == ProjectStatus.OnGoing, "Project not in progress");
+
+    // project is now validation process
+    project.status = ProjectStatus.Validate;
+
+    emit ValidateServices(_id, msg.sender, project.provider, project.title, project.price);
+  }
+
+  // Accept services of the provider
+  // The owner accepts the services delivered by the provider 
   function acceptServices(uint256 _id) public {
     
     // retrieve the project
@@ -229,17 +309,16 @@ contract ChainBizz {
     require(project.owner == msg.sender, "You are not the owner of this project");
 
     // is the project in review?
-    require(project.status == ProjectStatus.InReview, "Project not in review");
+    require(project.status == ProjectStatus.Validate, "Project not in validation process");
 
-    // project is now ongoing
-    project.status = ProjectStatus.OnGoing;
+    // project is now completed
+    project.status = ProjectStatus.Completed;
 
-    emit AcceptServices(_id, msg.sender, project.provider, project.title, project.price);
+    emit CompletedServices(_id, msg.sender, project.provider, project.title, project.price);
   }
 
-
   // Reject services from the provider
-  // The owner rejects the services offered by the provider 
+  // The owner rejects the services delivered by the provider 
   function rejectServices(uint256 _id) public {
     
     // retrieve the project
@@ -254,14 +333,67 @@ contract ChainBizz {
     require(project.owner == msg.sender, "You are not the owner of this project");
 
     // is the project in review?
-    require(project.status == ProjectStatus.InReview, "Project not in review");
+    require(project.status == ProjectStatus.Validate, "Project not in validation process");
 
-    // project is now available
+    // project becomes available
     address provider = project.provider;
     project.status = ProjectStatus.Available;
     project.provider = address(0x0);
     
     emit RejectServices(_id, msg.sender, provider, project.title, project.price);
+  }
+
+
+  // Leave services from the provider
+  // The provider leaves the services 
+  function leaveServices(uint256 _id) public {
+    
+    // retrieve the project
+    ProjectItem storage project = projects[_id];
+
+    // ensure that this project exists
+    if (project.owner == address(0x0)) {
+      return;
+    }
+ 
+    // are we the service provider?
+    require(project.provider == msg.sender, "You are not the service provider");
+
+    // is the project ongoing?
+    require(project.status == ProjectStatus.OnGoing, "Project not in progress");
+
+    // project becomes available
+    address provider = project.provider;
+    project.status = ProjectStatus.Available;
+    project.provider = address(0x0);
+    
+    emit LeaveServices(_id, msg.sender, provider, project.title, project.price);
+  }
+
+  // Cancel services from the ower
+  // The owner cancels the services 
+  function cancelServices(uint256 _id) public {
+    
+    // retrieve the project
+    ProjectItem storage project = projects[_id];
+
+    // ensure that this project exists
+    if (project.owner == address(0x0)) {
+      return;
+    }
+ 
+    // are we the service provider?
+    require(project.owner == msg.sender, "You are not the project's owner");
+
+    // is the project ongoing?
+    require(project.status == ProjectStatus.OnGoing, "Project not in progress");
+
+   // project becomes available
+    address provider = project.provider;
+    project.status = ProjectStatus.Available;
+    project.provider = address(0x0);
+    
+    emit CancelServices(_id, msg.sender, provider, project.title, project.price);
   }
 
   //

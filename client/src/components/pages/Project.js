@@ -14,11 +14,21 @@ const Project = ({ drizzle, drizzleState }) => {
     removeProject,
     publishProject,
     unpublishProject,
+    offerServices,
+    leaveServices,
+    cancelServices,
+    acceptProposal,
+    rejectProposal,
     getProject,
     showEdit,
     showRemove,
     showPublish,
     showUnpublish,
+    showOfferServices,
+    showLeaveServices,
+    showCancelServices,
+    showAcceptProposal,
+    showRejectProposal,
     clearCurrrentSelection,
     projectId
   } = projectContext;
@@ -159,19 +169,175 @@ const Project = ({ drizzle, drizzleState }) => {
     });
   };
 
+  const handleOfferServices = id => {
+    setDataID(id);
+    setmodalConfirmationOpen(true);
+
+    setModalTitle('Offer your services');
+    setModalDescription(
+      'Are you sure to offer your services for this project?'
+    );
+
+    setAction1({
+      title: 'Yes',
+      visible: true,
+      handle: function(id) {
+        setmodalConfirmationOpen(false);
+        offerServices(drizzle, drizzleState, id);
+      }
+    });
+
+    setAction2({
+      title: 'No',
+      visible: true,
+      handle: function() {
+        setmodalConfirmationOpen(false);
+      }
+    });
+  };
+
+  const handleLeaveServices = id => {
+    setDataID(id);
+    setmodalConfirmationOpen(true);
+
+    setModalTitle('Leave your services');
+    setModalDescription(
+      'Are you sure to leave your services for this project?'
+    );
+
+    setAction1({
+      title: 'Yes',
+      visible: true,
+      handle: function(id) {
+        setmodalConfirmationOpen(false);
+        leaveServices(drizzle, drizzleState, id);
+      }
+    });
+
+    setAction2({
+      title: 'No',
+      visible: true,
+      handle: function() {
+        setmodalConfirmationOpen(false);
+      }
+    });
+  };
+
+  const handleCancelServices = id => {
+    setDataID(id);
+    setmodalConfirmationOpen(true);
+
+    setModalTitle('Cancel services');
+    setModalDescription(
+      'Are you sure to cancel the services offered by the provider?'
+    );
+
+    setAction1({
+      title: 'Yes',
+      visible: true,
+      handle: function(id) {
+        setmodalConfirmationOpen(false);
+        cancelServices(drizzle, drizzleState, id);
+      }
+    });
+
+    setAction2({
+      title: 'No',
+      visible: true,
+      handle: function() {
+        setmodalConfirmationOpen(false);
+      }
+    });
+  };
+
+  const handleAcceptProposal = id => {
+    setDataID(id);
+    setmodalConfirmationOpen(true);
+
+    setModalTitle('Accept the proposal');
+    setModalDescription(
+      'Are you sure to accept the proposal made by the provider?'
+    );
+
+    setAction1({
+      title: 'Yes',
+      visible: true,
+      handle: function(id) {
+        setmodalConfirmationOpen(false);
+        acceptProposal(drizzle, drizzleState, id);
+      }
+    });
+
+    setAction2({
+      title: 'No',
+      visible: true,
+      handle: function() {
+        setmodalConfirmationOpen(false);
+      }
+    });
+  };
+
+  const handleRejectProposal = id => {
+    setDataID(id);
+    setmodalConfirmationOpen(true);
+
+    setModalTitle('Reject the proposal');
+    setModalDescription(
+      'Are you sure to reject the proposal made by the provider?'
+    );
+
+    setAction1({
+      title: 'Yes',
+      visible: true,
+      handle: function(id) {
+        setmodalConfirmationOpen(false);
+        rejectProposal(drizzle, drizzleState, id);
+      }
+    });
+
+    setAction2({
+      title: 'No',
+      visible: true,
+      handle: function() {
+        setmodalConfirmationOpen(false);
+      }
+    });
+  };
+
   useEffect(() => {
-    if (showEdit === true && projectId !== null) {
-      handleEditProject(projectId);
-    } else if (showRemove === true && projectId !== null) {
-      handleRemove(projectId);
-    } else if (showPublish === true && projectId !== null) {
-      handlePublish(projectId);
-    } else if (showUnpublish === true && projectId !== null) {
-      handleUnpublish(projectId);
+    if (projectId !== null) {
+      if (showEdit === true) {
+        handleEditProject(projectId);
+      } else if (showRemove === true) {
+        handleRemove(projectId);
+      } else if (showPublish === true) {
+        handlePublish(projectId);
+      } else if (showUnpublish === true) {
+        handleUnpublish(projectId);
+      } else if (showOfferServices === true) {
+        handleOfferServices(projectId);
+      } else if (showLeaveServices === true) {
+        handleLeaveServices(projectId);
+      } else if (showCancelServices === true) {
+        handleCancelServices(projectId);
+      } else if (showAcceptProposal === true) {
+        handleAcceptProposal(projectId);
+      } else if (showRejectProposal === true) {
+        handleRejectProposal(projectId);
+      }
     }
 
     //eslint-disable-next-line
-  }, [showEdit, showRemove, showPublish, showUnpublish, projectId]);
+  }, [
+    projectId,
+    showEdit,
+    showRemove,
+    showPublish,
+    showUnpublish,
+    showOfferServices,
+    showLeaveServices,
+    showCancelServices
+  ]);
 
   return (
     <div>
