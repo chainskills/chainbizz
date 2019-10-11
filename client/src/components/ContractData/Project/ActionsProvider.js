@@ -5,7 +5,7 @@ import ProjectContext from '../../context/projects/projectContext';
 import { projectStatus } from './ProjectStatus';
 
 import contractOpportunity from '../../../assets/images/contract-opportunity.svg';
-import contractValidate from '../../../assets/images/contract-validate.svg';
+import projectCompleted from '../../../assets/images/project-completed.svg';
 import contractCancel from '../../../assets/images/contract-cancel.svg';
 
 const ActionsProvider = ({ projectId, status }) => {
@@ -53,7 +53,7 @@ const ActionsProvider = ({ projectId, status }) => {
             }}
             title={'Validate your services'}
           >
-            <img src={contractValidate} style={{ width: '35px' }} />
+            <img src={projectCompleted} style={{ width: '35px' }} />
           </a>
 
           <a
