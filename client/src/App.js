@@ -14,6 +14,7 @@ import MyProjects from './components/pages/MyProjects';
 import PublishedProjects from './components/pages/PublishedProjects';
 import MyOffers from './components/pages/MyOffers';
 import MyReviews from './components/pages/MyReviews';
+import MyContracts from './components/pages/MyContracts';
 
 const App = ({ drizzleContext }) => {
   useEffect(() => {
@@ -76,6 +77,17 @@ const App = ({ drizzleContext }) => {
                   path='/myreviews'
                   render={() => (
                     <MyReviews drizzle={drizzle} drizzleState={drizzleState} />
+                  )}
+                />
+
+                <Route
+                  exact
+                  path='/mycontracts'
+                  render={() => (
+                    <MyContracts
+                      drizzle={drizzle}
+                      drizzleState={drizzleState}
+                    />
                   )}
                 />
 

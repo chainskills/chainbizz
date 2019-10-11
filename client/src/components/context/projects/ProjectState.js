@@ -30,6 +30,7 @@ import {
   ON_REJECT_SERVICES,
   ON_LEAVE_SERVICES,
   ON_CANCEL_SERVICES,
+  ON_CANCEL_MODAL,
   PROJECT_ERROR
 } from '../types';
 
@@ -336,6 +337,10 @@ const ProjectState = props => {
     dispatch({ type: ON_REMOVE_PROJECT, payload: projectId });
   };
 
+  // Cancel the modal form
+  const onCancelModal = () => {
+    dispatch({ type: ON_CANCEL_MODAL });
+  };
   // Prepare to publish a project
   const onPublishProject = projectId => {
     dispatch({ type: ON_PUBLISH_PROJECT, payload: projectId });
@@ -445,6 +450,7 @@ const ProjectState = props => {
         onValidateServices,
         onAcceptServices,
         onRejectServices,
+        onCancelModal,
         acceptServices,
         offerServices,
         rejectServices,

@@ -570,4 +570,32 @@ contract ChainBizz {
 
     return myReviews;
   }
+
+  // return all ongoing contracts
+  function getMyContracts() view public returns (uint256[] memory) {
+    if (projectsCounter == 0) {
+      return new uint[](0);
+    }
+
+    // prepare output array
+    uint256[] memory projectIDs = new uint[](projectsCounter);
+
+    // iterate over projects
+    uint256 numberOfProjects = 0;
+    for (uint256 i = 1; i <= projectsCounter; i++) {
+      // get only ongoing contracts owner by the contract's owner or the service provider 
+      if (((projects[i].owner == msg.sender) || (projects[i].provider == msg.sender)) && (projects[i].status == ProjectStatus.OnGoing)) {
+        projectIDs[numberOfProjects] = projects[i].id;
+        numberOfProjects = numberOfProjects.add(1);
+      }
+    }
+
+    // copy the project ID array into a smaller array
+    uint256[] memory myContracts = new uint[](numberOfProjects);
+    for (uint j = 0; j < numberOfProjects; j++) {
+      myContracts[j] = projectIDs[j];
+    }
+
+    return myContracts;
+  }
 }

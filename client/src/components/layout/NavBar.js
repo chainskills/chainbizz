@@ -4,6 +4,8 @@ import { withRouter } from 'react-router-dom';
 
 import Blockies from 'react-blockies';
 
+import blockchainNetwork from '../../assets/images/blockchain.svg';
+
 const NavBar = ({ drizzle, drizzleState }) => {
   let account = '';
   if (drizzleState !== null) {
@@ -85,7 +87,7 @@ const NavBar = ({ drizzle, drizzleState }) => {
           </div>
         </li>
         <li>
-          <a href='#!'>
+          <a href={null}>
             <i className='material-icons'>cloud</i>
             {networkName}
           </a>
@@ -100,7 +102,7 @@ const NavBar = ({ drizzle, drizzleState }) => {
           <a href='/myprojects'>My projects</a>
         </li>
         <li>
-          <a href='#!'>My contracts</a>
+          <a href='/mycontracts'>My contracts</a>
         </li>
         <li>
           <a href='/myoffers'>My offers</a>

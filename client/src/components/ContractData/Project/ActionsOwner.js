@@ -25,6 +25,7 @@ const ActionsOwner = ({ projectId, status }) => {
     <div>
       {status === projectStatus.DRAFT && (
         <a
+          href={'#!'}
           onClick={() => {
             onRemoveProject(projectId);
           }}
@@ -35,6 +36,7 @@ const ActionsOwner = ({ projectId, status }) => {
       )}
       {status === projectStatus.DRAFT && (
         <a
+          href={'#!'}
           onClick={() => {
             onEditProject(projectId);
           }}
@@ -45,6 +47,7 @@ const ActionsOwner = ({ projectId, status }) => {
       )}
       {status === projectStatus.DRAFT && (
         <a
+          href={'#!'}
           onClick={() => {
             onPublishProject(projectId);
           }}
@@ -56,6 +59,7 @@ const ActionsOwner = ({ projectId, status }) => {
 
       {status === projectStatus.AVAILABLE && (
         <a
+          href={'#!'}
           onClick={() => {
             onUnpublishProject(projectId);
           }}
@@ -69,32 +73,35 @@ const ActionsOwner = ({ projectId, status }) => {
         <span>
           {' '}
           <a
+            href={'#!'}
             onClick={() => {
               onRejectProposal(projectId);
             }}
             title={'Reject the proposal'}
           >
-            <img src={contractCancel} style={{ width: '25px' }} />
+            <img src={contractCancel} style={{ width: '35px' }} />
           </a>
           <a
+            href={'#!'}
             onClick={() => {
               onAcceptProposal(projectId);
             }}
             title={'Accept the proposal'}
           >
-            <img src={contractReview} style={{ width: '25px' }} />
+            <img src={contractReview} style={{ width: '35px' }} />
           </a>
         </span>
       )}
 
       {status === projectStatus.ONGOING && (
         <a
+          href={'#!'}
           onClick={() => {
             onUnpublishProject(projectId);
           }}
           title={'Unpublish'}
         >
-          <img src={contractDeal} style={{ width: '25px' }} />
+          <img src={contractDeal} style={{ width: '35px' }} />
         </a>
       )}
     </div>

@@ -26,6 +26,7 @@ import {
   ON_REJECT_SERVICES,
   ON_LEAVE_SERVICES,
   ON_CANCEL_SERVICES,
+  ON_CANCEL_MODAL,
   PROJECT_ERROR
 } from '../types';
 
@@ -134,6 +135,25 @@ export default (state, action) => {
       return {
         ...state,
         error: action.payload
+      };
+    case ON_CANCEL_MODAL:
+      return {
+        ...state,
+        current: null,
+        projectId: null,
+        loading: false,
+        showEdit: false,
+        showRemove: false,
+        showPublish: false,
+        showUnpublish: false,
+        showOfferServices: false,
+        showAcceptProposal: false,
+        showRejectProposal: false,
+        showValidateServices: false,
+        showAcceptServices: false,
+        showRejectServices: false,
+        showLeaveServices: false,
+        showCancelServices: false
       };
     case CLEAR_CURRENT_SELECTION:
       return {

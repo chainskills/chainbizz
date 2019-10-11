@@ -30,10 +30,11 @@ const Project = ({ drizzle, drizzleState }) => {
     showAcceptProposal,
     showRejectProposal,
     clearCurrrentSelection,
+    onCancelModal,
     projectId
   } = projectContext;
 
-  const [modalConfirmationOpen, setmodalConfirmationOpen] = useState(false);
+  const [modalConfirmationOpen, setModalConfirmationOpen] = useState(false);
   const [modalProjectOpen, setModalProjectOpen] = useState(false);
 
   const [modalTitle, setModalTitle] = useState(null);
@@ -76,6 +77,7 @@ const Project = ({ drizzle, drizzleState }) => {
       visible: true,
       handle: function() {
         setModalProjectOpen(false);
+        onCancelModal();
       }
     });
   };
@@ -98,13 +100,14 @@ const Project = ({ drizzle, drizzleState }) => {
       visible: true,
       handle: function() {
         setModalProjectOpen(false);
+        onCancelModal();
       }
     });
   };
 
   const handleRemove = id => {
     setDataID(id);
-    setmodalConfirmationOpen(true);
+    setModalConfirmationOpen(true);
 
     setModalTitle('Remove Project');
     setModalDescription('Are you sure to remove this project?');
@@ -113,15 +116,24 @@ const Project = ({ drizzle, drizzleState }) => {
       title: 'Yes',
       visible: true,
       handle: function(id) {
-        setmodalConfirmationOpen(false);
+        setModalConfirmationOpen(false);
         removeProject(drizzle, drizzleState, id);
+      }
+    });
+
+    setAction2({
+      title: 'No',
+      visible: true,
+      handle: function() {
+        setModalConfirmationOpen(false);
+        onCancelModal();
       }
     });
   };
 
   const handlePublish = id => {
     setDataID(id);
-    setmodalConfirmationOpen(true);
+    setModalConfirmationOpen(true);
 
     setModalTitle('Publish Project');
     setModalDescription('Are you sure to publish this project?');
@@ -130,7 +142,7 @@ const Project = ({ drizzle, drizzleState }) => {
       title: 'Yes',
       visible: true,
       handle: function(id) {
-        setmodalConfirmationOpen(false);
+        setModalConfirmationOpen(false);
         publishProject(drizzle, drizzleState, id);
       }
     });
@@ -139,14 +151,15 @@ const Project = ({ drizzle, drizzleState }) => {
       title: 'No',
       visible: true,
       handle: function() {
-        setmodalConfirmationOpen(false);
+        setModalConfirmationOpen(false);
+        onCancelModal();
       }
     });
   };
 
   const handleUnpublish = id => {
     setDataID(id);
-    setmodalConfirmationOpen(true);
+    setModalConfirmationOpen(true);
 
     setModalTitle('Unpublish Project');
     setModalDescription('Are you sure to unpublish this project?');
@@ -155,7 +168,7 @@ const Project = ({ drizzle, drizzleState }) => {
       title: 'Yes',
       visible: true,
       handle: function(id) {
-        setmodalConfirmationOpen(false);
+        setModalConfirmationOpen(false);
         unpublishProject(drizzle, drizzleState, id);
       }
     });
@@ -164,14 +177,15 @@ const Project = ({ drizzle, drizzleState }) => {
       title: 'No',
       visible: true,
       handle: function() {
-        setmodalConfirmationOpen(false);
+        setModalConfirmationOpen(false);
+        onCancelModal();
       }
     });
   };
 
   const handleOfferServices = id => {
     setDataID(id);
-    setmodalConfirmationOpen(true);
+    setModalConfirmationOpen(true);
 
     setModalTitle('Offer your services');
     setModalDescription(
@@ -182,7 +196,7 @@ const Project = ({ drizzle, drizzleState }) => {
       title: 'Yes',
       visible: true,
       handle: function(id) {
-        setmodalConfirmationOpen(false);
+        setModalConfirmationOpen(false);
         offerServices(drizzle, drizzleState, id);
       }
     });
@@ -191,14 +205,15 @@ const Project = ({ drizzle, drizzleState }) => {
       title: 'No',
       visible: true,
       handle: function() {
-        setmodalConfirmationOpen(false);
+        setModalConfirmationOpen(false);
+        onCancelModal();
       }
     });
   };
 
   const handleLeaveServices = id => {
     setDataID(id);
-    setmodalConfirmationOpen(true);
+    setModalConfirmationOpen(true);
 
     setModalTitle('Leave your services');
     setModalDescription(
@@ -209,7 +224,7 @@ const Project = ({ drizzle, drizzleState }) => {
       title: 'Yes',
       visible: true,
       handle: function(id) {
-        setmodalConfirmationOpen(false);
+        setModalConfirmationOpen(false);
         leaveServices(drizzle, drizzleState, id);
       }
     });
@@ -218,14 +233,15 @@ const Project = ({ drizzle, drizzleState }) => {
       title: 'No',
       visible: true,
       handle: function() {
-        setmodalConfirmationOpen(false);
+        setModalConfirmationOpen(false);
+        onCancelModal();
       }
     });
   };
 
   const handleCancelServices = id => {
     setDataID(id);
-    setmodalConfirmationOpen(true);
+    setModalConfirmationOpen(true);
 
     setModalTitle('Cancel services');
     setModalDescription(
@@ -236,7 +252,7 @@ const Project = ({ drizzle, drizzleState }) => {
       title: 'Yes',
       visible: true,
       handle: function(id) {
-        setmodalConfirmationOpen(false);
+        setModalConfirmationOpen(false);
         cancelServices(drizzle, drizzleState, id);
       }
     });
@@ -245,14 +261,15 @@ const Project = ({ drizzle, drizzleState }) => {
       title: 'No',
       visible: true,
       handle: function() {
-        setmodalConfirmationOpen(false);
+        setModalConfirmationOpen(false);
+        onCancelModal();
       }
     });
   };
 
   const handleAcceptProposal = id => {
     setDataID(id);
-    setmodalConfirmationOpen(true);
+    setModalConfirmationOpen(true);
 
     setModalTitle('Accept the proposal');
     setModalDescription(
@@ -263,7 +280,7 @@ const Project = ({ drizzle, drizzleState }) => {
       title: 'Yes',
       visible: true,
       handle: function(id) {
-        setmodalConfirmationOpen(false);
+        setModalConfirmationOpen(false);
         acceptProposal(drizzle, drizzleState, id);
       }
     });
@@ -272,14 +289,15 @@ const Project = ({ drizzle, drizzleState }) => {
       title: 'No',
       visible: true,
       handle: function() {
-        setmodalConfirmationOpen(false);
+        setModalConfirmationOpen(false);
+        onCancelModal();
       }
     });
   };
 
   const handleRejectProposal = id => {
     setDataID(id);
-    setmodalConfirmationOpen(true);
+    setModalConfirmationOpen(true);
 
     setModalTitle('Reject the proposal');
     setModalDescription(
@@ -290,7 +308,7 @@ const Project = ({ drizzle, drizzleState }) => {
       title: 'Yes',
       visible: true,
       handle: function(id) {
-        setmodalConfirmationOpen(false);
+        setModalConfirmationOpen(false);
         rejectProposal(drizzle, drizzleState, id);
       }
     });
@@ -299,12 +317,17 @@ const Project = ({ drizzle, drizzleState }) => {
       title: 'No',
       visible: true,
       handle: function() {
-        setmodalConfirmationOpen(false);
+        setModalConfirmationOpen(false);
+        onCancelModal();
       }
     });
   };
 
   useEffect(() => {
+    console.log('Into useEffect');
+    console.log('showEdit: ' + showEdit);
+    console.log('showRemove: ' + showRemove);
+
     if (projectId !== null) {
       if (showEdit === true) {
         handleEditProject(projectId);
@@ -344,7 +367,7 @@ const Project = ({ drizzle, drizzleState }) => {
       <div className='row container'>
         <div className='col s12 m4'>
           <a
-            className='waves-effect waves-light btn blue-grey'
+            className='waves-effect waves-light btn blue-grey lighten-1'
             onClick={() => handleNewProject()}
           >
             <i className='material-icons left'>add</i>New
@@ -357,7 +380,7 @@ const Project = ({ drizzle, drizzleState }) => {
           title={modalTitle}
           content={modalDescription}
           dataID={dataID}
-          onClose={() => setmodalConfirmationOpen(false)}
+          onClose={() => setModalConfirmationOpen(false)}
           action1={action1}
           action2={action2}
         />

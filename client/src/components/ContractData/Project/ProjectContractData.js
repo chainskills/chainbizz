@@ -38,7 +38,7 @@ const ProjectContractData = ({ projectId, drizzle, drizzleState }) => {
 
   return (
     <div className='col s12 m4'>
-      <div className='card medium blue-grey'>
+      <div className='card medium blue-grey lighten-1'>
         <div className='card-content white-text'>
           <span className='card-title'>{projectDetails.title}</span>
           <p>

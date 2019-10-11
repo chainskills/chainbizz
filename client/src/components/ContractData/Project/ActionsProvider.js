@@ -22,44 +22,48 @@ const ActionsProvider = ({ projectId, status }) => {
     <div>
       {status === projectStatus.AVAILABLE && (
         <a
+          href={'#!'}
           onClick={() => {
             onOfferServices(projectId);
           }}
           title={'Offer your services'}
         >
-          <img src={contractOpportunity} style={{ width: '25px' }} />
+          <img src={contractOpportunity} style={{ width: '35px' }} />
         </a>
       )}
 
       {status === projectStatus.REVIEW && (
         <a
+          href={'#!'}
           onClick={() => {
             onLeaveServices(projectId);
           }}
           title={'Leave your services'}
         >
-          <img src={contractCancel} style={{ width: '25px' }} />
+          <img src={contractCancel} style={{ width: '35px' }} />
         </a>
       )}
 
       {status === projectStatus.ONGOING && (
         <span>
           <a
+            href={'#!'}
             onClick={() => {
               onValidateServices(projectId);
             }}
             title={'Validate your services'}
           >
-            <img src={contractValidate} style={{ width: '25px' }} />
+            <img src={contractValidate} style={{ width: '35px' }} />
           </a>
 
           <a
+            href={'#!'}
             onClick={() => {
               onLeaveServices(projectId);
             }}
             title={'Cancel your services'}
           >
-            <img src={contractCancel} style={{ width: '25px' }} />
+            <img src={contractCancel} style={{ width: '35px' }} />
           </a>
         </span>
       )}
