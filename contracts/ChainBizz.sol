@@ -50,14 +50,15 @@ contract ChainBizz {
   event RemoveProject(uint256 id, address owner, string title);
   event PublishedProject(uint256 id, address owner, string title, uint256 price);
   event UnpublishedProject(uint256 id, address owner, string title, uint256 price);
-  event OfferServices(uint256 id, address owner, string title, uint256 price);
+  event OfferSubmitted(uint256 id, address owner, string title, uint256 price);
+  event OfferCancelled(uint256 id, address owner, address provider, string title, uint256 price);
   event AcceptProposal(uint256 id, address owner, address provider, string title, uint256 price);
   event RejectProposal(uint256 id, address owner, address provider, string title, uint256 price);
-  event ValidateServices(uint256 id, address owner, address provider, string title, uint256 price);
-  event CompletedServices(uint256 id, address owner, address provider, string title, uint256 price);
-  event RejectServices(uint256 id, address owner, address provider, string title, uint256 price);
-  event LeaveServices(uint256 id, address owner, address provider, string title, uint256 price);
-  event CancelServices(uint256 id, address owner, address provider, string title, uint256 price);
+  event ProjectDelivered(uint256 id, address owner, address provider, string title, uint256 price);
+  event DeliveryAccepted(uint256 id, address owner, address provider, string title, uint256 price);
+  event DeliveryRejected(uint256 id, address owner, address provider, string title, uint256 price);
+  event ProjectLeaved(uint256 id, address owner, address provider, string title, uint256 price);
+  event ServicesCancelled(uint256 id, address owner, address provider, string title, uint256 price);
 
   //
   // Implementation
@@ -196,7 +197,7 @@ contract ChainBizz {
 
   // Offer services for the project
   // A provider offers his/her services to perform the project 
-  function offerServices(uint256 _id) public {
+  function submitOffer(uint256 _id) public {
     
     // retrieve the project
     ProjectItem storage project = projects[_id];
@@ -215,9 +216,34 @@ contract ChainBizz {
     // project is under review
     project.status = ProjectStatus.InReview;
 
-    emit OfferServices(_id, msg.sender, project.title, project.price);
+    emit OfferSubmitted(_id, msg.sender, project.title, project.price);
   }
 
+  // Cancel offer made by the provider
+  // A provider cancels his/her offer to perform the project 
+  function cancelOffer(uint256 _id) public {
+    
+    // retrieve the project
+    ProjectItem storage project = projects[_id];
+
+    // ensure that this project exists
+    if (project.owner == address(0x0)) {
+      return;
+    }
+ 
+     // are we the service provider?
+    require(project.provider == msg.sender, "You are not the service provider");
+
+    // is the project in review?
+    require(project.status == ProjectStatus.InReview , "Proposal not in review");
+
+    // project is now available
+    address provider = project.provider;
+    project.status = ProjectStatus.Available;
+    project.provider = address(0x0);
+
+    emit OfferCancelled(_id, msg.sender, provider, project.title, project.price);
+  }
 
   // Accept services from the provider
   // The owner accepts the services offered by the provider 
@@ -269,9 +295,9 @@ contract ChainBizz {
     emit RejectProposal(_id, msg.sender, provider, project.title, project.price);
   }
 
-  // Validate services delivered by the provider
-  // The provider request a validation of the services 
-  function validateServices(uint256 _id) public {
+  // Deliver the project to the customer
+  // The provider delivers the project to the owner 
+  function deliverProject(uint256 _id) public {
     
     // retrieve the project
     ProjectItem storage project = projects[_id];
@@ -290,12 +316,12 @@ contract ChainBizz {
     // project is now validation process
     project.status = ProjectStatus.Validate;
 
-    emit ValidateServices(_id, msg.sender, project.provider, project.title, project.price);
+    emit ProjectDelivered(_id, msg.sender, project.provider, project.title, project.price);
   }
 
-  // Accept services of the provider
-  // The owner accepts the services delivered by the provider 
-  function acceptServices(uint256 _id) public {
+  // Accept the project delivery from the provider
+  // The owner accepts the project delivered by the provider 
+  function acceptDelivery(uint256 _id) public {
     
     // retrieve the project
     ProjectItem storage project = projects[_id];
@@ -314,12 +340,12 @@ contract ChainBizz {
     // project is now completed
     project.status = ProjectStatus.Completed;
 
-    emit CompletedServices(_id, msg.sender, project.provider, project.title, project.price);
+    emit DeliveryAccepted(_id, msg.sender, project.provider, project.title, project.price);
   }
 
-  // Reject services from the provider
-  // The owner rejects the services delivered by the provider 
-  function rejectServices(uint256 _id) public {
+  // Reject the project delivery from the provider
+  // The owner rejects the project delivered by the provider 
+  function rejectDelivery(uint256 _id) public {
     
     // retrieve the project
     ProjectItem storage project = projects[_id];
@@ -340,13 +366,13 @@ contract ChainBizz {
     project.status = ProjectStatus.Available;
     project.provider = address(0x0);
     
-    emit RejectServices(_id, msg.sender, provider, project.title, project.price);
+    emit DeliveryRejected(_id, msg.sender, provider, project.title, project.price);
   }
 
 
-  // Leave services from the provider
-  // The provider leaves the services 
-  function leaveServices(uint256 _id) public {
+  // Leave project from the provider
+  // The provider leaves the project 
+  function leaveProject(uint256 _id) public {
     
     // retrieve the project
     ProjectItem storage project = projects[_id];
@@ -367,7 +393,7 @@ contract ChainBizz {
     project.status = ProjectStatus.Available;
     project.provider = address(0x0);
     
-    emit LeaveServices(_id, msg.sender, provider, project.title, project.price);
+    emit ProjectLeaved(_id, msg.sender, provider, project.title, project.price);
   }
 
   // Cancel services from the ower
@@ -393,7 +419,7 @@ contract ChainBizz {
     project.status = ProjectStatus.Available;
     project.provider = address(0x0);
     
-    emit CancelServices(_id, msg.sender, provider, project.title, project.price);
+    emit ServicesCancelled(_id, msg.sender, provider, project.title, project.price);
   }
 
   //

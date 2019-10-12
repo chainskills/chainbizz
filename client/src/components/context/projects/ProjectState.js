@@ -14,7 +14,8 @@ import {
   UNPUBLISH_PROJECT,
   CLEAR_CURRENT_SELECTION,
   GET_PROJECT,
-  OFFER_SERVICES,
+  SUBMIT_OFFER,
+  CANCEL_OFFER,
   ACCEPT_PROPOSAL,
   REJECT_PROPOSAL,
   VALIDATE_SERVICES,
@@ -22,7 +23,8 @@ import {
   REJECT_SERVICES,
   LEAVE_SERVICES,
   CANCEL_SERVICES,
-  ON_OFFER_SERVICES,
+  ON_SUBMIT_OFFER,
+  ON_CANCEL_OFFER,
   ON_ACCEPT_PROPOSAL,
   ON_REJECT_PROPOSAL,
   ON_VALIDATE_SERVICES,
@@ -44,7 +46,8 @@ const ProjectState = props => {
     showRemove: false,
     showPublish: false,
     showUnpublish: false,
-    showOfferServices: false,
+    showSubmitOffer: false,
+    showCancelOffer: false,
     showAcceptProposal: false,
     showRejectProposal: false,
     showValidateServices: false,
@@ -167,26 +170,45 @@ const ProjectState = props => {
       });
   };
 
-  // Offer sercices to the project
-  const offerServices = (drizzle, drizzleState, projectId) => {
+  // Submit offer of sercices to the project
+  const submitOffer = (drizzle, drizzleState, projectId) => {
     const { ChainBizz } = drizzle.contracts;
     const account = drizzleState.accounts[0];
 
     // offer our services
     ChainBizz.methods
-      .offerServices(projectId)
+      .submitOffer(projectId)
       .send({
         from: account,
         gas: 500000
       })
       .on('receipt', receipt => {
-        dispatch({ type: OFFER_SERVICES, payload: receipt });
+        dispatch({ type: SUBMIT_OFFER, payload: receipt });
       })
       .on('error', err => {
         dispatch({ type: PROJECT_ERROR, payload: err });
       });
   };
 
+  // Cancel offer of sercices to the project
+  const cancelOffer = (drizzle, drizzleState, projectId) => {
+    const { ChainBizz } = drizzle.contracts;
+    const account = drizzleState.accounts[0];
+
+    // offer our services
+    ChainBizz.methods
+      .cancelOffer(projectId)
+      .send({
+        from: account,
+        gas: 500000
+      })
+      .on('receipt', receipt => {
+        dispatch({ type: CANCEL_OFFER, payload: receipt });
+      })
+      .on('error', err => {
+        dispatch({ type: PROJECT_ERROR, payload: err });
+      });
+  };
   // Accept proposal to our project
   const acceptProposal = (drizzle, drizzleState, projectId) => {
     const { ChainBizz } = drizzle.contracts;
@@ -351,9 +373,14 @@ const ProjectState = props => {
     dispatch({ type: ON_UNPUBLISH_PROJECT, payload: projectId });
   };
 
-  // Prepare to offer services
-  const onOfferServices = projectId => {
-    dispatch({ type: ON_OFFER_SERVICES, payload: projectId });
+  // Prepare to submit offer of services
+  const onSubmitOffer = projectId => {
+    dispatch({ type: ON_SUBMIT_OFFER, payload: projectId });
+  };
+
+  // Prepare to cancel offer of services
+  const onCancelOffer = projectId => {
+    dispatch({ type: ON_CANCEL_OFFER, payload: projectId });
   };
 
   // Prepare to accepts proposal
@@ -427,7 +454,8 @@ const ProjectState = props => {
         showRemove: state.showRemove,
         showPublish: state.showPublish,
         showUnpublish: state.showUnpublish,
-        showOfferServices: state.showOfferServices,
+        showSubmitOffer: state.showSubmitOffer,
+        showCancelOffer: state.showCancelOffer,
         showAcceptProposal: state.showAcceptProposal,
         showRejectProposal: state.showRejectProposal,
         showValidateServices: state.showValidateServices,
@@ -444,7 +472,8 @@ const ProjectState = props => {
         onRemoveProject,
         onPublishProject,
         onUnpublishProject,
-        onOfferServices,
+        onSubmitOffer,
+        onCancelOffer,
         onAcceptProposal,
         onRejectProposal,
         onValidateServices,
@@ -452,7 +481,8 @@ const ProjectState = props => {
         onRejectServices,
         onCancelModal,
         acceptServices,
-        offerServices,
+        submitOffer,
+        cancelOffer,
         rejectServices,
         acceptProposal,
         rejectProposal,

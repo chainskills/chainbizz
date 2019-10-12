@@ -69,6 +69,18 @@ const ActionsOwner = ({ projectId, status }) => {
         </a>
       )}
 
+      {status === projectStatus.ONGOING && (
+        <a
+          href={'#!'}
+          onClick={() => {
+            onUnpublishProject(projectId);
+          }}
+          title={'Unpublish'}
+        >
+          <img src={contractDeal} style={{ width: '35px' }} />
+        </a>
+      )}
+
       {status === projectStatus.REVIEW && (
         <span>
           {' '}
@@ -91,18 +103,6 @@ const ActionsOwner = ({ projectId, status }) => {
             <img src={contractReview} style={{ width: '35px' }} />
           </a>
         </span>
-      )}
-
-      {status === projectStatus.ONGOING && (
-        <a
-          href={'#!'}
-          onClick={() => {
-            onUnpublishProject(projectId);
-          }}
-          title={'Unpublish'}
-        >
-          <img src={contractDeal} style={{ width: '35px' }} />
-        </a>
       )}
     </div>
   );

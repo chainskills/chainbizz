@@ -10,7 +10,8 @@ import {
   UNPUBLISH_PROJECT,
   CLEAR_CURRENT_SELECTION,
   GET_PROJECT,
-  OFFER_SERVICES,
+  SUBMIT_OFFER,
+  CANCEL_OFFER,
   ACCEPT_PROPOSAL,
   REJECT_PROPOSAL,
   ACCEPT_SERVICES,
@@ -18,7 +19,8 @@ import {
   VALIDATE_SERVICES,
   LEAVE_SERVICES,
   CANCEL_SERVICES,
-  ON_OFFER_SERVICES,
+  ON_SUBMIT_OFFER,
+  ON_CANCEL_OFFER,
   ON_ACCEPT_PROPOSAL,
   ON_REJECT_PROPOSAL,
   ON_VALIDATE_SERVICES,
@@ -37,7 +39,8 @@ export default (state, action) => {
     case REMOVE_PROJECT:
     case PUBLISH_PROJECT:
     case UNPUBLISH_PROJECT:
-    case OFFER_SERVICES:
+    case SUBMIT_OFFER:
+    case CANCEL_OFFER:
     case ACCEPT_SERVICES:
     case REJECT_SERVICES:
     case VALIDATE_SERVICES:
@@ -77,11 +80,17 @@ export default (state, action) => {
         projectId: action.payload,
         showUnpublish: true
       };
-    case ON_OFFER_SERVICES:
+    case ON_SUBMIT_OFFER:
       return {
         ...state,
         projectId: action.payload,
-        showOfferServices: true
+        showSubmitOffer: true
+      };
+    case ON_CANCEL_OFFER:
+      return {
+        ...state,
+        projectId: action.payload,
+        showCancelOffer: true
       };
     case ON_ACCEPT_PROPOSAL:
       return {
@@ -146,7 +155,8 @@ export default (state, action) => {
         showRemove: false,
         showPublish: false,
         showUnpublish: false,
-        showOfferServices: false,
+        showSubmitOffer: false,
+        showCancelOffer: false,
         showAcceptProposal: false,
         showRejectProposal: false,
         showValidateServices: false,
@@ -165,7 +175,8 @@ export default (state, action) => {
         showRemove: false,
         showPublish: false,
         showUnpublish: false,
-        showOfferServices: false,
+        showSubmitOffer: false,
+        showCancelOffer: false,
         showAcceptProposal: false,
         showRejectProposal: false,
         showValidateServices: false,

@@ -11,7 +11,8 @@ import contractCancel from '../../../assets/images/contract-cancel.svg';
 const ActionsProvider = ({ projectId, status }) => {
   const projectContext = useContext(ProjectContext);
   const {
-    onOfferServices,
+    onSubmitOffer,
+    onCancelOffer,
     onValidateServices,
     onLeaveServices
   } = projectContext;
@@ -24,7 +25,7 @@ const ActionsProvider = ({ projectId, status }) => {
         <a
           href={'#!'}
           onClick={() => {
-            onOfferServices(projectId);
+            onSubmitOffer(projectId);
           }}
           title={'Offer your services'}
         >
@@ -36,9 +37,9 @@ const ActionsProvider = ({ projectId, status }) => {
         <a
           href={'#!'}
           onClick={() => {
-            onLeaveServices(projectId);
+            onCancelOffer(projectId);
           }}
-          title={'Leave your services'}
+          title={'Cancel your offer of services'}
         >
           <img src={contractCancel} style={{ width: '35px' }} />
         </a>

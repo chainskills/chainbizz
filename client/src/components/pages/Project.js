@@ -14,7 +14,8 @@ const Project = ({ drizzle, drizzleState }) => {
     removeProject,
     publishProject,
     unpublishProject,
-    offerServices,
+    submitOffer,
+    cancelOffer,
     leaveServices,
     cancelServices,
     acceptProposal,
@@ -24,7 +25,8 @@ const Project = ({ drizzle, drizzleState }) => {
     showRemove,
     showPublish,
     showUnpublish,
-    showOfferServices,
+    showSubmitOffer,
+    showCancelOffer,
     showLeaveServices,
     showCancelServices,
     showAcceptProposal,
@@ -183,7 +185,7 @@ const Project = ({ drizzle, drizzleState }) => {
     });
   };
 
-  const handleOfferServices = id => {
+  const handleSubmitOffer = id => {
     setDataID(id);
     setModalConfirmationOpen(true);
 
@@ -197,7 +199,35 @@ const Project = ({ drizzle, drizzleState }) => {
       visible: true,
       handle: function(id) {
         setModalConfirmationOpen(false);
-        offerServices(drizzle, drizzleState, id);
+        submitOffer(drizzle, drizzleState, id);
+      }
+    });
+
+    setAction2({
+      title: 'No',
+      visible: true,
+      handle: function() {
+        setModalConfirmationOpen(false);
+        onCancelModal();
+      }
+    });
+  };
+
+  const handleCancelOffer = id => {
+    setDataID(id);
+    setModalConfirmationOpen(true);
+
+    setModalTitle('Cancel your services');
+    setModalDescription(
+      'Are you sure to cancel the offer of your services for this project?'
+    );
+
+    setAction1({
+      title: 'Yes',
+      visible: true,
+      handle: function(id) {
+        setModalConfirmationOpen(false);
+        cancelOffer(drizzle, drizzleState, id);
       }
     });
 
@@ -337,8 +367,10 @@ const Project = ({ drizzle, drizzleState }) => {
         handlePublish(projectId);
       } else if (showUnpublish === true) {
         handleUnpublish(projectId);
-      } else if (showOfferServices === true) {
-        handleOfferServices(projectId);
+      } else if (showSubmitOffer === true) {
+        handleSubmitOffer(projectId);
+      } else if (showCancelOffer === true) {
+        handleCancelOffer(projectId);
       } else if (showLeaveServices === true) {
         handleLeaveServices(projectId);
       } else if (showCancelServices === true) {
@@ -357,9 +389,10 @@ const Project = ({ drizzle, drizzleState }) => {
     showRemove,
     showPublish,
     showUnpublish,
-    showOfferServices,
     showLeaveServices,
-    showCancelServices
+    showCancelServices,
+    showSubmitOffer,
+    showCancelOffer
   ]);
 
   return (
