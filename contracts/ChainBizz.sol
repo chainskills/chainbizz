@@ -55,10 +55,10 @@ contract ChainBizz {
   event AcceptProposal(uint256 id, address owner, address provider, string title, uint256 price);
   event RejectProposal(uint256 id, address owner, address provider, string title, uint256 price);
   event ProjectDelivered(uint256 id, address owner, address provider, string title, uint256 price);
+  event ServicesCancelled(uint256 id, address owner, address provider, string title, uint256 price);
   event DeliveryAccepted(uint256 id, address owner, address provider, string title, uint256 price);
   event DeliveryRejected(uint256 id, address owner, address provider, string title, uint256 price);
-  event ProjectLeaved(uint256 id, address owner, address provider, string title, uint256 price);
-  event ServicesCancelled(uint256 id, address owner, address provider, string title, uint256 price);
+  event ContractCancelled(uint256 id, address owner, address provider, string title, uint256 price);
 
   //
   // Implementation
@@ -319,6 +319,32 @@ contract ChainBizz {
     emit ProjectDelivered(_id, msg.sender, project.provider, project.title, project.price);
   }
 
+   // Cancel services from the provider
+  // The provider cancels the services performed for the project 
+  function cancelServices(uint256 _id) public {
+    
+    // retrieve the project
+    ProjectItem storage project = projects[_id];
+
+    // ensure that this project exists
+    if (project.owner == address(0x0)) {
+      return;
+    }
+ 
+    // are we the service provider?
+    require(project.provider == msg.sender, "You are not the service provider");
+
+    // is the project ongoing?
+    require(project.status == ProjectStatus.OnGoing, "Project not in progress");
+
+    // project becomes available
+    address provider = project.provider;
+    project.status = ProjectStatus.Available;
+    project.provider = address(0x0);
+    
+    emit ServicesCancelled(_id, msg.sender, provider, project.title, project.price);
+  }
+
   // Accept the project delivery from the provider
   // The owner accepts the project delivered by the provider 
   function acceptDelivery(uint256 _id) public {
@@ -361,44 +387,15 @@ contract ChainBizz {
     // is the project in review?
     require(project.status == ProjectStatus.Validate, "Project not in validation process");
 
-    // project becomes available
-    address provider = project.provider;
-    project.status = ProjectStatus.Available;
-    project.provider = address(0x0);
+    // project remains ongoing
+    project.status = ProjectStatus.OnGoing;
     
     emit DeliveryRejected(_id, msg.sender, provider, project.title, project.price);
   }
 
-
-  // Leave project from the provider
-  // The provider leaves the project 
-  function leaveProject(uint256 _id) public {
-    
-    // retrieve the project
-    ProjectItem storage project = projects[_id];
-
-    // ensure that this project exists
-    if (project.owner == address(0x0)) {
-      return;
-    }
- 
-    // are we the service provider?
-    require(project.provider == msg.sender, "You are not the service provider");
-
-    // is the project ongoing?
-    require(project.status == ProjectStatus.OnGoing, "Project not in progress");
-
-    // project becomes available
-    address provider = project.provider;
-    project.status = ProjectStatus.Available;
-    project.provider = address(0x0);
-    
-    emit ProjectLeaved(_id, msg.sender, provider, project.title, project.price);
-  }
-
-  // Cancel services from the ower
-  // The owner cancels the services 
-  function cancelServices(uint256 _id) public {
+  // Contract cancelled by the owner
+  // The owner cancels the contract 
+  function cancelContract(uint256 _id) public {
     
     // retrieve the project
     ProjectItem storage project = projects[_id];
@@ -419,7 +416,7 @@ contract ChainBizz {
     project.status = ProjectStatus.Available;
     project.provider = address(0x0);
     
-    emit ServicesCancelled(_id, msg.sender, provider, project.title, project.price);
+    emit ContractCancelled(_id, msg.sender, provider, project.title, project.price);
   }
 
   //
