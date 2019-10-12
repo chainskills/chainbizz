@@ -14,24 +14,30 @@ const Project = ({ drizzle, drizzleState }) => {
     removeProject,
     publishProject,
     unpublishProject,
-    submitOffer,
-    cancelOffer,
-    leaveServices,
-    cancelServices,
-    acceptProposal,
-    rejectProposal,
-    getProject,
     showEdit,
     showRemove,
     showPublish,
     showUnpublish,
+    submitOffer,
+    cancelOffer,
+    acceptProposal,
+    rejectProposal,
     showSubmitOffer,
     showCancelOffer,
-    showLeaveServices,
-    showCancelServices,
     showAcceptProposal,
     showRejectProposal,
+    deliverProject,
+    cancelServices,
+    acceptDelivery,
+    rejectDelivery,
+    cancelContract,
+    showDeliverProject,
+    showCancelServices,
+    showAcceptDelivery,
+    showRejectDelivery,
+    showCancelContract,
     clearCurrrentSelection,
+    getProject,
     onCancelModal,
     projectId
   } = projectContext;
@@ -54,6 +60,29 @@ const Project = ({ drizzle, drizzleState }) => {
   });
   const [dataID, setDataID] = useState(null);
 
+  const handleNewProject = () => {
+    setDataID(null);
+    clearCurrrentSelection();
+    setModalProjectOpen(true);
+    setAction1({
+      title: 'Save',
+      visible: true,
+      add: function(project) {
+        setModalProjectOpen(false);
+        addProject(drizzle, drizzleState, project);
+      }
+    });
+
+    setAction2({
+      title: 'Cancel',
+      visible: true,
+      handle: function() {
+        setModalProjectOpen(false);
+        onCancelModal();
+      }
+    });
+  };
+
   const handleEditProject = id => {
     setDataID(id);
     clearCurrrentSelection();
@@ -71,29 +100,6 @@ const Project = ({ drizzle, drizzleState }) => {
       update: function(project) {
         setModalProjectOpen(false);
         updateProject(drizzle, drizzleState, id, project);
-      }
-    });
-
-    setAction2({
-      title: 'Cancel',
-      visible: true,
-      handle: function() {
-        setModalProjectOpen(false);
-        onCancelModal();
-      }
-    });
-  };
-
-  const handleNewProject = () => {
-    setDataID(null);
-    clearCurrrentSelection();
-    setModalProjectOpen(true);
-    setAction1({
-      title: 'Save',
-      visible: true,
-      add: function(project) {
-        setModalProjectOpen(false);
-        addProject(drizzle, drizzleState, project);
       }
     });
 
@@ -241,62 +247,6 @@ const Project = ({ drizzle, drizzleState }) => {
     });
   };
 
-  const handleLeaveServices = id => {
-    setDataID(id);
-    setModalConfirmationOpen(true);
-
-    setModalTitle('Leave your services');
-    setModalDescription(
-      'Are you sure to leave your services for this project?'
-    );
-
-    setAction1({
-      title: 'Yes',
-      visible: true,
-      handle: function(id) {
-        setModalConfirmationOpen(false);
-        leaveServices(drizzle, drizzleState, id);
-      }
-    });
-
-    setAction2({
-      title: 'No',
-      visible: true,
-      handle: function() {
-        setModalConfirmationOpen(false);
-        onCancelModal();
-      }
-    });
-  };
-
-  const handleCancelServices = id => {
-    setDataID(id);
-    setModalConfirmationOpen(true);
-
-    setModalTitle('Cancel services');
-    setModalDescription(
-      'Are you sure to cancel the services offered by the provider?'
-    );
-
-    setAction1({
-      title: 'Yes',
-      visible: true,
-      handle: function(id) {
-        setModalConfirmationOpen(false);
-        cancelServices(drizzle, drizzleState, id);
-      }
-    });
-
-    setAction2({
-      title: 'No',
-      visible: true,
-      handle: function() {
-        setModalConfirmationOpen(false);
-        onCancelModal();
-      }
-    });
-  };
-
   const handleAcceptProposal = id => {
     setDataID(id);
     setModalConfirmationOpen(true);
@@ -353,11 +303,147 @@ const Project = ({ drizzle, drizzleState }) => {
     });
   };
 
-  useEffect(() => {
-    console.log('Into useEffect');
-    console.log('showEdit: ' + showEdit);
-    console.log('showRemove: ' + showRemove);
+  const handleDeliverProject = id => {
+    setDataID(id);
+    setModalConfirmationOpen(true);
 
+    setModalTitle('Deliver the project');
+    setModalDescription(
+      'Are you sure to delivery the project to the customer?'
+    );
+
+    setAction1({
+      title: 'Yes',
+      visible: true,
+      handle: function(id) {
+        setModalConfirmationOpen(false);
+        deliverProject(drizzle, drizzleState, id);
+      }
+    });
+
+    setAction2({
+      title: 'No',
+      visible: true,
+      handle: function() {
+        setModalConfirmationOpen(false);
+        onCancelModal();
+      }
+    });
+  };
+
+  const handleCancelServices = id => {
+    setDataID(id);
+    setModalConfirmationOpen(true);
+
+    setModalTitle('Cancel services');
+    setModalDescription(
+      'Are you sure to cancel the services you offered to the customer?'
+    );
+
+    setAction1({
+      title: 'Yes',
+      visible: true,
+      handle: function(id) {
+        setModalConfirmationOpen(false);
+        cancelServices(drizzle, drizzleState, id);
+      }
+    });
+
+    setAction2({
+      title: 'No',
+      visible: true,
+      handle: function() {
+        setModalConfirmationOpen(false);
+        onCancelModal();
+      }
+    });
+  };
+
+  const handleAcceptDelivery = id => {
+    setDataID(id);
+    setModalConfirmationOpen(true);
+
+    setModalTitle('Accept Delivery');
+    setModalDescription(
+      'Are you sure to accept the delivery from the provider?'
+    );
+
+    setAction1({
+      title: 'Yes',
+      visible: true,
+      handle: function(id) {
+        setModalConfirmationOpen(false);
+        acceptDelivery(drizzle, drizzleState, id);
+      }
+    });
+
+    setAction2({
+      title: 'No',
+      visible: true,
+      handle: function() {
+        setModalConfirmationOpen(false);
+        onCancelModal();
+      }
+    });
+  };
+
+  const handleRejectDelivery = id => {
+    setDataID(id);
+    setModalConfirmationOpen(true);
+
+    setModalTitle('Reject Delivery');
+    setModalDescription(
+      'Are you sure to reject the delivery made by the provider?'
+    );
+
+    setAction1({
+      title: 'Yes',
+      visible: true,
+      handle: function(id) {
+        setModalConfirmationOpen(false);
+        rejectDelivery(drizzle, drizzleState, id);
+      }
+    });
+
+    setAction2({
+      title: 'No',
+      visible: true,
+      handle: function() {
+        setModalConfirmationOpen(false);
+        onCancelModal();
+      }
+    });
+  };
+
+  const handleCancelContract = id => {
+    setDataID(id);
+    setModalConfirmationOpen(true);
+
+    setModalTitle('Cancel contract');
+    setModalDescription(
+      'Are you sure to cancel the contract with the provider?'
+    );
+
+    setAction1({
+      title: 'Yes',
+      visible: true,
+      handle: function(id) {
+        setModalConfirmationOpen(false);
+        cancelContract(drizzle, drizzleState, id);
+      }
+    });
+
+    setAction2({
+      title: 'No',
+      visible: true,
+      handle: function() {
+        setModalConfirmationOpen(false);
+        onCancelModal();
+      }
+    });
+  };
+
+  useEffect(() => {
     if (projectId !== null) {
       if (showEdit === true) {
         handleEditProject(projectId);
@@ -371,17 +457,22 @@ const Project = ({ drizzle, drizzleState }) => {
         handleSubmitOffer(projectId);
       } else if (showCancelOffer === true) {
         handleCancelOffer(projectId);
-      } else if (showLeaveServices === true) {
-        handleLeaveServices(projectId);
-      } else if (showCancelServices === true) {
-        handleCancelServices(projectId);
       } else if (showAcceptProposal === true) {
         handleAcceptProposal(projectId);
       } else if (showRejectProposal === true) {
         handleRejectProposal(projectId);
+      } else if (showDeliverProject === true) {
+        handleDeliverProject(projectId);
+      } else if (showCancelServices === true) {
+        handleCancelServices(projectId);
+      } else if (showAcceptDelivery === true) {
+        handleAcceptDelivery(projectId);
+      } else if (showRejectDelivery === true) {
+        handleRejectDelivery(projectId);
+      } else if (showCancelContract === true) {
+        handleCancelContract(projectId);
       }
     }
-
     //eslint-disable-next-line
   }, [
     projectId,
@@ -389,10 +480,15 @@ const Project = ({ drizzle, drizzleState }) => {
     showRemove,
     showPublish,
     showUnpublish,
-    showLeaveServices,
-    showCancelServices,
     showSubmitOffer,
-    showCancelOffer
+    showCancelOffer,
+    showAcceptProposal,
+    showRejectProposal,
+    showDeliveryProject,
+    showCancelServices,
+    showAcceptDelivery,
+    showRejectDelivery,
+    showCancelContract
   ]);
 
   return (

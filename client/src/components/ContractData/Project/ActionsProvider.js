@@ -13,11 +13,9 @@ const ActionsProvider = ({ projectId, status }) => {
   const {
     onSubmitOffer,
     onCancelOffer,
-    onValidateServices,
-    onLeaveServices
+    onDeliverProject,
+    onCancelServices
   } = projectContext;
-
-  console.log(status);
 
   return (
     <div>
@@ -50,21 +48,20 @@ const ActionsProvider = ({ projectId, status }) => {
           <a
             href={'#!'}
             onClick={() => {
-              onValidateServices(projectId);
-            }}
-            title={'Validate your services'}
-          >
-            <img src={projectCompleted} style={{ width: '35px' }} />
-          </a>
-
-          <a
-            href={'#!'}
-            onClick={() => {
-              onLeaveServices(projectId);
+              onCancelServices(projectId);
             }}
             title={'Cancel your services'}
           >
             <img src={contractCancel} style={{ width: '35px' }} />
+          </a>
+          <a
+            href={'#!'}
+            onClick={() => {
+              onDeliverProject(projectId);
+            }}
+            title={'Deliver the project'}
+          >
+            <img src={projectCompleted} style={{ width: '35px' }} />
           </a>
         </span>
       )}

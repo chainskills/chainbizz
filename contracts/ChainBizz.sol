@@ -409,7 +409,7 @@ contract ChainBizz {
     require(project.owner == msg.sender, "You are not the project's owner");
 
     // is the project ongoing?
-    require(project.status == ProjectStatus.OnGoing, "Project not in progress");
+    require((project.status == ProjectStatus.OnGoing) || (project.status == ProjectStatus.Validate), "Project not in progress");
 
    // project becomes available
     address provider = project.provider;
