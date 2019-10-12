@@ -31,7 +31,8 @@ const ActionsProvider = ({ projectId, status }) => {
         </a>
       )}
 
-      {status === projectStatus.REVIEW && (
+      {(status === projectStatus.REVIEW ||
+        status === projectStatus.VALIDATE) && (
         <a
           href={'#!'}
           onClick={() => {

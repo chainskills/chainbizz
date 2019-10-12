@@ -102,7 +102,7 @@ const NavBar = ({ drizzle, drizzleState }) => {
           <a href='/myprojects'>My projects</a>
         </li>
         <li>
-          <a href='/mycontracts'>My contracts</a>
+          <a href='/mycontracts'>My ongoing contracts</a>
         </li>
         <li>
           <a href='/myoffers'>My offers</a>
@@ -112,6 +112,21 @@ const NavBar = ({ drizzle, drizzleState }) => {
         </li>
         <li>
           <a href='/myreviews'>Offers to review</a>
+        </li>
+        <li>
+          <div className='divider'></div>
+        </li>
+        <li>
+          <a href='/deliveries'>Deliveries to review</a>
+        </li>
+        <li>
+          <div className='divider'></div>
+        </li>
+        <li>
+          <a href='/completed'>Contracts completed</a>
+        </li>
+        <li>
+          <a href='/canceled'>Contracts canceled</a>
         </li>
       </ul>
       <a href='#!' data-target='slide-out' className='sidenav-trigger'>

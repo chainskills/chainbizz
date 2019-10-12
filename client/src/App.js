@@ -13,8 +13,11 @@ import Project from './components/pages/Project';
 import MyProjects from './components/pages/MyProjects';
 import PublishedProjects from './components/pages/PublishedProjects';
 import MyOffers from './components/pages/MyOffers';
-import MyReviews from './components/pages/MyReviews';
+import OffersReview from './components/pages/OffersReview';
 import MyContracts from './components/pages/MyContracts';
+import DeliveriesReview from './components/pages/DeliveriesReview';
+import Completed from './components/pages/Completed';
+import Canceled from './components/pages/Canceled';
 
 const App = ({ drizzleContext }) => {
   useEffect(() => {
@@ -76,7 +79,10 @@ const App = ({ drizzleContext }) => {
                   exact
                   path='/myreviews'
                   render={() => (
-                    <MyReviews drizzle={drizzle} drizzleState={drizzleState} />
+                    <OffersReview
+                      drizzle={drizzle}
+                      drizzleState={drizzleState}
+                    />
                   )}
                 />
 
@@ -88,6 +94,33 @@ const App = ({ drizzleContext }) => {
                       drizzle={drizzle}
                       drizzleState={drizzleState}
                     />
+                  )}
+                />
+
+                <Route
+                  exact
+                  path='/deliveries'
+                  render={() => (
+                    <DeliveriesReview
+                      drizzle={drizzle}
+                      drizzleState={drizzleState}
+                    />
+                  )}
+                />
+
+                <Route
+                  exact
+                  path='/completed'
+                  render={() => (
+                    <Completed drizzle={drizzle} drizzleState={drizzleState} />
+                  )}
+                />
+
+                <Route
+                  exact
+                  path='/canceled'
+                  render={() => (
+                    <Canceled drizzle={drizzle} drizzleState={drizzleState} />
                   )}
                 />
 

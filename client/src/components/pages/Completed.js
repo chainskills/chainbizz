@@ -4,13 +4,13 @@ import 'materialize-css/dist/css/materialize.min.css';
 
 import ProjectContractData from '../ContractData/Project/ProjectContractData';
 
-const MyReviews = ({ drizzle, drizzleState }) => {
+const Completed = ({ drizzle, drizzleState }) => {
   const [dataKeys, setDataKeys] = useState(null);
 
   useEffect(() => {
     const { ChainBizz } = drizzle.contracts;
     setDataKeys(
-      ChainBizz.methods.getMyReviews.cacheCall({
+      ChainBizz.methods.getCompleted.cacheCall({
         from: drizzleState.accounts[0]
       })
     );
@@ -18,23 +18,25 @@ const MyReviews = ({ drizzle, drizzleState }) => {
     //eslint-disable-next-line
   }, []);
 
-  // Retrieve all projects that required a reviews from the owner
+  // Retrieve all projects IDs linked to the current owner
 
   // prepare projects cards
-  let allProjects = [];
+  let allCompleted = [];
   let projectIds = null;
   if (dataKeys !== null) {
     if (
-      drizzleState.contracts.ChainBizz.getMyReviews[dataKeys] &&
-      drizzleState.contracts.ChainBizz.getMyReviews[dataKeys].value
+      drizzleState.contracts.ChainBizz.getCompleted[dataKeys] &&
+      drizzleState.contracts.ChainBizz.getCompleted[dataKeys].value
     ) {
       projectIds =
-        drizzleState.contracts.ChainBizz.getMyReviews[dataKeys].value;
+        drizzleState.contracts.ChainBizz.getCompleted[dataKeys].value;
     }
 
     if (projectIds !== null) {
       for (let i = 0; i < projectIds.length; i++) {
         const projectId = projectIds[i];
+
+        console.log('Project Id: ' + projectId);
 
         const projectDetail = (
           <ProjectContractData
@@ -45,16 +47,16 @@ const MyReviews = ({ drizzle, drizzleState }) => {
           />
         );
 
-        allProjects.push(projectDetail);
+        allCompleted.push(projectDetail);
       }
     }
   }
 
   return (
     <div>
-      <div className='row'>{allProjects}</div>
+      <div className='row'>{allCompleted}</div>
     </div>
   );
 };
 
-export default MyReviews;
+export default Completed;

@@ -484,7 +484,7 @@ const Project = ({ drizzle, drizzleState }) => {
     showCancelOffer,
     showAcceptProposal,
     showRejectProposal,
-    showDeliveryProject,
+    showDeliverProject,
     showCancelServices,
     showAcceptDelivery,
     showRejectDelivery,

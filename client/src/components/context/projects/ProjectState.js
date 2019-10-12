@@ -390,12 +390,12 @@ const ProjectState = props => {
   };
 
   // Prepare the delivery of the project
-  const onDeliveryProject = projectId => {
+  const onDeliverProject = projectId => {
     dispatch({ type: ON_DELIVER_PROJECT, payload: projectId });
   };
 
   // Cancel services
-  const onCancelService = projectId => {
+  const onCancelServices = projectId => {
     dispatch({ type: ON_CANCEL_SERVICES, payload: projectId });
   };
 
@@ -459,7 +459,7 @@ const ProjectState = props => {
         showCancelOffer: state.showCancelOffer,
         showAcceptProposal: state.showAcceptProposal,
         showRejectProposal: state.showRejectProposal,
-        showDeliverProject: state.showValidateServices,
+        showDeliverProject: state.showDeliverProject,
         showCancelServices: state.showCancelServices,
         showAcceptDelivery: state.showAcceptDelivery,
         showRejectDelivery: state.showRejectDelivery,
@@ -486,8 +486,8 @@ const ProjectState = props => {
         acceptDelivery,
         rejectDelivery,
         cancelContract,
-        onDeliveryProject,
-        onCancelService,
+        onDeliverProject,
+        onCancelServices,
         onAcceptDelivery,
         onRejectDelivery,
         onCancelContract,

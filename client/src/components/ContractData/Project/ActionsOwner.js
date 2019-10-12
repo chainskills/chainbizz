@@ -23,7 +23,6 @@ const ActionsOwner = ({ projectId, status }) => {
     onCancelContract
   } = projectContext;
 
-  console.log(status);
   return (
     <div>
       {status === projectStatus.DRAFT && (
@@ -58,8 +57,7 @@ const ActionsOwner = ({ projectId, status }) => {
         </span>
       )}
 
-      {(status === projectStatus.AVAILABLE ||
-        status === projectStatus.ONGOING) && (
+      {status === projectStatus.AVAILABLE && (
         <a
           href={'#!'}
           onClick={() => {

@@ -4,13 +4,13 @@ import 'materialize-css/dist/css/materialize.min.css';
 
 import ProjectContractData from '../ContractData/Project/ProjectContractData';
 
-const MyContracts = ({ drizzle, drizzleState }) => {
+const DeliveriesReview = ({ drizzle, drizzleState }) => {
   const [dataKeys, setDataKeys] = useState(null);
 
   useEffect(() => {
     const { ChainBizz } = drizzle.contracts;
     setDataKeys(
-      ChainBizz.methods.getMyContracts.cacheCall({
+      ChainBizz.methods.getDeliveries.cacheCall({
         from: drizzleState.accounts[0]
       })
     );
@@ -21,15 +21,15 @@ const MyContracts = ({ drizzle, drizzleState }) => {
   // Retrieve all projects IDs linked to the current owner
 
   // prepare projects cards
-  let allContracts = [];
+  let allDeliveries = [];
   let projectIds = null;
   if (dataKeys !== null) {
     if (
-      drizzleState.contracts.ChainBizz.getMyContracts[dataKeys] &&
-      drizzleState.contracts.ChainBizz.getMyContracts[dataKeys].value
+      drizzleState.contracts.ChainBizz.getDeliveries[dataKeys] &&
+      drizzleState.contracts.ChainBizz.getDeliveries[dataKeys].value
     ) {
       projectIds =
-        drizzleState.contracts.ChainBizz.getMyContracts[dataKeys].value;
+        drizzleState.contracts.ChainBizz.getDeliveries[dataKeys].value;
     }
 
     if (projectIds !== null) {
@@ -47,16 +47,16 @@ const MyContracts = ({ drizzle, drizzleState }) => {
           />
         );
 
-        allContracts.push(projectDetail);
+        allDeliveries.push(projectDetail);
       }
     }
   }
 
   return (
     <div>
-      <div className='row'>{allContracts}</div>
+      <div className='row'>{allDeliveries}</div>
     </div>
   );
 };
 
-export default MyContracts;
+export default DeliveriesReview;

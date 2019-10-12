@@ -390,7 +390,7 @@ contract ChainBizz {
     // project remains ongoing
     project.status = ProjectStatus.OnGoing;
     
-    emit DeliveryRejected(_id, msg.sender, provider, project.title, project.price);
+    emit DeliveryRejected(_id, msg.sender, project.provider, project.title, project.price);
   }
 
   // Contract cancelled by the owner
@@ -411,12 +411,10 @@ contract ChainBizz {
     // is the project ongoing?
     require((project.status == ProjectStatus.OnGoing) || (project.status == ProjectStatus.Validate), "Project not in progress");
 
-   // project becomes available
-    address provider = project.provider;
-    project.status = ProjectStatus.Available;
-    project.provider = address(0x0);
+   // contract becomes canceled
+    project.status = ProjectStatus.Canceled;
     
-    emit ContractCancelled(_id, msg.sender, provider, project.title, project.price);
+    emit ContractCancelled(_id, msg.sender, project.provider, project.title, project.price);
   }
 
   //
@@ -519,7 +517,7 @@ contract ChainBizz {
     uint256 numberOfProjects = 0;
     for (uint i = 1; i <= projectsCounter; i++) {
       // keep the ID of the project owned by the caller
-      if (projects[i].owner == msg.sender) {
+      if ((projects[i].owner == msg.sender) && (projects[i].status != ProjectStatus.Completed) && (projects[i].status != ProjectStatus.Canceled)) {
         projectIDs[numberOfProjects] = projects[i].id;
 
         numberOfProjects = numberOfProjects.add(1);
@@ -606,8 +604,9 @@ contract ChainBizz {
     // iterate over projects
     uint256 numberOfProjects = 0;
     for (uint256 i = 1; i <= projectsCounter; i++) {
-      // get only ongoing contracts owner by the contract's owner or the service provider 
-      if (((projects[i].owner == msg.sender) || (projects[i].provider == msg.sender)) && (projects[i].status == ProjectStatus.OnGoing)) {
+      // get only ongoing and under validation contracts owned by the contract's owner or the service provider 
+      if (((projects[i].owner == msg.sender) || (projects[i].provider == msg.sender)) && 
+      ((projects[i].status == ProjectStatus.OnGoing) || (projects[i].status == ProjectStatus.Validate))) {
         projectIDs[numberOfProjects] = projects[i].id;
         numberOfProjects = numberOfProjects.add(1);
       }
@@ -620,5 +619,89 @@ contract ChainBizz {
     }
 
     return myContracts;
+  }
+
+  // return all deliveries to review
+  function getDeliveries() view public returns (uint256[] memory) {
+    if (projectsCounter == 0) {
+      return new uint[](0);
+    }
+
+    // prepare output array
+    uint256[] memory projectIDs = new uint[](projectsCounter);
+
+    // iterate over projects
+    uint256 numberOfProjects = 0;
+    for (uint256 i = 1; i <= projectsCounter; i++) {
+      // get only ongoing contracts owner by the contract's owner or the service provider 
+      if (((projects[i].owner == msg.sender) || (projects[i].provider == msg.sender)) && (projects[i].status == ProjectStatus.Validate)) {
+        projectIDs[numberOfProjects] = projects[i].id;
+        numberOfProjects = numberOfProjects.add(1);
+      }
+    }
+
+    // copy the project ID array into a smaller array
+    uint256[] memory myDeliveries = new uint[](numberOfProjects);
+    for (uint j = 0; j < numberOfProjects; j++) {
+      myDeliveries[j] = projectIDs[j];
+    }
+
+    return myDeliveries;
+  }
+
+  // return all completed contracts
+  function getCompleted() view public returns (uint256[] memory) {
+    if (projectsCounter == 0) {
+      return new uint[](0);
+    }
+
+    // prepare output array
+    uint256[] memory projectIDs = new uint[](projectsCounter);
+
+    // iterate over projects
+    uint256 numberOfProjects = 0;
+    for (uint256 i = 1; i <= projectsCounter; i++) {
+      // get only ongoing contracts owner by the contract's owner or the service provider 
+      if (((projects[i].owner == msg.sender) || (projects[i].provider == msg.sender)) && (projects[i].status == ProjectStatus.Completed)) {
+        projectIDs[numberOfProjects] = projects[i].id;
+        numberOfProjects = numberOfProjects.add(1);
+      }
+    }
+
+    // copy the project ID array into a smaller array
+    uint256[] memory myCompleted = new uint[](numberOfProjects);
+    for (uint j = 0; j < numberOfProjects; j++) {
+      myCompleted[j] = projectIDs[j];
+    }
+
+    return myCompleted;
+  }
+
+  // return all canceled contracts
+  function getCanceled() view public returns (uint256[] memory) {
+    if (projectsCounter == 0) {
+      return new uint[](0);
+    }
+
+    // prepare output array
+    uint256[] memory projectIDs = new uint[](projectsCounter);
+
+    // iterate over projects
+    uint256 numberOfProjects = 0;
+    for (uint256 i = 1; i <= projectsCounter; i++) {
+      // get only ongoing contracts owner by the contract's owner or the service provider 
+      if (((projects[i].owner == msg.sender) || (projects[i].provider == msg.sender)) && (projects[i].status == ProjectStatus.Canceled)) {
+        projectIDs[numberOfProjects] = projects[i].id;
+        numberOfProjects = numberOfProjects.add(1);
+      }
+    }
+
+    // copy the project ID array into a smaller array
+    uint256[] memory myCanceled = new uint[](numberOfProjects);
+    for (uint j = 0; j < numberOfProjects; j++) {
+      myCanceled[j] = projectIDs[j];
+    }
+
+    return myCanceled;
   }
 }
