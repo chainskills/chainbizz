@@ -1,34 +1,34 @@
 import {
   ADD_PROJECT,
+  UPDATE_PROJECT,
+  REMOVE_PROJECT,
+  PUBLISH_PROJECT,
+  UNPUBLISH_PROJECT,
   ON_EDIT_PROJECT,
   ON_REMOVE_PROJECT,
   ON_PUBLISH_PROJECT,
   ON_UNPUBLISH_PROJECT,
-  REMOVE_PROJECT,
-  UPDATE_PROJECT,
-  PUBLISH_PROJECT,
-  UNPUBLISH_PROJECT,
-  CLEAR_CURRENT_SELECTION,
-  GET_PROJECT,
   SUBMIT_OFFER,
   CANCEL_OFFER,
   ACCEPT_PROPOSAL,
   REJECT_PROPOSAL,
-  ACCEPT_SERVICES,
-  REJECT_SERVICES,
-  VALIDATE_SERVICES,
-  LEAVE_SERVICES,
-  CANCEL_SERVICES,
   ON_SUBMIT_OFFER,
   ON_CANCEL_OFFER,
   ON_ACCEPT_PROPOSAL,
   ON_REJECT_PROPOSAL,
-  ON_VALIDATE_SERVICES,
-  ON_ACCEPT_SERVICES,
-  ON_REJECT_SERVICES,
-  ON_LEAVE_SERVICES,
+  DELIVER_PROJECT,
+  CANCEL_SERVICES,
+  ACCEPT_DELIVERY,
+  REJECT_DELIVERY,
+  CANCEL_CONTRACT,
+  ON_DELIVER_PROJECT,
   ON_CANCEL_SERVICES,
+  ON_ACCEPT_DELIVERY,
+  ON_REJECT_DELIVERY,
+  ON_CANCEL_CONTRACT,
   ON_CANCEL_MODAL,
+  CLEAR_CURRENT_SELECTION,
+  GET_PROJECT,
   PROJECT_ERROR
 } from '../types';
 
@@ -41,16 +41,13 @@ export default (state, action) => {
     case UNPUBLISH_PROJECT:
     case SUBMIT_OFFER:
     case CANCEL_OFFER:
-    case ACCEPT_SERVICES:
-    case REJECT_SERVICES:
-    case VALIDATE_SERVICES:
     case ACCEPT_PROPOSAL:
     case REJECT_PROPOSAL:
-    case LEAVE_SERVICES:
+    case DELIVER_PROJECT:
     case CANCEL_SERVICES:
-    case ACCEPT_SERVICES:
-    case REJECT_SERVICES:
-    case VALIDATE_SERVICES:
+    case ACCEPT_DELIVERY:
+    case REJECT_DELIVERY:
+    case CANCEL_CONTRACT:
       return {
         ...state,
         project: action.payload,
@@ -104,29 +101,11 @@ export default (state, action) => {
         projectId: action.payload,
         showRejectProposal: true
       };
-    case ON_VALIDATE_SERVICES:
+    case ON_DELIVER_PROJECT:
       return {
         ...state,
         projectId: action.payload,
-        showValidateServices: true
-      };
-    case ON_ACCEPT_SERVICES:
-      return {
-        ...state,
-        projectId: action.payload,
-        showAcceptServices: true
-      };
-    case ON_REJECT_SERVICES:
-      return {
-        ...state,
-        projectId: action.payload,
-        showRejectServices: true
-      };
-    case ON_LEAVE_SERVICES:
-      return {
-        ...state,
-        projectId: action.payload,
-        showLeaveServices: true
+        showDeliverProject: true
       };
     case ON_CANCEL_SERVICES:
       return {
@@ -134,6 +113,25 @@ export default (state, action) => {
         projectId: action.payload,
         showCancelServices: true
       };
+    case ON_ACCEPT_DELIVERY:
+      return {
+        ...state,
+        projectId: action.payload,
+        showAcceptDelivery: true
+      };
+    case ON_REJECT_DELIVERY:
+      return {
+        ...state,
+        projectId: action.payload,
+        showRejectDelivery: true
+      };
+    case ON_CANCEL_CONTRACT:
+      return {
+        ...state,
+        projectId: action.payload,
+        showCancelContract: true
+      };
+
     case GET_PROJECT:
       return {
         ...state,
@@ -148,9 +146,6 @@ export default (state, action) => {
     case ON_CANCEL_MODAL:
       return {
         ...state,
-        current: null,
-        projectId: null,
-        loading: false,
         showEdit: false,
         showRemove: false,
         showPublish: false,
@@ -159,11 +154,11 @@ export default (state, action) => {
         showCancelOffer: false,
         showAcceptProposal: false,
         showRejectProposal: false,
-        showValidateServices: false,
-        showAcceptServices: false,
-        showRejectServices: false,
-        showLeaveServices: false,
-        showCancelServices: false
+        showDeliverProject: false,
+        showCancelServices: false,
+        showAcceptDelivery: false,
+        showRejectDelivery: false,
+        showCancelContract: false
       };
     case CLEAR_CURRENT_SELECTION:
       return {
@@ -171,7 +166,7 @@ export default (state, action) => {
         current: null,
         projectId: null,
         loading: false,
-        showEdit: false,
+        sshowEdit: false,
         showRemove: false,
         showPublish: false,
         showUnpublish: false,
@@ -179,11 +174,11 @@ export default (state, action) => {
         showCancelOffer: false,
         showAcceptProposal: false,
         showRejectProposal: false,
-        showValidateServices: false,
-        showAcceptServices: false,
-        showRejectServices: false,
-        showLeaveServices: false,
-        showCancelServices: false
+        showDeliverProject: false,
+        showCancelServices: false,
+        showAcceptDelivery: false,
+        showRejectDelivery: false,
+        showCancelContract: false
       };
     default:
       return state;

@@ -4,35 +4,35 @@ import projectReducer from './projectReducer';
 
 import {
   ADD_PROJECT,
-  ON_EDIT_PROJECT,
-  ON_REMOVE_PROJECT,
-  ON_PUBLISH_PROJECT,
-  ON_UNPUBLISH_PROJECT,
   UPDATE_PROJECT,
   REMOVE_PROJECT,
   PUBLISH_PROJECT,
   UNPUBLISH_PROJECT,
-  CLEAR_CURRENT_SELECTION,
-  GET_PROJECT,
+  ON_EDIT_PROJECT,
+  ON_REMOVE_PROJECT,
+  ON_PUBLISH_PROJECT,
+  ON_UNPUBLISH_PROJECT,
   SUBMIT_OFFER,
   CANCEL_OFFER,
   ACCEPT_PROPOSAL,
   REJECT_PROPOSAL,
-  VALIDATE_SERVICES,
-  ACCEPT_SERVICES,
-  REJECT_SERVICES,
-  LEAVE_SERVICES,
-  CANCEL_SERVICES,
   ON_SUBMIT_OFFER,
   ON_CANCEL_OFFER,
   ON_ACCEPT_PROPOSAL,
   ON_REJECT_PROPOSAL,
-  ON_VALIDATE_SERVICES,
-  ON_ACCEPT_SERVICES,
-  ON_REJECT_SERVICES,
-  ON_LEAVE_SERVICES,
+  DELIVER_PROJECT,
+  CANCEL_SERVICES,
+  ACCEPT_DELIVERY,
+  REJECT_DELIVERY,
+  CANCEL_CONTRACT,
+  ON_DELIVER_PROJECT,
   ON_CANCEL_SERVICES,
+  ON_ACCEPT_DELIVERY,
+  ON_REJECT_DELIVERY,
+  ON_CANCEL_CONTRACT,
   ON_CANCEL_MODAL,
+  CLEAR_CURRENT_SELECTION,
+  GET_PROJECT,
   PROJECT_ERROR
 } from '../types';
 
@@ -50,11 +50,11 @@ const ProjectState = props => {
     showCancelOffer: false,
     showAcceptProposal: false,
     showRejectProposal: false,
-    showValidateServices: false,
-    showAcceptServices: false,
-    showRejectServices: false,
-    showLeaveServices: false,
-    showCancelServices: false
+    showDeliverProject: false,
+    showCancelServices: false,
+    showAcceptDelivery: false,
+    showRejectDelivery: false,
+    showCancelContract: false
   };
 
   const [state, dispatch] = useReducer(projectReducer, initialState);
@@ -249,87 +249,27 @@ const ProjectState = props => {
       });
   };
 
-  // Validate sercices
-  const validateServices = (drizzle, drizzleState, projectId) => {
+  // Deliver the project to the owner
+  const deliverProject = (drizzle, drizzleState, projectId) => {
     const { ChainBizz } = drizzle.contracts;
     const account = drizzleState.accounts[0];
 
     // validate services of the provider
     ChainBizz.methods
-      .validateServices(projectId)
+      .deliverProject(projectId)
       .send({
         from: account,
         gas: 500000
       })
       .on('receipt', receipt => {
-        dispatch({ type: VALIDATE_SERVICES, payload: receipt });
+        dispatch({ type: DELIVER_PROJECT, payload: receipt });
       })
       .on('error', err => {
         dispatch({ type: PROJECT_ERROR, payload: err });
       });
   };
 
-  // Accept sercices from the provider
-  const acceptServices = (drizzle, drizzleState, projectId) => {
-    const { ChainBizz } = drizzle.contracts;
-    const account = drizzleState.accounts[0];
-
-    // accept services
-    ChainBizz.methods
-      .acceptServices(projectId)
-      .send({
-        from: account,
-        gas: 500000
-      })
-      .on('receipt', receipt => {
-        dispatch({ type: ACCEPT_SERVICES, payload: receipt });
-      })
-      .on('error', err => {
-        dispatch({ type: PROJECT_ERROR, payload: err });
-      });
-  };
-
-  // Reject sercices of the provider
-  const rejectServices = (drizzle, drizzleState, projectId) => {
-    const { ChainBizz } = drizzle.contracts;
-    const account = drizzleState.accounts[0];
-
-    // reject services
-    ChainBizz.methods
-      .rejectServices(projectId)
-      .send({
-        from: account,
-        gas: 500000
-      })
-      .on('receipt', receipt => {
-        dispatch({ type: REJECT_SERVICES, payload: receipt });
-      })
-      .on('error', err => {
-        dispatch({ type: PROJECT_ERROR, payload: err });
-      });
-  };
-
-  // Leave services from the provider
-  const leaveServices = (drizzle, drizzleState, projectId) => {
-    const { ChainBizz } = drizzle.contracts;
-    const account = drizzleState.accounts[0];
-
-    // leave services
-    ChainBizz.methods
-      .leaveServices(projectId)
-      .send({
-        from: account,
-        gas: 500000
-      })
-      .on('receipt', receipt => {
-        dispatch({ type: LEAVE_SERVICES, payload: receipt });
-      })
-      .on('error', err => {
-        dispatch({ type: PROJECT_ERROR, payload: err });
-      });
-  };
-
-  // Cancel sercices from the provider
+  // Cancel services to deliver to the owner
   const cancelServices = (drizzle, drizzleState, projectId) => {
     const { ChainBizz } = drizzle.contracts;
     const account = drizzleState.accounts[0];
@@ -349,6 +289,66 @@ const ProjectState = props => {
       });
   };
 
+  // Accept delivery sent by the provider
+  const acceptDelivery = (drizzle, drizzleState, projectId) => {
+    const { ChainBizz } = drizzle.contracts;
+    const account = drizzleState.accounts[0];
+
+    // accept delivery
+    ChainBizz.methods
+      .acceptDelivery(projectId)
+      .send({
+        from: account,
+        gas: 500000
+      })
+      .on('receipt', receipt => {
+        dispatch({ type: ACCEPT_DELIVERY, payload: receipt });
+      })
+      .on('error', err => {
+        dispatch({ type: PROJECT_ERROR, payload: err });
+      });
+  };
+
+  // Reject delivery sent by the provider
+  const rejectDelivery = (drizzle, drizzleState, projectId) => {
+    const { ChainBizz } = drizzle.contracts;
+    const account = drizzleState.accounts[0];
+
+    // reject the delivery
+    ChainBizz.methods
+      .rejectDelivery(projectId)
+      .send({
+        from: account,
+        gas: 500000
+      })
+      .on('receipt', receipt => {
+        dispatch({ type: REJECT_DELIVERY, payload: receipt });
+      })
+      .on('error', err => {
+        dispatch({ type: PROJECT_ERROR, payload: err });
+      });
+  };
+
+  // Cancel the contract with the provider
+  const cancelContract = (drizzle, drizzleState, projectId) => {
+    const { ChainBizz } = drizzle.contracts;
+    const account = drizzleState.accounts[0];
+
+    // cancel contract
+    ChainBizz.methods
+      .cancelContract(projectId)
+      .send({
+        from: account,
+        gas: 500000
+      })
+      .on('receipt', receipt => {
+        dispatch({ type: CANCEL_CONTRACT, payload: receipt });
+      })
+      .on('error', err => {
+        dispatch({ type: PROJECT_ERROR, payload: err });
+      });
+  };
+
   // Prepare to edit a project
   const onEditProject = projectId => {
     dispatch({ type: ON_EDIT_PROJECT, payload: projectId });
@@ -359,10 +359,6 @@ const ProjectState = props => {
     dispatch({ type: ON_REMOVE_PROJECT, payload: projectId });
   };
 
-  // Cancel the modal form
-  const onCancelModal = () => {
-    dispatch({ type: ON_CANCEL_MODAL });
-  };
   // Prepare to publish a project
   const onPublishProject = projectId => {
     dispatch({ type: ON_PUBLISH_PROJECT, payload: projectId });
@@ -393,29 +389,34 @@ const ProjectState = props => {
     dispatch({ type: ON_REJECT_PROPOSAL, payload: projectId });
   };
 
-  // Prepare the validation of the services
-  const onValidateServices = projectId => {
-    dispatch({ type: ON_VALIDATE_SERVICES, payload: projectId });
-  };
-
-  // Prepare to accepts services
-  const onAcceptServices = projectId => {
-    dispatch({ type: ON_ACCEPT_SERVICES, payload: projectId });
-  };
-
-  // Prepare to reject services
-  const onRejectServices = projectId => {
-    dispatch({ type: ON_REJECT_SERVICES, payload: projectId });
-  };
-
-  // Leave services
-  const onLeaveService = projectId => {
-    dispatch({ type: ON_LEAVE_SERVICES, payload: projectId });
+  // Prepare the delivery of the project
+  const onDeliveryProject = projectId => {
+    dispatch({ type: ON_DELIVER_PROJECT, payload: projectId });
   };
 
   // Cancel services
-  const onCanceService = projectId => {
+  const onCancelService = projectId => {
     dispatch({ type: ON_CANCEL_SERVICES, payload: projectId });
+  };
+
+  // Prepare to accepts the delivery
+  const onAcceptDelivery = projectId => {
+    dispatch({ type: ON_ACCEPT_DELIVERY, payload: projectId });
+  };
+
+  // Prepare to reject the delivery
+  const onRejectDelivery = projectId => {
+    dispatch({ type: ON_REJECT_DELIVERY, payload: projectId });
+  };
+
+  // Prepare to cancel the contract
+  const onCancelContract = projectId => {
+    dispatch({ type: ON_CANCEL_CONTRACT, payload: projectId });
+  };
+
+  // Cancel the modal form
+  const onCancelModal = () => {
+    dispatch({ type: ON_CANCEL_MODAL });
   };
 
   // Get a project
@@ -458,11 +459,11 @@ const ProjectState = props => {
         showCancelOffer: state.showCancelOffer,
         showAcceptProposal: state.showAcceptProposal,
         showRejectProposal: state.showRejectProposal,
-        showValidateServices: state.showValidateServices,
-        showAcceptServices: state.showAcceptServices,
-        showRejectServices: state.showRejectServices,
-        showLeaveServices: state.showLeaveServices,
+        showDeliverProject: state.showValidateServices,
         showCancelServices: state.showCancelServices,
+        showAcceptDelivery: state.showAcceptDelivery,
+        showRejectDelivery: state.showRejectDelivery,
+        showCancelContract: state.showCancelContract,
         addProject,
         updateProject,
         removeProject,
@@ -472,22 +473,25 @@ const ProjectState = props => {
         onRemoveProject,
         onPublishProject,
         onUnpublishProject,
+        submitOffer,
+        cancelOffer,
+        acceptProposal,
+        rejectProposal,
         onSubmitOffer,
         onCancelOffer,
         onAcceptProposal,
         onRejectProposal,
-        onValidateServices,
-        onAcceptServices,
-        onRejectServices,
-        onCancelModal,
-        acceptServices,
-        submitOffer,
-        cancelOffer,
-        rejectServices,
-        acceptProposal,
-        rejectProposal,
-        leaveServices,
+        deliverProject,
         cancelServices,
+        acceptDelivery,
+        rejectDelivery,
+        cancelContract,
+        onDeliveryProject,
+        onCancelService,
+        onAcceptDelivery,
+        onRejectDelivery,
+        onCancelContract,
+        onCancelModal,
         getProject,
         clearCurrrentSelection
       }}
