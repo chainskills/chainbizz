@@ -1,1 +1,1 @@
-# ChainBizz - Your Decentalised Business Platform
+# ChainBizz - Your Decentralised Business Platform
