@@ -36,8 +36,6 @@ const Completed = ({ drizzle, drizzleState }) => {
       for (let i = 0; i < projectIds.length; i++) {
         const projectId = projectIds[i];
 
-        console.log('Project Id: ' + projectId);
-
         const projectDetail = (
           <ProjectContractData
             drizzle={drizzle}

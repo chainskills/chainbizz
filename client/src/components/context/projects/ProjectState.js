@@ -210,16 +210,22 @@ const ProjectState = props => {
       });
   };
   // Accept proposal to our project
-  const acceptProposal = (drizzle, drizzleState, projectId) => {
+  const acceptProposal = async (drizzle, drizzleState, projectId) => {
     const { ChainBizz } = drizzle.contracts;
     const account = drizzleState.accounts[0];
+
+    // retrieve the price of the contract
+    const project = await ChainBizz.methods.getProject(projectId).call({
+      from: account
+    });
 
     // accept services
     ChainBizz.methods
       .acceptProposal(projectId)
       .send({
         from: account,
-        gas: 500000
+        gas: 500000,
+        value: project.price
       })
       .on('receipt', receipt => {
         dispatch({ type: ACCEPT_PROPOSAL, payload: receipt });

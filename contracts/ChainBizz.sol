@@ -28,8 +28,8 @@ contract ChainBizz {
   // Description of a project
   struct ProjectItem {
     uint256 id;               // unique ID
-    address owner;
-    address provider;             
+    address payable owner;
+    address payable provider;             
     string title;
     string description;
     uint256 price;            // price in Wei
@@ -247,7 +247,7 @@ contract ChainBizz {
 
   // Accept services from the provider
   // The owner accepts the services offered by the provider 
-  function acceptProposal(uint256 _id) public {
+  function acceptProposal(uint256 _id) payable public {
     
     // retrieve the project
     ProjectItem storage project = projects[_id];
@@ -263,6 +263,9 @@ contract ChainBizz {
     // is the project in review?
     require(project.status == ProjectStatus.InReview, "Proposal not in review");
 
+    // is the owner has deposit the requeste amount?
+    require(msg.value == project.price, "Your deposit doesn't match the contract's price");
+
     // project is now ongoing
     project.status = ProjectStatus.OnGoing;
 
@@ -271,7 +274,7 @@ contract ChainBizz {
 
   // Reject proposal from the provider
   // The owner rejects the services offered by the provider 
-  function rejectProposal(uint256 _id) public {
+  function rejectProposal(uint256 _id) payable public {
     
     // retrieve the project
     ProjectItem storage project = projects[_id];
@@ -321,7 +324,7 @@ contract ChainBizz {
 
    // Cancel services from the provider
   // The provider cancels the services performed for the project 
-  function cancelServices(uint256 _id) public {
+  function cancelServices(uint256 _id) payable public {
     
     // retrieve the project
     ProjectItem storage project = projects[_id];
@@ -362,6 +365,9 @@ contract ChainBizz {
 
     // is the project in review?
     require(project.status == ProjectStatus.Validate, "Project not in validation process");
+
+    // pay the service provide
+    project.provider.transfer(project.price);
 
     // project is now completed
     project.status = ProjectStatus.Completed;
@@ -411,7 +417,10 @@ contract ChainBizz {
     // is the project ongoing?
     require((project.status == ProjectStatus.OnGoing) || (project.status == ProjectStatus.Validate), "Project not in progress");
 
-   // contract becomes canceled
+    // pay back the contract's owner
+    project.owner.transfer(project.price);
+
+    // contract becomes canceled
     project.status = ProjectStatus.Canceled;
     
     emit ContractCancelled(_id, msg.sender, project.provider, project.title, project.price);

@@ -21,7 +21,6 @@ const MyProjects = ({ drizzle, drizzleState }) => {
   // Retrieve all projects IDs linked to the current owner
 
   // prepare projects cards
-  console.log('Data key: ' + dataKeys);
   let allProjects = [];
   let projectIds = null;
   if (dataKeys !== null) {
