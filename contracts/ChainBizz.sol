@@ -274,7 +274,7 @@ contract ChainBizz {
 
   // Reject proposal from the provider
   // The owner rejects the services offered by the provider 
-  function rejectProposal(uint256 _id) payable public {
+  function rejectProposal(uint256 _id) public {
     
     // retrieve the project
     ProjectItem storage project = projects[_id];
@@ -324,7 +324,7 @@ contract ChainBizz {
 
    // Cancel services from the provider
   // The provider cancels the services performed for the project 
-  function cancelServices(uint256 _id) payable public {
+  function cancelServices(uint256 _id) public {
     
     // retrieve the project
     ProjectItem storage project = projects[_id];
