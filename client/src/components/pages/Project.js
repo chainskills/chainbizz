@@ -365,7 +365,7 @@ const Project = ({ drizzle, drizzleState }) => {
 
     setModalTitle('Accept Delivery');
     setModalDescription(
-      'Are you sure to accept the delivery from the provider?'
+      'If you accept the dellivery, your deposit will be sent to the service provider. Are you sure to accept the delivery?'
     );
 
     setAction1({
@@ -393,7 +393,7 @@ const Project = ({ drizzle, drizzleState }) => {
 
     setModalTitle('Reject Delivery');
     setModalDescription(
-      'Are you sure to reject the delivery made by the provider?'
+      'If you reject the delivery, the service provider will have to review the project and to submit it again. Are you sure to reject the delivery?'
     );
 
     setAction1({
@@ -421,7 +421,7 @@ const Project = ({ drizzle, drizzleState }) => {
 
     setModalTitle('Cancel contract');
     setModalDescription(
-      'Are you sure to cancel the contract with the provider?'
+      'If you cancel the contract, you will get back your deposit and your project will be set to cancel. Are you sure to cancel the contract?'
     );
 
     setAction1({
