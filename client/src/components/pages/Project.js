@@ -6,7 +6,7 @@ import ProjectContext from '../context/projects/projectContext';
 import ProjectModal from '../dialog/modal/project/ProjectModal';
 import ConfirmModal from '../dialog/modal/confirm/ConfirmModal';
 
-const Project = ({ drizzle, drizzleState }) => {
+const Project = ({ drizzle, account }) => {
   const projectContext = useContext(ProjectContext);
   const {
     addProject,
@@ -69,7 +69,7 @@ const Project = ({ drizzle, drizzleState }) => {
       visible: true,
       add: function(project) {
         setModalProjectOpen(false);
-        addProject(drizzle, drizzleState, project);
+        addProject(drizzle, account, project);
       }
     });
 
@@ -87,7 +87,7 @@ const Project = ({ drizzle, drizzleState }) => {
     setDataID(id);
     clearCurrrentSelection();
     if (id !== null) {
-      getProject(drizzle, drizzleState, id);
+      getProject(drizzle, account, id);
     } else {
       // todo display error notification message
       return;
@@ -99,7 +99,7 @@ const Project = ({ drizzle, drizzleState }) => {
       visible: true,
       update: function(project) {
         setModalProjectOpen(false);
-        updateProject(drizzle, drizzleState, id, project);
+        updateProject(drizzle, account, id, project);
       }
     });
 
@@ -125,7 +125,7 @@ const Project = ({ drizzle, drizzleState }) => {
       visible: true,
       handle: function(id) {
         setModalConfirmationOpen(false);
-        removeProject(drizzle, drizzleState, id);
+        removeProject(drizzle, account, id);
       }
     });
 
@@ -151,7 +151,7 @@ const Project = ({ drizzle, drizzleState }) => {
       visible: true,
       handle: function(id) {
         setModalConfirmationOpen(false);
-        publishProject(drizzle, drizzleState, id);
+        publishProject(drizzle, account, id);
       }
     });
 
@@ -177,7 +177,7 @@ const Project = ({ drizzle, drizzleState }) => {
       visible: true,
       handle: function(id) {
         setModalConfirmationOpen(false);
-        unpublishProject(drizzle, drizzleState, id);
+        unpublishProject(drizzle, account, id);
       }
     });
 
@@ -205,7 +205,7 @@ const Project = ({ drizzle, drizzleState }) => {
       visible: true,
       handle: function(id) {
         setModalConfirmationOpen(false);
-        submitOffer(drizzle, drizzleState, id);
+        submitOffer(drizzle, account, id);
       }
     });
 
@@ -233,7 +233,7 @@ const Project = ({ drizzle, drizzleState }) => {
       visible: true,
       handle: function(id) {
         setModalConfirmationOpen(false);
-        cancelOffer(drizzle, drizzleState, id);
+        cancelOffer(drizzle, account, id);
       }
     });
 
@@ -261,7 +261,7 @@ const Project = ({ drizzle, drizzleState }) => {
       visible: true,
       handle: function(id) {
         setModalConfirmationOpen(false);
-        acceptProposal(drizzle, drizzleState, id);
+        acceptProposal(drizzle, account, id);
       }
     });
 
@@ -289,7 +289,7 @@ const Project = ({ drizzle, drizzleState }) => {
       visible: true,
       handle: function(id) {
         setModalConfirmationOpen(false);
-        rejectProposal(drizzle, drizzleState, id);
+        rejectProposal(drizzle, account, id);
       }
     });
 
@@ -317,7 +317,7 @@ const Project = ({ drizzle, drizzleState }) => {
       visible: true,
       handle: function(id) {
         setModalConfirmationOpen(false);
-        deliverProject(drizzle, drizzleState, id);
+        deliverProject(drizzle, account, id);
       }
     });
 
@@ -345,7 +345,7 @@ const Project = ({ drizzle, drizzleState }) => {
       visible: true,
       handle: function(id) {
         setModalConfirmationOpen(false);
-        cancelServices(drizzle, drizzleState, id);
+        cancelServices(drizzle, account, id);
       }
     });
 
@@ -373,7 +373,7 @@ const Project = ({ drizzle, drizzleState }) => {
       visible: true,
       handle: function(id) {
         setModalConfirmationOpen(false);
-        acceptDelivery(drizzle, drizzleState, id);
+        acceptDelivery(drizzle, account, id);
       }
     });
 
@@ -401,7 +401,7 @@ const Project = ({ drizzle, drizzleState }) => {
       visible: true,
       handle: function(id) {
         setModalConfirmationOpen(false);
-        rejectDelivery(drizzle, drizzleState, id);
+        rejectDelivery(drizzle, account, id);
       }
     });
 
@@ -429,7 +429,7 @@ const Project = ({ drizzle, drizzleState }) => {
       visible: true,
       handle: function(id) {
         setModalConfirmationOpen(false);
-        cancelContract(drizzle, drizzleState, id);
+        cancelContract(drizzle, account, id);
       }
     });
 

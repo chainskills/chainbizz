@@ -60,9 +60,9 @@ const ProjectState = props => {
   const [state, dispatch] = useReducer(projectReducer, initialState);
 
   // Add a project
-  const addProject = (drizzle, drizzleState, project) => {
+  const addProject = (drizzle, account, project) => {
     const { ChainBizz } = drizzle.contracts;
-    const account = drizzleState.accounts[0];
+
     const { title, description, price } = project;
 
     // save the project
@@ -85,9 +85,9 @@ const ProjectState = props => {
   };
 
   // Update a project
-  const updateProject = (drizzle, drizzleState, projectId, project) => {
+  const updateProject = (drizzle, account, projectId, project) => {
     const { ChainBizz } = drizzle.contracts;
-    const account = drizzleState.accounts[0];
+
     const { title, description, price } = project;
 
     // save the project
@@ -111,9 +111,8 @@ const ProjectState = props => {
   };
 
   // Remove a project
-  const removeProject = (drizzle, drizzleState, projectId) => {
+  const removeProject = (drizzle, account, projectId) => {
     const { ChainBizz } = drizzle.contracts;
-    const account = drizzleState.accounts[0];
 
     // remove the project
     ChainBizz.methods
@@ -131,9 +130,8 @@ const ProjectState = props => {
   };
 
   // Publish a project
-  const publishProject = (drizzle, drizzleState, projectId) => {
+  const publishProject = (drizzle, account, projectId) => {
     const { ChainBizz } = drizzle.contracts;
-    const account = drizzleState.accounts[0];
 
     // publish the project
     ChainBizz.methods
@@ -151,9 +149,8 @@ const ProjectState = props => {
   };
 
   // Unpublish a project
-  const unpublishProject = (drizzle, drizzleState, projectId) => {
+  const unpublishProject = (drizzle, account, projectId) => {
     const { ChainBizz } = drizzle.contracts;
-    const account = drizzleState.accounts[0];
 
     // unpublish the project
     ChainBizz.methods
@@ -171,9 +168,8 @@ const ProjectState = props => {
   };
 
   // Submit offer of sercices to the project
-  const submitOffer = (drizzle, drizzleState, projectId) => {
+  const submitOffer = (drizzle, account, projectId) => {
     const { ChainBizz } = drizzle.contracts;
-    const account = drizzleState.accounts[0];
 
     // offer our services
     ChainBizz.methods
@@ -191,9 +187,8 @@ const ProjectState = props => {
   };
 
   // Cancel offer of sercices to the project
-  const cancelOffer = (drizzle, drizzleState, projectId) => {
+  const cancelOffer = (drizzle, account, projectId) => {
     const { ChainBizz } = drizzle.contracts;
-    const account = drizzleState.accounts[0];
 
     // offer our services
     ChainBizz.methods
@@ -210,9 +205,8 @@ const ProjectState = props => {
       });
   };
   // Accept proposal to our project
-  const acceptProposal = async (drizzle, drizzleState, projectId) => {
+  const acceptProposal = async (drizzle, account, projectId) => {
     const { ChainBizz } = drizzle.contracts;
-    const account = drizzleState.accounts[0];
 
     // retrieve the price of the contract
     const project = await ChainBizz.methods.getProject(projectId).call({
@@ -236,9 +230,8 @@ const ProjectState = props => {
   };
 
   // Reject proposal of the provider
-  const rejectProposal = (drizzle, drizzleState, projectId) => {
+  const rejectProposal = (drizzle, account, projectId) => {
     const { ChainBizz } = drizzle.contracts;
-    const account = drizzleState.accounts[0];
 
     // reject services
     ChainBizz.methods
@@ -256,9 +249,8 @@ const ProjectState = props => {
   };
 
   // Deliver the project to the owner
-  const deliverProject = (drizzle, drizzleState, projectId) => {
+  const deliverProject = (drizzle, account, projectId) => {
     const { ChainBizz } = drizzle.contracts;
-    const account = drizzleState.accounts[0];
 
     // validate services of the provider
     ChainBizz.methods
@@ -276,9 +268,8 @@ const ProjectState = props => {
   };
 
   // Cancel services to deliver to the owner
-  const cancelServices = (drizzle, drizzleState, projectId) => {
+  const cancelServices = (drizzle, account, projectId) => {
     const { ChainBizz } = drizzle.contracts;
-    const account = drizzleState.accounts[0];
 
     // cancel services
     ChainBizz.methods
@@ -296,9 +287,8 @@ const ProjectState = props => {
   };
 
   // Accept delivery sent by the provider
-  const acceptDelivery = (drizzle, drizzleState, projectId) => {
+  const acceptDelivery = (drizzle, account, projectId) => {
     const { ChainBizz } = drizzle.contracts;
-    const account = drizzleState.accounts[0];
 
     // accept delivery
     ChainBizz.methods
@@ -316,9 +306,8 @@ const ProjectState = props => {
   };
 
   // Reject delivery sent by the provider
-  const rejectDelivery = (drizzle, drizzleState, projectId) => {
+  const rejectDelivery = (drizzle, account, projectId) => {
     const { ChainBizz } = drizzle.contracts;
-    const account = drizzleState.accounts[0];
 
     // reject the delivery
     ChainBizz.methods
@@ -336,9 +325,8 @@ const ProjectState = props => {
   };
 
   // Cancel the contract with the provider
-  const cancelContract = (drizzle, drizzleState, projectId) => {
+  const cancelContract = (drizzle, account, projectId) => {
     const { ChainBizz } = drizzle.contracts;
-    const account = drizzleState.accounts[0];
 
     // cancel contract
     ChainBizz.methods
@@ -426,9 +414,8 @@ const ProjectState = props => {
   };
 
   // Get a project
-  const getProject = async (drizzle, drizzleState, projectId) => {
+  const getProject = async (drizzle, account, projectId) => {
     const { ChainBizz } = drizzle.contracts;
-    const account = drizzleState.accounts[0];
 
     let project = await ChainBizz.methods.getProject(projectId).call({
       from: account

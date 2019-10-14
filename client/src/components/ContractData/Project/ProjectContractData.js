@@ -7,8 +7,6 @@ const ProjectContractData = ({ projectId, drizzle, drizzleState, account }) => {
   const [dataKey, setDataKey] = useState(null);
 
   useEffect(() => {
-    const account = drizzleState.accounts[0];
-
     const { ChainBizz } = drizzle.contracts;
     setDataKey(
       ChainBizz.methods.getProject.cacheCall(projectId, {

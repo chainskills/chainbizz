@@ -68,12 +68,14 @@ const NavBar = ({ account }) => {
           <div className='user-view' style={{ height: '122px' }}>
             <div className='row'>
               <div className='col s3'>
-                <Blockies
-                  seed={account}
-                  size={10}
-                  scale={5}
-                  className='circle'
-                />
+                {account !== null && (
+                  <Blockies
+                    seed={account}
+                    size={10}
+                    scale={5}
+                    className='circle'
+                  />
+                )}
               </div>
               <div className='col s9'>
                 <span className='name truncate'>{account}</span>

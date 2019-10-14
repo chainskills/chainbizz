@@ -31,8 +31,6 @@ const App = ({ drizzleContext }) => {
 
   useEffect(() => {
     if (initialized === true) {
-      //console.log('Effect -> Initialized: ' + initialized);
-      //console.log('Effect -> Account: ' + drizzleState.accounts[0]);
       setAccount(drizzleState.accounts[0]);
     }
   }, [initialized, drizzleState]);
@@ -63,10 +61,9 @@ const App = ({ drizzleContext }) => {
 
   // detect account changes using Metamask
   window.ethereum.on('accountsChanged', function(accounts) {
-    console.log('Meta-mask: ' + accounts[0]);
+    //console.log('Meta-mask: ' + accounts[0]);
     if (initialized) {
-      //console.log(drizzleContext);
-      console.log('Drizzle: ' + drizzleState.accounts[0]);
+      //console.log('Drizzle: ' + drizzleState.accounts[0]);
       setAccount(accounts[0]);
     }
   });
@@ -78,16 +75,14 @@ const App = ({ drizzleContext }) => {
   });
   */
 
-  //setAccount(drizzleState.accounts[0]);
   console.log('Account: ' + account);
-  //console.log('Initialized: ' + initialized);
   return (
     <ProjectState>
       <Router>
         <Fragment>
           <NavBar account={account} />
 
-          <Project drizzle={drizzle} drizzleState={drizzleState} />
+          <Project drizzle={drizzle} account={account} />
 
           <div className='container'>
             {!initialized && (
@@ -117,7 +112,11 @@ const App = ({ drizzleContext }) => {
                   exact
                   path='/myprojects'
                   render={() => (
-                    <MyProjects drizzle={drizzle} drizzleState={drizzleState} />
+                    <MyProjects
+                      drizzle={drizzle}
+                      drizzleState={drizzleState}
+                      account={account}
+                    />
                   )}
                 />
 
@@ -125,7 +124,11 @@ const App = ({ drizzleContext }) => {
                   exact
                   path='/myoffers'
                   render={() => (
-                    <MyOffers drizzle={drizzle} drizzleState={drizzleState} />
+                    <MyOffers
+                      drizzle={drizzle}
+                      drizzleState={drizzleState}
+                      account={account}
+                    />
                   )}
                 />
 
@@ -136,6 +139,7 @@ const App = ({ drizzleContext }) => {
                     <OffersReview
                       drizzle={drizzle}
                       drizzleState={drizzleState}
+                      account={account}
                     />
                   )}
                 />
@@ -147,6 +151,7 @@ const App = ({ drizzleContext }) => {
                     <MyContracts
                       drizzle={drizzle}
                       drizzleState={drizzleState}
+                      account={account}
                     />
                   )}
                 />
@@ -158,6 +163,7 @@ const App = ({ drizzleContext }) => {
                     <DeliveriesReview
                       drizzle={drizzle}
                       drizzleState={drizzleState}
+                      account={account}
                     />
                   )}
                 />
@@ -166,7 +172,11 @@ const App = ({ drizzleContext }) => {
                   exact
                   path='/completed'
                   render={() => (
-                    <Completed drizzle={drizzle} drizzleState={drizzleState} />
+                    <Completed
+                      drizzle={drizzle}
+                      drizzleState={drizzleState}
+                      account={account}
+                    />
                   )}
                 />
 
@@ -174,7 +184,11 @@ const App = ({ drizzleContext }) => {
                   exact
                   path='/canceled'
                   render={() => (
-                    <Canceled drizzle={drizzle} drizzleState={drizzleState} />
+                    <Canceled
+                      drizzle={drizzle}
+                      drizzleState={drizzleState}
+                      account={account}
+                    />
                   )}
                 />
 
