@@ -38,7 +38,24 @@ const App = ({ drizzleContext }) => {
   }, [initialized, drizzleState]);
 
   if (initialized === false || account === null) {
-    return <span>Initializing...</span>;
+    return (
+      <Router>
+        <Fragment>
+          <NavBar account={account} />
+
+          <div className='container'>
+            {!initialized && (
+              <div>
+                <h2>Preparing the Dapp</h2>
+                <div className='progress'>
+                  <div className='indeterminate' />
+                </div>
+              </div>
+            )}
+          </div>
+        </Fragment>
+      </Router>
+    );
   }
 
   // disable auto-refresh page when network is changed
