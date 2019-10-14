@@ -4,14 +4,14 @@ import 'materialize-css/dist/css/materialize.min.css';
 
 import ProjectContractData from '../ContractData/Project/ProjectContractData';
 
-const PublishedProjects = ({ drizzle, drizzleState }) => {
+const PublishedProjects = ({ drizzle, drizzleState, account }) => {
   const [dataKeys, setDataKeys] = useState(null);
 
   useEffect(() => {
     const { ChainBizz } = drizzle.contracts;
     setDataKeys(
       ChainBizz.methods.getPublishedProjects.cacheCall({
-        from: drizzleState.accounts[0]
+        from: account
       })
     );
 
@@ -40,6 +40,7 @@ const PublishedProjects = ({ drizzle, drizzleState }) => {
           <ProjectContractData
             drizzle={drizzle}
             drizzleState={drizzleState}
+            account={account}
             projectId={projectId}
             key={projectId}
           />

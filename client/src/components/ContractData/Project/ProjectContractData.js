@@ -3,7 +3,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import ActionsOwner from './ActionsOwner';
 import ActionsProvider from './ActionsProvider';
 
-const ProjectContractData = ({ projectId, drizzle, drizzleState }) => {
+const ProjectContractData = ({ projectId, drizzle, drizzleState, account }) => {
   const [dataKey, setDataKey] = useState(null);
 
   useEffect(() => {
@@ -19,7 +19,6 @@ const ProjectContractData = ({ projectId, drizzle, drizzleState }) => {
     //eslint-disable-next-line
   }, []);
 
-  const account = drizzleState.accounts[0];
   // Retrieve project details only if the information is available
   let projectDetails = null;
   if (

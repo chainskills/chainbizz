@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import 'materialize-css/dist/css/materialize.min.css';
@@ -20,19 +20,55 @@ import Completed from './components/pages/Completed';
 import Canceled from './components/pages/Canceled';
 
 const App = ({ drizzleContext }) => {
+  const { drizzleState, drizzle, initialized } = drizzleContext;
+  const [account, setAccount] = useState(null);
+
   useEffect(() => {
     // Initialize Materialize JS
     M.AutoInit();
     // eslint-disable-next-line
   }, []);
 
-  const { drizzleState, drizzle, initialized } = drizzleContext;
+  useEffect(() => {
+    if (initialized === true) {
+      //console.log('Effect -> Initialized: ' + initialized);
+      //console.log('Effect -> Account: ' + drizzleState.accounts[0]);
+      setAccount(drizzleState.accounts[0]);
+    }
+  }, [initialized, drizzleState]);
 
+  if (initialized === false || account === null) {
+    return <span>Initializing...</span>;
+  }
+
+  // disable auto-refresh page when network is changed
+  window.ethereum.autoRefreshOnNetworkChange = false;
+
+  // detect account changes using Metamask
+  window.ethereum.on('accountsChanged', function(accounts) {
+    console.log('Meta-mask: ' + accounts[0]);
+    if (initialized) {
+      //console.log(drizzleContext);
+      console.log('Drizzle: ' + drizzleState.accounts[0]);
+      setAccount(accounts[0]);
+    }
+  });
+
+  /*
+  // detect network changes using Metamask
+  window.ethereum.on('networkChanged', function(network) {
+    console.log('New network ID is: ' + network);
+  });
+  */
+
+  //setAccount(drizzleState.accounts[0]);
+  console.log('Account: ' + account);
+  //console.log('Initialized: ' + initialized);
   return (
     <ProjectState>
       <Router>
         <Fragment>
-          <NavBar drizzle={drizzle} drizzleState={drizzleState} />
+          <NavBar account={account} />
 
           <Project drizzle={drizzle} drizzleState={drizzleState} />
 
@@ -55,6 +91,7 @@ const App = ({ drizzleContext }) => {
                     <PublishedProjects
                       drizzle={drizzle}
                       drizzleState={drizzleState}
+                      account={account}
                     />
                   )}
                 />

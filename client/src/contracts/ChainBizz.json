@@ -60605,12 +60605,12 @@
         }
       },
       "links": {},
-      "address": "0xc6E11Ee8Eee957e85Ede8F4efC8399Bd4fCB5a88",
-      "transactionHash": "0x2de9a661a0bda8a766611a0f2ba5a2d9ad2191d5f90198ae937d6337c11ca385"
+      "address": "0x30126d3814D6208Aad1658E19Cc61A11CdeB596A",
+      "transactionHash": "0x93b3f8f048854050f0ce4509bc70d1d02b71786f01ae734ff7ffb3e06f7f4162"
     }
   },
   "schemaVersion": "3.0.16",
-  "updatedAt": "2019-10-13T14:12:37.356Z",
+  "updatedAt": "2019-10-13T14:52:24.097Z",
   "devdoc": {
     "methods": {}
   },

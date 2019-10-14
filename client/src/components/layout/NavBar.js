@@ -6,12 +6,7 @@ import Blockies from 'react-blockies';
 
 import blockchainNetwork from '../../assets/images/blockchain.svg';
 
-const NavBar = ({ drizzle, drizzleState }) => {
-  let account = '';
-  if (drizzleState !== null) {
-    account = drizzleState.accounts[0];
-  }
-
+const NavBar = ({ account }) => {
   let networkName = '';
   switch (window.ethereum.networkVersion) {
     case 1:
