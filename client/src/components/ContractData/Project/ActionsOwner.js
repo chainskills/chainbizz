@@ -78,7 +78,7 @@ const ActionsOwner = ({ projectId, status }) => {
             }}
             title={'Reject the proposal'}
           >
-            <img src={contractCancel} style={{ width: '35px' }} />
+            <img src={contractCancel} style={{ width: '35px' }} alt={''} />
           </a>
           <a
             href={'#!'}
@@ -87,7 +87,7 @@ const ActionsOwner = ({ projectId, status }) => {
             }}
             title={'Accept the proposal'}
           >
-            <img src={contractReview} style={{ width: '35px' }} />
+            <img src={contractReview} style={{ width: '35px' }} alt={''} />
           </a>
         </span>
       )}
@@ -101,7 +101,7 @@ const ActionsOwner = ({ projectId, status }) => {
             }}
             title={'Reject the delivery'}
           >
-            <img src={thumbDown} style={{ width: '35px' }} />
+            <img src={thumbDown} style={{ width: '35px' }} alt={''} />
           </a>
           <a
             href={'#!'}
@@ -110,7 +110,7 @@ const ActionsOwner = ({ projectId, status }) => {
             }}
             title={'Accept the delivery'}
           >
-            <img src={thumbUp} style={{ width: '35px' }} />
+            <img src={thumbUp} style={{ width: '35px' }} alt={''} />
           </a>
         </span>
       )}
@@ -124,7 +124,7 @@ const ActionsOwner = ({ projectId, status }) => {
           }}
           title={'Cancel the contract'}
         >
-          <img src={contractCancel} style={{ width: '35px' }} />
+          <img src={contractCancel} style={{ width: '35px' }} alt={''} />
         </a>
       )}
     </div>

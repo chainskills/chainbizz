@@ -27,7 +27,7 @@ const ActionsProvider = ({ projectId, status }) => {
           }}
           title={'Offer your services'}
         >
-          <img src={contractOpportunity} style={{ width: '35px' }} />
+          <img src={contractOpportunity} style={{ width: '35px' }} alt={''} />
         </a>
       )}
 
@@ -40,7 +40,7 @@ const ActionsProvider = ({ projectId, status }) => {
           }}
           title={'Cancel your offer of services'}
         >
-          <img src={contractCancel} style={{ width: '35px' }} />
+          <img src={contractCancel} style={{ width: '35px' }} alt={''} />
         </a>
       )}
 
@@ -53,7 +53,7 @@ const ActionsProvider = ({ projectId, status }) => {
             }}
             title={'Cancel your services'}
           >
-            <img src={contractCancel} style={{ width: '35px' }} />
+            <img src={contractCancel} style={{ width: '35px' }} alt={''} />
           </a>
           <a
             href={'#!'}
@@ -62,7 +62,7 @@ const ActionsProvider = ({ projectId, status }) => {
             }}
             title={'Deliver the project'}
           >
-            <img src={projectCompleted} style={{ width: '35px' }} />
+            <img src={projectCompleted} style={{ width: '35px' }} alt={''} />
           </a>
         </span>
       )}

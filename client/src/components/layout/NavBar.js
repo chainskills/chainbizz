@@ -4,8 +4,6 @@ import { withRouter } from 'react-router-dom';
 
 import Blockies from 'react-blockies';
 
-import blockchainNetwork from '../../assets/images/blockchain.svg';
-
 const NavBar = ({ account }) => {
   let networkName = '';
   switch (window.ethereum.networkVersion) {
