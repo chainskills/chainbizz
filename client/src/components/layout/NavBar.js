@@ -1,10 +1,16 @@
-import React from 'react';
-
+import React, { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
-
 import Blockies from 'react-blockies';
+import 'materialize-css/dist/css/materialize.min.css';
+import M from 'materialize-css/dist/js/materialize.min.js';
 
 const NavBar = ({ account }) => {
+  useEffect(() => {
+    // Initialize Materialize JS
+    M.AutoInit();
+    // eslint-disable-next-line
+  }, []);
+
   let networkName = '';
   switch (window.ethereum.networkVersion) {
     case 1:
@@ -58,6 +64,7 @@ const NavBar = ({ account }) => {
           </form>
         </div>
       </nav>
+
       <ul
         id='slide-out'
         className='sidenav sidenav-fixed blue-grey lighten-5 z-depth-0'
@@ -124,7 +131,7 @@ const NavBar = ({ account }) => {
           <a href='/canceled'>Contracts canceled</a>
         </li>
       </ul>
-      <a href='#!' data-target='slide-out' className='sidenav-trigger'>
+      <a href='#' data-target='slide-out' className='sidenav-trigger'>
         <i className='material-icons'>menu</i>
       </a>
     </div>
