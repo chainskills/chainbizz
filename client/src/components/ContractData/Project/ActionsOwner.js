@@ -23,9 +23,12 @@ const ActionsOwner = ({ projectId, status }) => {
     onCancelContract
   } = projectContext;
 
+  console.log('Status: ' + status);
+
   return (
     <div>
-      {status === projectStatus.DRAFT && (
+      {(status === projectStatus.DRAFT ||
+        status === projectStatus.REFUNDED) && (
         <span>
           <a
             href={'#!'}
