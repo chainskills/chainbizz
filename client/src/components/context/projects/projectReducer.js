@@ -1,4 +1,5 @@
 import {
+  IS_ENABLED,
   ADD_PROJECT,
   UPDATE_PROJECT,
   REMOVE_PROJECT,
@@ -52,6 +53,11 @@ export default (state, action) => {
         ...state,
         project: action.payload,
         loading: false
+      };
+    case IS_ENABLED:
+      return {
+        ...state,
+        enabled: action.payload
       };
     case ON_EDIT_PROJECT:
       return {

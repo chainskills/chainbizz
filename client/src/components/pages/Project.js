@@ -9,6 +9,7 @@ import ConfirmModal from '../dialog/modal/confirm/ConfirmModal';
 const Project = ({ drizzle, account }) => {
   const projectContext = useContext(ProjectContext);
   const {
+    enabled,
     addProject,
     updateProject,
     removeProject,
@@ -31,6 +32,8 @@ const Project = ({ drizzle, account }) => {
     acceptDelivery,
     rejectDelivery,
     cancelContract,
+    disableContract,
+    enableContract,
     showDeliverProject,
     showCancelServices,
     showAcceptDelivery,
@@ -39,8 +42,11 @@ const Project = ({ drizzle, account }) => {
     clearCurrrentSelection,
     getProject,
     onCancelModal,
+    isEnabled,
     projectId
   } = projectContext;
+
+  const [contractEnable, setContractEnable] = useState(false);
 
   const [modalConfirmationOpen, setModalConfirmationOpen] = useState(false);
   const [modalProjectOpen, setModalProjectOpen] = useState(false);
@@ -78,6 +84,62 @@ const Project = ({ drizzle, account }) => {
       visible: true,
       handle: function() {
         setModalProjectOpen(false);
+        onCancelModal();
+      }
+    });
+  };
+
+  const handleDisableContract = () => {
+    setDataID(null);
+    setModalConfirmationOpen(true);
+
+    setModalTitle('Disable the ChainBizz contract');
+    setModalDescription(
+      'If you disable your contract, all deposits of running contracts will be refunded to their owners and the contract will not more available until being re-enable. Are you sure to accept the delivery?'
+    );
+
+    setAction1({
+      title: 'Disable',
+      visible: true,
+      handle: function(id) {
+        setModalConfirmationOpen(false);
+        disableContract(drizzle, account);
+      }
+    });
+
+    setAction2({
+      title: 'No',
+      visible: true,
+      handle: function() {
+        setModalConfirmationOpen(false);
+        onCancelModal();
+      }
+    });
+  };
+
+  const handleEnableContract = () => {
+    setDataID(null);
+    setModalConfirmationOpen(true);
+
+    setModalTitle('Enable the ChainBizz contract');
+    setModalDescription(
+      'If you (re)enable your contract, all users will be able to interact with and to deposit ethers in the wallet of the contract. Are you sure to accept the delivery?'
+    );
+
+    setAction1({
+      title: 'Enable',
+      visible: true,
+      handle: function(id) {
+        setModalConfirmationOpen(false);
+        enableContract(drizzle, account);
+      }
+    });
+
+    setAction2({
+      title: 'No',
+      visible: true,
+      handle: function() {
+        setModalConfirmationOpen(false);
         onCancelModal();
       }
     });
@@ -365,7 +427,7 @@ const Project = ({ drizzle, account }) => {
 
     setModalTitle('Accept Delivery');
     setModalDescription(
-      'If you accept the dellivery, your deposit will be sent to the service provider. Are you sure to accept the delivery?'
+      'If you accept the delivery, your deposit will be sent to the service provider. Are you sure to accept the delivery?'
     );
 
     setAction1({
@@ -444,6 +506,16 @@ const Project = ({ drizzle, account }) => {
   };
 
   useEffect(() => {
+    // retrieve the status of the contract
+    isEnabled(drizzle);
+    //eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
+    setContractEnable(enabled);
+  }, [enabled]);
+
+  useEffect(() => {
     if (projectId !== null) {
       if (showEdit === true) {
         handleEditProject(projectId);
@@ -501,6 +573,24 @@ const Project = ({ drizzle, account }) => {
           >
             <i className='material-icons left'>add</i>New
           </a>
+        </div>
+        <div className='col s12 m4'>
+          {enabled === true && (
+            <a
+              className='waves-effect waves-light btn blue-grey lighten-1'
+              onClick={() => handleDisableContract()}
+            >
+              <i className='material-icons left'>cancel</i>Disable
+            </a>
+          )}
+          {enabled === false && (
+            <a
+              className='waves-effect waves-light btn blue-grey lighten-1'
+              onClick={() => handleEnableContract()}
+            >
+              <i className='material-icons left'>cancel</i>Enable
+            </a>
+          )}
         </div>
       </div>
 

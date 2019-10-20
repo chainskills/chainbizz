@@ -1,4 +1,5 @@
 // Related to the project
+export const IS_ENABLED = 'IS_ENABLED';
 export const ADD_PROJECT = 'ADD_PROJECT';
 export const UPDATE_PROJECT = 'UPDATE_PROJECT';
 export const REMOVE_PROJECT = 'REMOVE_PROJECT';
@@ -8,6 +9,7 @@ export const ON_EDIT_PROJECT = 'ON_EDIT_PROJECT';
 export const ON_REMOVE_PROJECT = 'ON_REMOVE_PROJECT';
 export const ON_PUBLISH_PROJECT = 'ON_PUBLISH_PROJECT';
 export const ON_UNPUBLISH_PROJECT = 'ON_UNPUBLISH_PROJECT';
+
 
 // Related to the offer
 export const SUBMIT_OFFER = 'SUBMIT_OFFER';

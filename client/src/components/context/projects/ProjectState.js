@@ -3,6 +3,7 @@ import ProjectContext from './projectContext';
 import projectReducer from './projectReducer';
 
 import {
+  IS_ENABLED,
   ADD_PROJECT,
   UPDATE_PROJECT,
   REMOVE_PROJECT,
@@ -39,6 +40,7 @@ import {
 const ProjectState = props => {
   const initialState = {
     current: null,
+    enabled: true,
     projects: null,
     error: null,
     projectId: null,
@@ -58,6 +60,67 @@ const ProjectState = props => {
   };
 
   const [state, dispatch] = useReducer(projectReducer, initialState);
+
+  // Check if contract is enabled
+  const isEnabled = async drizzle => {
+    const { ChainBizz } = drizzle.contracts;
+
+    const enabled = await ChainBizz.methods.isEnabled().call();
+
+    dispatch({ type: IS_ENABLED, payload: enabled });
+  };
+
+  // Disable the contract and payback all projects' owners
+  const disableContract = async (drizzle, account) => {
+    const { ChainBizz } = drizzle.contracts;
+
+    const enabled = await ChainBizz.methods.isEnabled().call();
+    if (enabled === false) {
+      // alreay disabled
+      return;
+    }
+
+    // disable the contract
+    ChainBizz.methods
+      .disableContract()
+      .send({
+        from: account,
+        gas: 500000
+      })
+      .on('receipt', receipt => {
+        isEnabled(drizzle);
+      })
+      .on('error', err => {
+        console.error(err);
+        dispatch({ type: PROJECT_ERROR, payload: err });
+      });
+  };
+
+  // Enable the contract
+  const enableContract = async (drizzle, account) => {
+    const { ChainBizz } = drizzle.contracts;
+
+    const enabled = await ChainBizz.methods.isEnabled().call();
+    if (enabled === true) {
+      // alreay enabled
+      return;
+    }
+
+    // enable the contract
+    ChainBizz.methods
+      .enableContract()
+      .send({
+        from: account,
+        gas: 500000
+      })
+      .on('receipt', receipt => {
+        isEnabled(drizzle);
+      })
+      .on('error', err => {
+        console.error(err);
+        dispatch({ type: PROJECT_ERROR, payload: err });
+      });
+  };
 
   // Add a project
   const addProject = (drizzle, account, project) => {
@@ -80,6 +143,7 @@ const ProjectState = props => {
         dispatch({ type: ADD_PROJECT, payload: receipt });
       })
       .on('error', err => {
+        console.error(err);
         dispatch({ type: PROJECT_ERROR, payload: err });
       });
   };
@@ -441,6 +505,7 @@ const ProjectState = props => {
     <ProjectContext.Provider
       value={{
         current: state.current,
+        enabled: state.enabled,
         project: state.project,
         error: state.error,
         projectId: state.projectId,
@@ -486,7 +551,10 @@ const ProjectState = props => {
         onCancelContract,
         onCancelModal,
         getProject,
-        clearCurrrentSelection
+        clearCurrrentSelection,
+        isEnabled,
+        disableContract,
+        enableContract
       }}
     >
       {props.children}

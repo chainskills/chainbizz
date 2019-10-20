@@ -18,6 +18,7 @@ contract ChainBizz {
     Validate,
     Completed,
     Canceled,
+    Refunded,
     Unknown
   }
 
@@ -41,6 +42,26 @@ contract ChainBizz {
 
   // Number of registered projects
   uint256 projectsCounter;
+
+  // Defines if the contract is still enable or not
+  bool enabledContract;
+
+  // Keep contract's owner address
+  address owner;
+
+  //
+  // Function modifiers
+  //
+  modifier onlyEnable() {
+    require(enabledContract == true, "The contract is not more available");
+    _;
+  }
+
+    modifier onlyOwner() {
+    require(msg.sender == owner, "This call is only allower by the contract's owner");
+    _;
+  }
+
   
   //
   // Events
@@ -51,26 +72,77 @@ contract ChainBizz {
   event PublishedProject(uint256 id, address owner, string title, uint256 price);
   event UnpublishedProject(uint256 id, address owner, string title, uint256 price);
   event OfferSubmitted(uint256 id, address owner, string title, uint256 price);
-  event OfferCancelled(uint256 id, address owner, address provider, string title, uint256 price);
+  event OfferCanceled(uint256 id, address owner, address provider, string title, uint256 price);
   event AcceptProposal(uint256 id, address owner, address provider, string title, uint256 price);
   event RejectProposal(uint256 id, address owner, address provider, string title, uint256 price);
   event ProjectDelivered(uint256 id, address owner, address provider, string title, uint256 price);
-  event ServicesCancelled(uint256 id, address owner, address provider, string title, uint256 price);
+  event ServicesCanceled(uint256 id, address owner, address provider, string title, uint256 price);
   event DeliveryAccepted(uint256 id, address owner, address provider, string title, uint256 price);
   event DeliveryRejected(uint256 id, address owner, address provider, string title, uint256 price);
-  event ContractCancelled(uint256 id, address owner, address provider, string title, uint256 price);
+  event ContractCanceled(uint256 id, address owner, address provider, string title, uint256 price);
 
   //
   // Implementation
   //
+
+  // Constructor
+  constructor() public {
+    enabledContract = true;
+    owner = msg.sender;
+  }
 
 
   //
   // Setters
   //
   
+  // Disable the usage of the contract
+  // We have to change the status of all running contracts and to payback their owners
+  function disableContract() public onlyOwner onlyEnable {
+    // First, we disable the contract
+    enabledContract = false;
+
+    // Then, we refund owners for their running contracts
+
+    // At least one project?
+    if (projectsCounter == 0) {
+      return;
+    }
+
+    // prepare output array
+    uint256[] memory projectIDs = new uint[](projectsCounter);
+
+    // iterate over projects
+    uint256 numberOfProjects = 0;
+    for (uint i = 1; i <= projectsCounter; i++) {
+      // retrieve the project
+      ProjectItem storage project = projects[i];
+
+      // check if this project is published
+      if ((project.status == ProjectStatus.OnGoing) || (project.status == ProjectStatus.Validate)) {
+        // Refund the owner
+        if (project.price > 0) {
+          // pay back the contract's owner
+          project.owner.transfer(project.price);
+        }
+
+        // project refunded
+        project.status = ProjectStatus.Refunded;
+      }
+    }
+  }
+
+
+  // Enable the usage of the contract
+  // The owner decides to reenable the usage of the contract
+  function enableContract() public onlyOwner {
+    enabledContract = true;
+  }
+
+
+
   // Add a new project
-  function addProject(string memory _title, string memory _description, uint256 _price) public {
+  function addProject(string memory _title, string memory _description, uint256 _price) public onlyEnable {
     
     // a title is required
     bytes memory title = bytes(_title);
@@ -90,7 +162,7 @@ contract ChainBizz {
   }
 
   // Update an unpublished project
-  function updateProject(uint256 _id, string memory _title, string memory _description, uint256 _price) public {
+  function updateProject(uint256 _id, string memory _title, string memory _description, uint256 _price) public onlyEnable {
     
     // retrieve the project
     ProjectItem storage project = projects[_id];
@@ -123,7 +195,7 @@ contract ChainBizz {
   }
 
   // Remove an unpublished project
-  function removeProject(uint256 _id) public {
+  function removeProject(uint256 _id) public onlyEnable {
     
     // retrieve the project
     ProjectItem memory project = projects[_id];
@@ -149,7 +221,7 @@ contract ChainBizz {
   }
 
   // Publish the project to seek for providers
-  function publishProject(uint256 _id) public {
+  function publishProject(uint256 _id) public onlyEnable {
     
     // retrieve the project
     ProjectItem storage project = projects[_id];
@@ -173,7 +245,7 @@ contract ChainBizz {
 
   // Unpublish the project
   // A project can be unpublished ONLY if it's already published and not already part of a contract 
-  function unpublishProject(uint256 _id) public {
+  function unpublishProject(uint256 _id) public onlyEnable {
     
     // retrieve the project
     ProjectItem storage project = projects[_id];
@@ -197,7 +269,7 @@ contract ChainBizz {
 
   // Offer services for the project
   // A provider offers his/her services to perform the project 
-  function submitOffer(uint256 _id) public {
+  function submitOffer(uint256 _id) public onlyEnable {
     
     // retrieve the project
     ProjectItem storage project = projects[_id];
@@ -221,7 +293,7 @@ contract ChainBizz {
 
   // Cancel offer made by the provider
   // A provider cancels his/her offer to perform the project 
-  function cancelOffer(uint256 _id) public {
+  function cancelOffer(uint256 _id) public onlyEnable {
     
     // retrieve the project
     ProjectItem storage project = projects[_id];
@@ -242,12 +314,12 @@ contract ChainBizz {
     project.status = ProjectStatus.Available;
     project.provider = address(0x0);
 
-    emit OfferCancelled(_id, msg.sender, provider, project.title, project.price);
+    emit OfferCanceled(_id, msg.sender, provider, project.title, project.price);
   }
 
   // Accept services from the provider
   // The owner accepts the services offered by the provider 
-  function acceptProposal(uint256 _id) payable public {
+  function acceptProposal(uint256 _id) payable public onlyEnable {
     
     // retrieve the project
     ProjectItem storage project = projects[_id];
@@ -274,7 +346,7 @@ contract ChainBizz {
 
   // Reject proposal from the provider
   // The owner rejects the services offered by the provider 
-  function rejectProposal(uint256 _id) public {
+  function rejectProposal(uint256 _id) public onlyEnable {
     
     // retrieve the project
     ProjectItem storage project = projects[_id];
@@ -300,7 +372,7 @@ contract ChainBizz {
 
   // Deliver the project to the customer
   // The provider delivers the project to the owner 
-  function deliverProject(uint256 _id) public {
+  function deliverProject(uint256 _id) public onlyEnable {
     
     // retrieve the project
     ProjectItem storage project = projects[_id];
@@ -324,7 +396,7 @@ contract ChainBizz {
 
    // Cancel services from the provider
   // The provider cancels the services performed for the project 
-  function cancelServices(uint256 _id) public {
+  function cancelServices(uint256 _id) public onlyEnable {
     
     // retrieve the project
     ProjectItem storage project = projects[_id];
@@ -345,12 +417,12 @@ contract ChainBizz {
     project.status = ProjectStatus.Available;
     project.provider = address(0x0);
     
-    emit ServicesCancelled(_id, msg.sender, provider, project.title, project.price);
+    emit ServicesCanceled(_id, msg.sender, provider, project.title, project.price);
   }
 
   // Accept the project delivery from the provider
   // The owner accepts the project delivered by the provider 
-  function acceptDelivery(uint256 _id) public {
+  function acceptDelivery(uint256 _id) public onlyEnable {
     
     // retrieve the project
     ProjectItem storage project = projects[_id];
@@ -377,7 +449,7 @@ contract ChainBizz {
 
   // Reject the project delivery from the provider
   // The owner rejects the project delivered by the provider 
-  function rejectDelivery(uint256 _id) public {
+  function rejectDelivery(uint256 _id) public onlyEnable {
     
     // retrieve the project
     ProjectItem storage project = projects[_id];
@@ -399,9 +471,9 @@ contract ChainBizz {
     emit DeliveryRejected(_id, msg.sender, project.provider, project.title, project.price);
   }
 
-  // Contract cancelled by the owner
+  // Contract canceled by the owner
   // The owner cancels the contract 
-  function cancelContract(uint256 _id) public {
+  function cancelContract(uint256 _id) public onlyEnable {
     
     // retrieve the project
     ProjectItem storage project = projects[_id];
@@ -423,12 +495,17 @@ contract ChainBizz {
     // contract becomes canceled
     project.status = ProjectStatus.Canceled;
     
-    emit ContractCancelled(_id, msg.sender, project.provider, project.title, project.price);
+    emit ContractCanceled(_id, msg.sender, project.provider, project.title, project.price);
   }
 
   //
   // Getters
   //
+
+  // Retrieve if the contract is still enable or not
+  function isEnabled() public view returns (bool) {
+    return enabledContract;
+  }
 
   // Retrieve a project from its id
   function getProject(uint256 _id) public view returns (
