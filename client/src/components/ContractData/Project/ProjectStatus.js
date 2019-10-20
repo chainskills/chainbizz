@@ -4,7 +4,8 @@ export const projectStatus = {
   REVIEW: 2,
   ONGOING: 3,
   VALIDATE: 4,
-  COMPLETED: 4,
-  CANCELED: 5,
-  UNKNOWN: 6
+  COMPLETED: 5,
+  CANCELED: 6,
+  REFUNDED: 7,
+  UNKNOWN: 8
 };
