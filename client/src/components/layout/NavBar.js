@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import Blockies from 'react-blockies';
 import 'materialize-css/dist/css/materialize.min.css';
 import M from 'materialize-css/dist/js/materialize.min.js';
+import blockchain from '../../assets/images/blockchain.svg';
 
 const NavBar = ({ account }) => {
   useEffect(() => {
@@ -88,9 +89,10 @@ const NavBar = ({ account }) => {
             </div>
           </div>
         </li>
-        <li>
+        <li style={{ 
+        marginBottom: '30px' }}>
           <a href={null}>
-            <i className='material-icons'>cloud</i>
+            <img src={blockchain} style={{ width: '35px',position: 'relative',top: '11px',marginRight: '8px' }} alt={''} />
             {networkName}
           </a>
         </li>
