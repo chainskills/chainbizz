@@ -2,13 +2,18 @@ pragma solidity >=0.4.21 <0.6.0;
 
 import 'openzeppelin-solidity/contracts/math/SafeMath.sol';
 
-// @title Decentralised business platform
+/// @title Decentralised business platform
+/// @author Said Eloudrhiri (ChainSkills) - Devoxx Morocco 2019
+/// @notice Learn how to create a smart contract to simulate a decentralised business platform to issue and fulfill projects
+/// @dev This smart contract is for illustration purpose only and should not be used in the mainNet
 contract ChainBizz {
-  //
-  // OpenZeppelin specifics
-  //
+
   using SafeMath for uint256;
 
+  /*
+   * Enum
+   */
+   
   // Defines the status of the project
   enum ProjectStatus {
     Draft,
@@ -22,21 +27,25 @@ contract ChainBizz {
     Unknown
   }
 
-  //
-  // State variables
-  //
+  /*
+   * Structs
+   */
 
   // Description of a project
   struct ProjectItem {
     uint256 id;               // unique ID
-    address payable owner;
-    address payable provider;             
+    address payable issuer;
+    address payable fulfiller;             
     string title;
     string description;
     uint256 price;            // price in Wei
     ProjectStatus status;      
   }
 
+  /*
+   * Storage
+   */
+   
   // List of projects
   mapping(uint256 => ProjectItem) public projects;
 
@@ -46,63 +55,66 @@ contract ChainBizz {
   // Defines if the contract is still enable or not
   bool enabledContract;
 
-  // Keep contract's owner address
+  // Keep contract's issuer address
   address owner;
 
-  //
-  // Function modifiers
-  //
+  /*
+   * Modifiers
+   */
+
   modifier onlyEnable() {
     require(enabledContract == true, "The contract is not more available");
     _;
   }
 
-    modifier onlyOwner() {
+  modifier onlyOwner() {
     require(msg.sender == owner, "This call is only allower by the contract's owner");
     _;
   }
 
   
-  //
-  // Events
-  //
-  event NewProject(uint256 id, address owner, string title, uint256 price);
-  event UpdateProject(uint256 id, address owner, string title, uint256 price);
-  event RemoveProject(uint256 id, address owner, string title);
-  event PublishedProject(uint256 id, address owner, string title, uint256 price);
-  event UnpublishedProject(uint256 id, address owner, string title, uint256 price);
-  event OfferSubmitted(uint256 id, address owner, string title, uint256 price);
-  event OfferCanceled(uint256 id, address owner, address provider, string title, uint256 price);
-  event AcceptProposal(uint256 id, address owner, address provider, string title, uint256 price);
-  event RejectProposal(uint256 id, address owner, address provider, string title, uint256 price);
-  event ProjectDelivered(uint256 id, address owner, address provider, string title, uint256 price);
-  event ServicesCanceled(uint256 id, address owner, address provider, string title, uint256 price);
-  event DeliveryAccepted(uint256 id, address owner, address provider, string title, uint256 price);
-  event DeliveryRejected(uint256 id, address owner, address provider, string title, uint256 price);
-  event ContractCanceled(uint256 id, address owner, address provider, string title, uint256 price);
+  /*
+   * Events
+   */
+  event NewProject(uint256 id, address payable issuer, string title, uint256 price);
+  event UpdateProject(uint256 id, address payable issuer, string title, uint256 price);
+  event RemoveProject(uint256 id, address payable issuer, string title);
+  event PublishedProject(uint256 id, address payable issuer, string title, uint256 price);
+  event UnpublishedProject(uint256 id, address payable issuer, string title, uint256 price);
+  event OfferSubmitted(uint256 id, address payable issuer, string title, uint256 price);
+  event OfferCanceled(uint256 id, address payable issuer, address payable fulfiller, string title, uint256 price);
+  event AcceptProposal(uint256 id, address payable issuer, address payable fulfiller, string title, uint256 price);
+  event RejectProposal(uint256 id, address payable issuer, address payable fulfiller, string title, uint256 price);
+  event ProjectDelivered(uint256 id, address payable issuer, address payable fulfiller, string title, uint256 price);
+  event ServicesCanceled(uint256 id, address payable issuer, address payable fulfiller, string title, uint256 price);
+  event DeliveryAccepted(uint256 id, address payable issuer, address payable fulfiller, string title, uint256 price);
+  event DeliveryRejected(uint256 id, address payable issuer, address payable fulfiller, string title, uint256 price);
+  event ContractCanceled(uint256 id, address payable issuer, address payable fulfiller, string title, uint256 price);
 
-  //
-  // Implementation
-  //
+ /*
+  * Public functions
+  */
 
-  // Constructor
   constructor() public {
     enabledContract = true;
     owner = msg.sender;
   }
 
+  /// @dev Enable the usage of the contract
+  /// @param 
+  /// @return 
+  function enableContract() public onlyOwner {
+    enabledContract = true;
+  }
 
-  //
-  // Setters
-  //
-  
-  // Disable the usage of the contract
-  // We have to change the status of all running contracts and to payback their owners
+  /// @dev Disable the usage of the contract, change the status of all running projects and payback all issuers
+  /// @param 
+  /// @return 
   function disableContract() public onlyOwner onlyEnable {
     // First, we disable the contract
     enabledContract = false;
 
-    // Then, we refund owners for their running contracts
+    // Then, we refund issuers for their running contracts
 
     // At least one project?
     if (projectsCounter == 0) {
@@ -120,10 +132,10 @@ contract ChainBizz {
 
       // check if this project is published
       if ((project.status == ProjectStatus.OnGoing) || (project.status == ProjectStatus.Validate)) {
-        // Refund the owner
+        // Refund the issuer
         if (project.price > 0) {
-          // pay back the contract's owner
-          project.owner.transfer(project.price);
+          // pay back the issuer
+          project.issuer.transfer(project.price);
         }
 
         // project refunded
@@ -133,13 +145,9 @@ contract ChainBizz {
   }
 
 
-  // Enable the usage of the contract
-  // The owner decides to reenable the usage of the contract
-  function enableContract() public onlyOwner {
-    enabledContract = true;
-  }
-
-
+  //
+  // Setters
+  //
 
   // Add a new project
   function addProject(string memory _title, string memory _description, uint256 _price) public onlyEnable {
@@ -168,12 +176,12 @@ contract ChainBizz {
     ProjectItem storage project = projects[_id];
 
     // ensure that this project exists
-    if (project.owner == address(0x0)) {
+    if (project.issuer == address(0x0)) {
       return;
     }
  
     // do we own this project?
-    require(project.owner == msg.sender, "You are not the owner of this project");
+    require(project.issuer == msg.sender, "You are not the issuer of this project");
 
     // ready to be published?
     require(project.status == ProjectStatus.Draft, "Cannot be updated while published");
@@ -201,12 +209,12 @@ contract ChainBizz {
     ProjectItem memory project = projects[_id];
 
     // ensure that this project exists
-    if (project.owner == address(0x0)) {
+    if (project.issuer == address(0x0)) {
       return;
     }
  
     // do we own this project?
-    require(project.owner == msg.sender, "You are not the owner of this project");
+    require(project.issuer == msg.sender, "You are not the issuer of this project");
 
     // ready to be removed?
     require(project.status == ProjectStatus.Draft, "Cannot be removed while published");
@@ -220,19 +228,19 @@ contract ChainBizz {
     emit RemoveProject(_id, msg.sender, title);
   }
 
-  // Publish the project to seek for providers
+  // Publish the project to seek for fulfillers
   function publishProject(uint256 _id) public onlyEnable {
     
     // retrieve the project
     ProjectItem storage project = projects[_id];
 
     // ensure that this project exists
-    if (project.owner == address(0x0)) {
+    if (project.issuer == address(0x0)) {
       return;
     }
  
     // do we own this project?
-    require(project.owner == msg.sender, "You are not the owner of this project");
+    require(project.issuer == msg.sender, "You are not the issuer of this project");
 
     // ready to be published?
     require(project.status == ProjectStatus.Draft, "Cannot be published");
@@ -251,12 +259,12 @@ contract ChainBizz {
     ProjectItem storage project = projects[_id];
 
     // ensure that this project exists
-    if (project.owner == address(0x0)) {
+    if (project.issuer == address(0x0)) {
       return;
     }
  
     // do we own this project?
-    require(project.owner == msg.sender, "You are not the owner of this project");
+    require(project.issuer == msg.sender, "You are not the issuer of this project");
 
     // ready to be unpublished?
     require(project.status == ProjectStatus.Available, "Cannot be unpublished");
@@ -268,22 +276,22 @@ contract ChainBizz {
   }
 
   // Offer services for the project
-  // A provider offers his/her services to perform the project 
+  // A fulfiller offers his/her services to perform the project 
   function submitOffer(uint256 _id) public onlyEnable {
     
     // retrieve the project
     ProjectItem storage project = projects[_id];
 
     // ensure that this project exists
-    if (project.owner == address(0x0)) {
+    if (project.issuer == address(0x0)) {
       return;
     }
  
     // is the project available?
     require(project.status == ProjectStatus.Available, "Project no more available");
 
-    // store the address of the provider
-    project.provider = msg.sender;
+    // store the address of the fulfiller
+    project.fulfiller = msg.sender;
 
     // project is under review
     project.status = ProjectStatus.InReview;
@@ -291,99 +299,99 @@ contract ChainBizz {
     emit OfferSubmitted(_id, msg.sender, project.title, project.price);
   }
 
-  // Cancel offer made by the provider
-  // A provider cancels his/her offer to perform the project 
+  // Cancel offer made by the fulfiller
+  // A fulfiller cancels his/her offer to perform the project 
   function cancelOffer(uint256 _id) public onlyEnable {
     
     // retrieve the project
     ProjectItem storage project = projects[_id];
 
     // ensure that this project exists
-    if (project.owner == address(0x0)) {
+    if (project.issuer == address(0x0)) {
       return;
     }
  
-     // are we the service provider?
-    require(project.provider == msg.sender, "You are not the service provider");
+     // are we the service fulfiller?
+    require(project.fulfiller == msg.sender, "You are not the service fulfiller");
 
     // is the project in review?
     require(project.status == ProjectStatus.InReview , "Proposal not in review");
 
     // project is now available
-    address provider = project.provider;
+    address payable fulfiller = project.fulfiller;
     project.status = ProjectStatus.Available;
-    project.provider = address(0x0);
+    project.fulfiller = address(0x0);
 
-    emit OfferCanceled(_id, msg.sender, provider, project.title, project.price);
+    emit OfferCanceled(_id, msg.sender, fulfiller, project.title, project.price);
   }
 
-  // Accept services from the provider
-  // The owner accepts the services offered by the provider 
+  // Accept services from the fulfiller
+  // The issuer accepts the services offered by the fulfiller 
   function acceptProposal(uint256 _id) payable public onlyEnable {
     
     // retrieve the project
     ProjectItem storage project = projects[_id];
 
     // ensure that this project exists
-    if (project.owner == address(0x0)) {
+    if (project.issuer == address(0x0)) {
       return;
     }
  
      // do we own this project?
-    require(project.owner == msg.sender, "You are not the owner of this project");
+    require(project.issuer == msg.sender, "You are not the issuer of this project");
 
     // is the project in review?
     require(project.status == ProjectStatus.InReview, "Proposal not in review");
 
-    // is the owner has deposit the requeste amount?
+    // is the issuer has deposit the requeste amount?
     require(msg.value == project.price, "Your deposit doesn't match the contract's price");
 
     // project is now ongoing
     project.status = ProjectStatus.OnGoing;
 
-    emit AcceptProposal(_id, msg.sender, project.provider, project.title, project.price);
+    emit AcceptProposal(_id, msg.sender, project.fulfiller, project.title, project.price);
   }
 
-  // Reject proposal from the provider
-  // The owner rejects the services offered by the provider 
+  // Reject proposal from the fulfiller
+  // The issuer rejects the services offered by the fulfiller 
   function rejectProposal(uint256 _id) public onlyEnable {
     
     // retrieve the project
     ProjectItem storage project = projects[_id];
 
     // ensure that this project exists
-    if (project.owner == address(0x0)) {
+    if (project.issuer == address(0x0)) {
       return;
     }
  
      // do we own this project?
-    require(project.owner == msg.sender, "You are not the owner of this project");
+    require(project.issuer == msg.sender, "You are not the issuer of this project");
 
     // is the project in review?
     require(project.status == ProjectStatus.InReview , "Proposal not in review");
 
     // project is now available
-    address provider = project.provider;
+    address payable fulfiller = project.fulfiller;
     project.status = ProjectStatus.Available;
-    project.provider = address(0x0);
+    project.fulfiller = address(0x0);
     
-    emit RejectProposal(_id, msg.sender, provider, project.title, project.price);
+    emit RejectProposal(_id, msg.sender, fulfiller, project.title, project.price);
   }
 
   // Deliver the project to the customer
-  // The provider delivers the project to the owner 
+  // The fulfiller delivers the project to the issuer 
   function deliverProject(uint256 _id) public onlyEnable {
     
     // retrieve the project
     ProjectItem storage project = projects[_id];
 
     // ensure that this project exists
-    if (project.owner == address(0x0)) {
+    if (project.issuer == address(0x0)) {
       return;
     }
  
-    // are we the service provider?
-    require(project.provider == msg.sender, "You are not the service provider");
+    // are we the service fulfiller?
+    require(project.fulfiller == msg.sender, "You are not the service fulfiller");
 
     // is the project ongoing?
     require(project.status == ProjectStatus.OnGoing, "Project not in progress");
@@ -391,76 +399,76 @@ contract ChainBizz {
     // project is now validation process
     project.status = ProjectStatus.Validate;
 
-    emit ProjectDelivered(_id, msg.sender, project.provider, project.title, project.price);
+    emit ProjectDelivered(_id, msg.sender, project.fulfiller, project.title, project.price);
   }
 
-   // Cancel services from the provider
-  // The provider cancels the services performed for the project 
+   // Cancel services from the fulfiller
+  // The fulfiller cancels the services performed for the project 
   function cancelServices(uint256 _id) public onlyEnable {
     
     // retrieve the project
     ProjectItem storage project = projects[_id];
 
     // ensure that this project exists
-    if (project.owner == address(0x0)) {
+    if (project.issuer == address(0x0)) {
       return;
     }
  
-    // are we the service provider?
-    require(project.provider == msg.sender, "You are not the service provider");
+    // are we the service fulfiller?
+    require(project.fulfiller == msg.sender, "You are not the service fulfiller");
 
     // is the project ongoing?
     require(project.status == ProjectStatus.OnGoing, "Project not in progress");
 
     // project becomes available
-    address provider = project.provider;
+    address payable fulfiller = project.fulfiller;
     project.status = ProjectStatus.Available;
-    project.provider = address(0x0);
+    project.fulfiller = address(0x0);
     
-    emit ServicesCanceled(_id, msg.sender, provider, project.title, project.price);
+    emit ServicesCanceled(_id, msg.sender, fulfiller, project.title, project.price);
   }
 
-  // Accept the project delivery from the provider
-  // The owner accepts the project delivered by the provider 
+  // Accept the project delivery from the fulfiller
+  // The issuer accepts the project delivered by the fulfiller 
   function acceptDelivery(uint256 _id) public onlyEnable {
     
     // retrieve the project
     ProjectItem storage project = projects[_id];
 
     // ensure that this project exists
-    if (project.owner == address(0x0)) {
+    if (project.issuer == address(0x0)) {
       return;
     }
  
      // do we own this project?
-    require(project.owner == msg.sender, "You are not the owner of this project");
+    require(project.issuer == msg.sender, "You are not the issuer of this project");
 
     // is the project in review?
     require(project.status == ProjectStatus.Validate, "Project not in validation process");
 
     // pay the service provide
-    project.provider.transfer(project.price);
+    project.fulfiller.transfer(project.price);
 
     // project is now completed
     project.status = ProjectStatus.Completed;
 
-    emit DeliveryAccepted(_id, msg.sender, project.provider, project.title, project.price);
+    emit DeliveryAccepted(_id, msg.sender, project.fulfiller, project.title, project.price);
   }
 
-  // Reject the project delivery from the provider
-  // The owner rejects the project delivered by the provider 
+  // Reject the project delivery from the fulfiller
+  // The issuer rejects the project delivered by the fulfiller 
   function rejectDelivery(uint256 _id) public onlyEnable {
     
     // retrieve the project
     ProjectItem storage project = projects[_id];
 
     // ensure that this project exists
-    if (project.owner == address(0x0)) {
+    if (project.issuer == address(0x0)) {
       return;
     }
  
      // do we own this project?
-    require(project.owner == msg.sender, "You are not the owner of this project");
+    require(project.issuer == msg.sender, "You are not the issuer of this project");
 
     // is the project in review?
     require(project.status == ProjectStatus.Validate, "Project not in validation process");
@@ -468,34 +476,34 @@ contract ChainBizz {
     // project remains ongoing
     project.status = ProjectStatus.OnGoing;
     
-    emit DeliveryRejected(_id, msg.sender, project.provider, project.title, project.price);
+    emit DeliveryRejected(_id, msg.sender, project.fulfiller, project.title, project.price);
   }
 
-  // Contract canceled by the owner
-  // The owner cancels the contract 
+  // Contract canceled by the issuer
+  // The issuer cancels the contract 
   function cancelContract(uint256 _id) public onlyEnable {
     
     // retrieve the project
     ProjectItem storage project = projects[_id];
 
     // ensure that this project exists
-    if (project.owner == address(0x0)) {
+    if (project.issuer == address(0x0)) {
       return;
     }
  
-    // are we the service provider?
-    require(project.owner == msg.sender, "You are not the project's owner");
+    // are we the service fulfiller?
+    require(project.issuer == msg.sender, "You are not the project's issuer");
 
     // is the project ongoing?
     require((project.status == ProjectStatus.OnGoing) || (project.status == ProjectStatus.Validate), "Project not in progress");
 
-    // pay back the contract's owner
-    project.owner.transfer(project.price);
+    // pay back the contract's issuer
+    project.issuer.transfer(project.price);
 
     // contract becomes canceled
     project.status = ProjectStatus.Canceled;
     
-    emit ContractCanceled(_id, msg.sender, project.provider, project.title, project.price);
+    emit ContractCanceled(_id, msg.sender, project.fulfiller, project.title, project.price);
   }
 
   //
@@ -509,8 +517,8 @@ contract ChainBizz {
 
   // Retrieve a project from its id
   function getProject(uint256 _id) public view returns (
-    address owner,
-    address provider,
+    address issuer,
+    address fulfiller,
     string memory title,
     string memory description,
     uint256 price,
@@ -519,13 +527,13 @@ contract ChainBizz {
     ProjectItem memory project = projects[_id];
 
     // ensure that we have a project to fetch
-    if (project.owner == address(0x0)) {
+    if (project.issuer == address(0x0)) {
       return (address(0x0), address(0x0), "", "", 0, ProjectStatus.Unknown);
     }
 
     return (
-      project.owner,
-      project.provider,
+      project.issuer,
+      project.fulfiller,
       project.title,
       project.description,
       project.price,
@@ -545,7 +553,7 @@ contract ChainBizz {
     uint256 numberOfProjects = 0;
     for (uint256 i = 1; i <= projectsCounter; i++) {
       // skip deleted projects
-      if (projects[i].owner != address(0x0)) {
+      if (projects[i].issuer != address(0x0)) {
         projectIDs[numberOfProjects] = projects[i].id;
         numberOfProjects = numberOfProjects.add(1);
       }
@@ -574,7 +582,7 @@ contract ChainBizz {
     uint256 numberOfProjects = 0;
     for (uint256 i = 1; i <= projectsCounter; i++) {
       // get only published and active projects 
-      if ((projects[i].owner != address(0x0)) && (projects[i].status == ProjectStatus.Available)) {
+      if ((projects[i].issuer != address(0x0)) && (projects[i].status == ProjectStatus.Available)) {
         projectIDs[numberOfProjects] = projects[i].id;
         numberOfProjects = numberOfProjects.add(1);
       }
@@ -603,7 +611,7 @@ contract ChainBizz {
     uint256 numberOfProjects = 0;
     for (uint i = 1; i <= projectsCounter; i++) {
       // keep the ID of the project owned by the caller
-      if ((projects[i].owner == msg.sender) && (projects[i].status != ProjectStatus.Completed) && (projects[i].status != ProjectStatus.Canceled)) {
+      if ((projects[i].issuer == msg.sender) && (projects[i].status != ProjectStatus.Completed) && (projects[i].status != ProjectStatus.Canceled)) {
         projectIDs[numberOfProjects] = projects[i].id;
 
         numberOfProjects = numberOfProjects.add(1);
@@ -631,8 +639,8 @@ contract ChainBizz {
     // iterate over projects
     uint256 numberOfProjects = 0;
     for (uint i = 1; i <= projectsCounter; i++) {
-      // keep the ID of the project with the sender as provider and the project still in review process
-      if ((projects[i].provider == msg.sender) && (projects[i].status == ProjectStatus.InReview)) {
+      // keep the ID of the project with the sender as fulfiller and the project still in review process
+      if ((projects[i].fulfiller == msg.sender) && (projects[i].status == ProjectStatus.InReview)) {
         projectIDs[numberOfProjects] = projects[i].id;
 
         numberOfProjects = numberOfProjects.add(1);
@@ -662,7 +670,7 @@ contract ChainBizz {
     uint256 numberOfProjects = 0;
     for (uint i = 1; i <= projectsCounter; i++) {
       // keep the ID of the project owned by the caller and the project still in review process
-      if ((projects[i].owner == msg.sender) && (projects[i].status == ProjectStatus.InReview)) {
+      if ((projects[i].issuer == msg.sender) && (projects[i].status == ProjectStatus.InReview)) {
         projectIDs[numberOfProjects] = projects[i].id;
 
         numberOfProjects = numberOfProjects.add(1);
@@ -690,8 +698,8 @@ contract ChainBizz {
     // iterate over projects
     uint256 numberOfProjects = 0;
     for (uint256 i = 1; i <= projectsCounter; i++) {
-      // get only ongoing and under validation contracts owned by the contract's owner or the service provider 
-      if (((projects[i].owner == msg.sender) || (projects[i].provider == msg.sender)) && 
+      // get only ongoing and under validation contracts owned by the issuer or the service fulfiller 
+      if (((projects[i].issuer == msg.sender) || (projects[i].fulfiller == msg.sender)) && 
       ((projects[i].status == ProjectStatus.OnGoing) || (projects[i].status == ProjectStatus.Validate))) {
         projectIDs[numberOfProjects] = projects[i].id;
         numberOfProjects = numberOfProjects.add(1);
@@ -719,8 +727,8 @@ contract ChainBizz {
     // iterate over projects
     uint256 numberOfProjects = 0;
     for (uint256 i = 1; i <= projectsCounter; i++) {
-      // get only ongoing contracts owner by the contract's owner or the service provider 
-      if (((projects[i].owner == msg.sender) || (projects[i].provider == msg.sender)) && (projects[i].status == ProjectStatus.Validate)) {
+      // get only ongoing projects issued by the issuer or the fulfiller 
+      if (((projects[i].issuer == msg.sender) || (projects[i].fulfiller == msg.sender)) && (projects[i].status == ProjectStatus.Validate)) {
         projectIDs[numberOfProjects] = projects[i].id;
         numberOfProjects = numberOfProjects.add(1);
       }
@@ -747,8 +755,8 @@ contract ChainBizz {
     // iterate over projects
     uint256 numberOfProjects = 0;
     for (uint256 i = 1; i <= projectsCounter; i++) {
-      // get only ongoing contracts owner by the contract's owner or the service provider 
-      if (((projects[i].owner == msg.sender) || (projects[i].provider == msg.sender)) && (projects[i].status == ProjectStatus.Completed)) {
+      // get only ongoing projects issued by the issuer or the fulfiller 
+      if (((projects[i].issuer == msg.sender) || (projects[i].fulfiller == msg.sender)) && (projects[i].status == ProjectStatus.Completed)) {
         projectIDs[numberOfProjects] = projects[i].id;
         numberOfProjects = numberOfProjects.add(1);
       }
@@ -775,8 +783,8 @@ contract ChainBizz {
     // iterate over projects
     uint256 numberOfProjects = 0;
     for (uint256 i = 1; i <= projectsCounter; i++) {
-      // get only ongoing contracts owner by the contract's owner or the service provider 
-      if (((projects[i].owner == msg.sender) || (projects[i].provider == msg.sender)) && (projects[i].status == ProjectStatus.Canceled)) {
+      // get only ongoing projects issued by the issuer or the fulfiller 
+      if (((projects[i].issuer == msg.sender) || (projects[i].fulfiller == msg.sender)) && (projects[i].status == ProjectStatus.Canceled)) {
         projectIDs[numberOfProjects] = projects[i].id;
         numberOfProjects = numberOfProjects.add(1);
       }
