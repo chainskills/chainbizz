@@ -1,0 +1,14 @@
+.card--custom .col:nth-child(2) span,
+.card--custom .material-icons {
+  color: grey;
+}
+.card--custom .material-icons {
+  font-size: 18px;
+  margin-top: 13px;
+  position: relative;
+  top: 4px;
+  margin-right: 9px;
+}
+.card--custom .col:nth-child(2) span {
+  font-weight: 300;
+}

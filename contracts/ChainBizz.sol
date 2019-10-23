@@ -101,15 +101,11 @@ contract ChainBizz {
   }
 
   /// @dev Enable the usage of the contract
-  /// @param 
-  /// @return 
   function enableContract() public onlyOwner {
     enabledContract = true;
   }
 
   /// @dev Disable the usage of the contract, change the status of all running projects and payback all issuers
-  /// @param 
-  /// @return 
   function disableContract() public onlyOwner onlyEnable {
     // First, we disable the contract
     enabledContract = false;
