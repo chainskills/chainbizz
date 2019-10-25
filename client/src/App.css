@@ -33,6 +33,94 @@ nav .brand-logo {
   transform: rotate(180deg);
 }
 
+.network-status::before {
+  content: '';
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background-color: green;
+  margin-right: 5px;
+  position: relative;
+  border-radius: 5px;
+}
+.network-status {
+  position: relative;
+  left: 310px;
+  color: rgb(118, 119, 121);
+  border: 1px solid grey;
+  background-color: transparent;
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+
+.network-status:hover {
+  pointer-events: none;
+}
+
+.network-status:focus {
+  background-color: transparent !important;
+}
+
+.network-status--green::before {
+  background-color: green;
+}
+
+.network-status--orange::before {
+  background-color: orange;
+}
+
+.network-status--blue::before {
+  background-color: blue;
+}
+
+.user-view {
+  position: absolute;
+  right: 20px;
+  top: 10px;
+}
+
+.notifications {
+  color: grey;
+  position: absolute;
+  top: 0px;
+  right: 70px;
+  height: 64px;
+}
+
+.notifications i {
+  margin: 0;
+}
+
+.new-project {
+  position: absolute;
+  top: 13px;
+  right: 200px;
+}
+
+span.badge.new,
+.blue-grey.lighten-1 {
+  background-color: rgb(79, 166, 218) !important;
+}
+
+body {
+  padding-top: 100px;
+}
+
+.blue-grey.lighten-5 {
+  background-color: transparent !important;
+}
+
+.z-depth-0 {
+  position: fixed;
+  top: 0;
+  z-index: 20;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+[data-target='slide-out'] {
+  display: none;
+}
+
 @media only screen and (max-width: 992px) {
   header,
   main,

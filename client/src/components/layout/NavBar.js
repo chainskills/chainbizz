@@ -3,7 +3,6 @@ import { withRouter } from 'react-router-dom';
 import Blockies from 'react-blockies';
 import 'materialize-css/dist/css/materialize.min.css';
 import M from 'materialize-css/dist/js/materialize.min.js';
-import blockchain from '../../assets/images/blockchain.svg';
 
 import logo from '../../assets/images/chainskills-logo.png';
 
@@ -15,29 +14,36 @@ const NavBar = ({ account }) => {
   }, []);
 
   let networkName = '';
+  let networkFlag = 'grey';
   switch (window.ethereum.networkVersion) {
     case 1:
       networkName = 'Main Network';
+      networkFlag = 'network-status--green';
       break;
 
     case 3:
       networkName = 'Ropsten Test Network';
+      networkFlag = 'network-status--orange';
       break;
 
     case 4:
       networkName = 'Rinkeby Test Network';
+      networkFlag = 'network-status--orange';
       break;
 
     case 5:
       networkName = 'Göerli Test Network';
+      networkFlag = 'network-status--orange';
       break;
 
     case 42:
       networkName = 'Kovan Test Network';
+      networkFlag = 'network-status--orange';
       break;
 
     default:
       networkName = 'Private Network';
+      networkFlag = 'network-status--blue';
       break;
   }
 
@@ -62,22 +68,37 @@ const NavBar = ({ account }) => {
             />
             <span style={{ color: '#4fa6da' }}>ChainBizz</span>
           </a>
-          <a
+          <button
             href={null}
-            style={{ position: 'relative', left: '310px', color: '#767779' }}
+            style={{ position: 'relative', left: '310px', color: 'grey' }}
+            className={'network-status ' + networkFlag}
           >
-            <img
-              src={blockchain}
-              style={{
-                width: '35px',
-                position: 'relative',
-                top: '11px',
-                marginRight: '8px'
-              }}
-              alt={''}
-            />
             {networkName}
-          </a>
+          </button>
+          <button className={'notifications btn-flat'}>
+            <i className='material-icons left'>notifications_none</i>
+          </button>
+          <div className='user-view'>
+            <ul id='dropdown1' class='dropdown-content'>
+              <li>
+                <a href='#!'>Profile</a>
+              </li>
+
+              <li>
+                <a href='#!'>Events</a>
+              </li>
+            </ul>
+            {account !== null && (
+              <a class='dropdown-trigger' href='#!' data-target='dropdown1'>
+                <Blockies
+                  seed={account}
+                  size={8}
+                  scale={5}
+                  className='circle'
+                />
+              </a>
+            )}
+          </div>
         </div>
       </nav>
 
@@ -85,28 +106,9 @@ const NavBar = ({ account }) => {
         id='slide-out'
         className='sidenav sidenav-fixed blue-grey lighten-5 z-depth-0'
       >
-        <li>
-          <div className='user-view' style={{ height: '122px' }}>
-            <div className='row'>
-              <div className='col s3'>
-                {account !== null && (
-                  <Blockies
-                    seed={account}
-                    size={10}
-                    scale={5}
-                    className='circle'
-                  />
-                )}
-              </div>
-              <div className='col s9'>
-                <span className='name truncate'>{account}</span>
-              </div>
-            </div>
-          </div>
-        </li>
         <li
           style={{
-            marginBottom: '30px'
+            marginBottom: '120px'
           }}
         ></li>
         <li>

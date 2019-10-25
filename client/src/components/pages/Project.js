@@ -568,29 +568,11 @@ const Project = ({ drizzle, account }) => {
       <div className='row container'>
         <div className='col s12 m4'>
           <a
-            className='waves-effect waves-light btn blue-grey lighten-1'
+            className='waves-effect waves-light btn blue-grey lighten-1 new-project'
             onClick={() => handleNewProject()}
           >
             <i className='material-icons left'>add</i>New
           </a>
-        </div>
-        <div className='col s12 m4'>
-          {enabled === true && (
-            <a
-              className='waves-effect waves-light btn blue-grey lighten-1'
-              onClick={() => handleDisableContract()}
-            >
-              <i className='material-icons left'>cancel</i>Disable
-            </a>
-          )}
-          {enabled === false && (
-            <a
-              className='waves-effect waves-light btn blue-grey lighten-1'
-              onClick={() => handleEnableContract()}
-            >
-              <i className='material-icons left'>cancel</i>Enable
-            </a>
-          )}
         </div>
       </div>
 
