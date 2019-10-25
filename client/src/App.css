@@ -95,6 +95,7 @@ nav .brand-logo {
   position: absolute;
   top: 13px;
   right: 200px;
+  z-index: 21;
 }
 
 span.badge.new,
@@ -110,11 +111,18 @@ body {
   background-color: transparent !important;
 }
 
-.z-depth-0 {
+.top-navbar {
   position: fixed;
   top: 0;
   z-index: 20;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4) !important;
+}
+
+.left-nav {
+  position: fixed;
+  top: 0;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4) !important;
+  z-index: 0;
 }
 
 [data-target='slide-out'] {

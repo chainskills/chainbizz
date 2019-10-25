@@ -49,7 +49,7 @@ const NavBar = ({ account }) => {
 
   return (
     <div>
-      <nav className='z-depth-0'>
+      <nav className='top-navbar'>
         <div className='nav-wrapper white'>
           <a
             href='/'
@@ -104,7 +104,7 @@ const NavBar = ({ account }) => {
 
       <ul
         id='slide-out'
-        className='sidenav sidenav-fixed blue-grey lighten-5 z-depth-0'
+        className='sidenav sidenav-fixed blue-grey lighten-5 left-nav'
       >
         <li
           style={{
