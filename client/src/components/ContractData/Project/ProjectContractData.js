@@ -88,19 +88,19 @@ const ProjectContractData = ({ projectId, drizzle, drizzleState, account }) => {
                 <div>
                   <span
                     className='new badge'
-                    style={{ float: 'inherit', margin: '0 0 15px 0' }}
+                    style={{ float: 'inherit', margin: '0 5px 0 0' }}
                   >
                     text
                   </span>
                   <span
                     className='new badge'
-                    style={{ float: 'inherit', margin: '0 0 15px 0' }}
+                    style={{ float: 'inherit', margin: '0 5px 0 0' }}
                   >
                     text
                   </span>
                   <span
                     className='new badge'
-                    style={{ float: 'inherit', margin: '0 0 15px 0' }}
+                    style={{ float: 'inherit', margin: '0 5px 0 0' }}
                   >
                     text
                   </span>

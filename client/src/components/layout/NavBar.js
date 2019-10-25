@@ -5,6 +5,8 @@ import 'materialize-css/dist/css/materialize.min.css';
 import M from 'materialize-css/dist/js/materialize.min.js';
 import blockchain from '../../assets/images/blockchain.svg';
 
+import logo from '../../assets/images/chainskills-logo.png';
+
 const NavBar = ({ account }) => {
   useEffect(() => {
     // Initialize Materialize JS
@@ -46,23 +48,36 @@ const NavBar = ({ account }) => {
           <a
             href='/'
             className='brand-logo black-text'
-            style={{ textDecoration: 'none' }}
+            style={{ textDecoration: 'none', marginLeft: '20px' }}
           >
-            ChainBizz
+            <img
+              src={logo}
+              style={{
+                width: '40px',
+                position: 'relative',
+                top: '11px',
+                marginRight: '8px'
+              }}
+              alt={''}
+            />
+            <span style={{ color: '#4fa6da' }}>ChainBizz</span>
           </a>
-          <form className=' hide-on-med-and-down' id='formSearch'>
-            <div className='input-field'>
-              <input
-                id='search'
-                type='search'
-                placeholder='Search for projects'
-              />
-              <label className='label-icon' htmlFor='search'>
-                <i className='material-icons'>search</i>
-              </label>
-              <i className='material-icons'>close</i>
-            </div>
-          </form>
+          <a
+            href={null}
+            style={{ position: 'relative', left: '310px', color: '#767779' }}
+          >
+            <img
+              src={blockchain}
+              style={{
+                width: '35px',
+                position: 'relative',
+                top: '11px',
+                marginRight: '8px'
+              }}
+              alt={''}
+            />
+            {networkName}
+          </a>
         </div>
       </nav>
 
@@ -89,13 +104,11 @@ const NavBar = ({ account }) => {
             </div>
           </div>
         </li>
-        <li style={{ 
-        marginBottom: '30px' }}>
-          <a href={null}>
-            <img src={blockchain} style={{ width: '35px',position: 'relative',top: '11px',marginRight: '8px' }} alt={''} />
-            {networkName}
-          </a>
-        </li>
+        <li
+          style={{
+            marginBottom: '30px'
+          }}
+        ></li>
         <li>
           <a href='/'>Available projects</a>
         </li>
