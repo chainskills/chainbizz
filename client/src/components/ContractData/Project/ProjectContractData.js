@@ -68,7 +68,7 @@ const ProjectContractData = ({ projectId, drizzle, drizzleState, account }) => {
   */
   return (
     <div className='col s12 m12'>
-      <div className='card card--custom'>
+      <div className='card card-custom'>
         <div className='card-content'>
           <div>
             <div className='row'>
@@ -131,17 +131,17 @@ const ProjectContractData = ({ projectId, drizzle, drizzleState, account }) => {
                   </p>
                 </div>
               </div>
-              <div className='col s3'>
+              <div className='col s3 project-additional'>
                 <ul style={{ margin: '-10px 0 0 0' }}>
-                  <li style={{ fontWeight: '600' }}>
+                  <li style={{ fontWeight: '200' }}>
                     <i className='material-icons'>perm_data_setting</i>Beginner{' '}
                     <span>difficulty</span>
                   </li>
-                  <li style={{ fontWeight: '600' }}>
+                  <li style={{ fontWeight: '200' }}>
                     <i className='material-icons'>history</i>5{' '}
                     <span>days remaining</span>
                   </li>
-                  <li style={{ fontWeight: '600' }}>
+                  <li style={{ fontWeight: '200' }}>
                     <i className='material-icons'>thumb_up</i>0{' '}
                     <span>submissions</span>
                   </li>
@@ -161,6 +161,15 @@ const ProjectContractData = ({ projectId, drizzle, drizzleState, account }) => {
               </div>
             </div>
           </div>
+        </div>
+        <div className='card-action right-align project-card'>
+          {projectDetails.issuer === account && (
+            <ActionsOwner projectId={projectId} status={status} />
+          )}
+
+          {projectDetails.issuer !== account && (
+            <ActionsProvider projectId={projectId} status={status} />
+          )}
         </div>
       </div>
     </div>

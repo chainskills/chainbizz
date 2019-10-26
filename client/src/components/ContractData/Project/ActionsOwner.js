@@ -23,8 +23,6 @@ const ActionsOwner = ({ projectId, status }) => {
     onCancelContract
   } = projectContext;
 
-  console.log('Status: ' + status);
-
   return (
     <div>
       {(status === projectStatus.DRAFT ||
@@ -37,7 +35,7 @@ const ActionsOwner = ({ projectId, status }) => {
             }}
             title={'Remove'}
           >
-            <i className='material-icons'>delete</i>
+            <i className='material-icons card-icon'>delete</i>
           </a>
           <a
             href={'#!'}
@@ -46,7 +44,7 @@ const ActionsOwner = ({ projectId, status }) => {
             }}
             title={'Edit'}
           >
-            <i className='material-icons'>edit</i>
+            <i className='material-icons card-icon'>edit</i>
           </a>
           <a
             href={'#!'}
@@ -55,7 +53,7 @@ const ActionsOwner = ({ projectId, status }) => {
             }}
             title={'Publish'}
           >
-            <i className='material-icons'>publish</i>
+            <i className='material-icons card-icon'>publish</i>
           </a>
         </span>
       )}
@@ -68,7 +66,7 @@ const ActionsOwner = ({ projectId, status }) => {
           }}
           title={'Unpublish'}
         >
-          <i className='material-icons'>get_app</i>
+          <i className='material-icons card-icon'>get_app</i>
         </a>
       )}
 

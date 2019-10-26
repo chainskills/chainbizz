@@ -75,7 +75,6 @@ const App = ({ drizzleContext }) => {
   });
   */
 
-  console.log('Account: ' + account);
   return (
     <ProjectState>
       <Router>

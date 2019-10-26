@@ -150,6 +150,7 @@ export default (state, action) => {
         error: action.payload
       };
     case ON_CANCEL_MODAL:
+      console.log('Into ON_CANCEL_MODAL');
       return {
         ...state,
         showEdit: false,
@@ -167,12 +168,13 @@ export default (state, action) => {
         showCancelContract: false
       };
     case CLEAR_CURRENT_SELECTION:
+      console.log('Into CLEAR_CURRENT_SELECTION');
       return {
         ...state,
         current: null,
         projectId: null,
         loading: false,
-        sshowEdit: false,
+        showEdit: false,
         showRemove: false,
         showPublish: false,
         showUnpublish: false,

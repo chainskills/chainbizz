@@ -76,6 +76,7 @@ const Project = ({ drizzle, account }) => {
       add: function(project) {
         setModalProjectOpen(false);
         addProject(drizzle, account, project);
+        clearCurrrentSelection();
       }
     });
 
@@ -84,7 +85,7 @@ const Project = ({ drizzle, account }) => {
       visible: true,
       handle: function() {
         setModalProjectOpen(false);
-        onCancelModal();
+        clearCurrrentSelection();
       }
     });
   };
@@ -104,6 +105,7 @@ const Project = ({ drizzle, account }) => {
       handle: function(id) {
         setModalConfirmationOpen(false);
         disableContract(drizzle, account);
+        clearCurrrentSelection();
       }
     });
 
@@ -112,7 +114,7 @@ const Project = ({ drizzle, account }) => {
       visible: true,
       handle: function() {
         setModalConfirmationOpen(false);
-        onCancelModal();
+        clearCurrrentSelection();
       }
     });
   };
@@ -132,6 +134,7 @@ const Project = ({ drizzle, account }) => {
       handle: function(id) {
         setModalConfirmationOpen(false);
         enableContract(drizzle, account);
+        clearCurrrentSelection();
       }
     });
 
@@ -140,7 +143,7 @@ const Project = ({ drizzle, account }) => {
       visible: true,
       handle: function() {
         setModalConfirmationOpen(false);
-        onCancelModal();
+        clearCurrrentSelection();
       }
     });
   };
@@ -162,6 +165,7 @@ const Project = ({ drizzle, account }) => {
       update: function(project) {
         setModalProjectOpen(false);
         updateProject(drizzle, account, id, project);
+        clearCurrrentSelection();
       }
     });
 
@@ -170,12 +174,13 @@ const Project = ({ drizzle, account }) => {
       visible: true,
       handle: function() {
         setModalProjectOpen(false);
-        onCancelModal();
+        clearCurrrentSelection();
       }
     });
   };
 
   const handleRemove = id => {
+    console.log('debug: handleRemove: ' + new Date());
     setDataID(id);
     setModalConfirmationOpen(true);
 
@@ -188,6 +193,7 @@ const Project = ({ drizzle, account }) => {
       handle: function(id) {
         setModalConfirmationOpen(false);
         removeProject(drizzle, account, id);
+        clearCurrrentSelection();
       }
     });
 
@@ -196,12 +202,13 @@ const Project = ({ drizzle, account }) => {
       visible: true,
       handle: function() {
         setModalConfirmationOpen(false);
-        onCancelModal();
+        clearCurrrentSelection();
       }
     });
   };
 
   const handlePublish = id => {
+    console.log('debug: handlePublish: ' + new Date());
     setDataID(id);
     setModalConfirmationOpen(true);
 
@@ -214,6 +221,7 @@ const Project = ({ drizzle, account }) => {
       handle: function(id) {
         setModalConfirmationOpen(false);
         publishProject(drizzle, account, id);
+        clearCurrrentSelection();
       }
     });
 
@@ -222,7 +230,7 @@ const Project = ({ drizzle, account }) => {
       visible: true,
       handle: function() {
         setModalConfirmationOpen(false);
-        onCancelModal();
+        clearCurrrentSelection();
       }
     });
   };
@@ -240,6 +248,7 @@ const Project = ({ drizzle, account }) => {
       handle: function(id) {
         setModalConfirmationOpen(false);
         unpublishProject(drizzle, account, id);
+        clearCurrrentSelection();
       }
     });
 
@@ -248,7 +257,7 @@ const Project = ({ drizzle, account }) => {
       visible: true,
       handle: function() {
         setModalConfirmationOpen(false);
-        onCancelModal();
+        clearCurrrentSelection();
       }
     });
   };
@@ -268,6 +277,7 @@ const Project = ({ drizzle, account }) => {
       handle: function(id) {
         setModalConfirmationOpen(false);
         submitOffer(drizzle, account, id);
+        clearCurrrentSelection();
       }
     });
 
@@ -276,7 +286,7 @@ const Project = ({ drizzle, account }) => {
       visible: true,
       handle: function() {
         setModalConfirmationOpen(false);
-        onCancelModal();
+        clearCurrrentSelection();
       }
     });
   };
@@ -296,6 +306,7 @@ const Project = ({ drizzle, account }) => {
       handle: function(id) {
         setModalConfirmationOpen(false);
         cancelOffer(drizzle, account, id);
+        clearCurrrentSelection();
       }
     });
 
@@ -304,7 +315,7 @@ const Project = ({ drizzle, account }) => {
       visible: true,
       handle: function() {
         setModalConfirmationOpen(false);
-        onCancelModal();
+        clearCurrrentSelection();
       }
     });
   };
@@ -324,6 +335,7 @@ const Project = ({ drizzle, account }) => {
       handle: function(id) {
         setModalConfirmationOpen(false);
         acceptProposal(drizzle, account, id);
+        clearCurrrentSelection();
       }
     });
 
@@ -332,7 +344,7 @@ const Project = ({ drizzle, account }) => {
       visible: true,
       handle: function() {
         setModalConfirmationOpen(false);
-        onCancelModal();
+        clearCurrrentSelection();
       }
     });
   };
@@ -352,6 +364,7 @@ const Project = ({ drizzle, account }) => {
       handle: function(id) {
         setModalConfirmationOpen(false);
         rejectProposal(drizzle, account, id);
+        clearCurrrentSelection();
       }
     });
 
@@ -360,7 +373,7 @@ const Project = ({ drizzle, account }) => {
       visible: true,
       handle: function() {
         setModalConfirmationOpen(false);
-        onCancelModal();
+        clearCurrrentSelection();
       }
     });
   };
@@ -380,6 +393,7 @@ const Project = ({ drizzle, account }) => {
       handle: function(id) {
         setModalConfirmationOpen(false);
         deliverProject(drizzle, account, id);
+        clearCurrrentSelection();
       }
     });
 
@@ -388,7 +402,7 @@ const Project = ({ drizzle, account }) => {
       visible: true,
       handle: function() {
         setModalConfirmationOpen(false);
-        onCancelModal();
+        clearCurrrentSelection();
       }
     });
   };
@@ -408,6 +422,7 @@ const Project = ({ drizzle, account }) => {
       handle: function(id) {
         setModalConfirmationOpen(false);
         cancelServices(drizzle, account, id);
+        clearCurrrentSelection();
       }
     });
 
@@ -416,7 +431,7 @@ const Project = ({ drizzle, account }) => {
       visible: true,
       handle: function() {
         setModalConfirmationOpen(false);
-        onCancelModal();
+        clearCurrrentSelection();
       }
     });
   };
@@ -436,6 +451,7 @@ const Project = ({ drizzle, account }) => {
       handle: function(id) {
         setModalConfirmationOpen(false);
         acceptDelivery(drizzle, account, id);
+        clearCurrrentSelection();
       }
     });
 
@@ -444,7 +460,7 @@ const Project = ({ drizzle, account }) => {
       visible: true,
       handle: function() {
         setModalConfirmationOpen(false);
-        onCancelModal();
+        clearCurrrentSelection();
       }
     });
   };
@@ -464,6 +480,7 @@ const Project = ({ drizzle, account }) => {
       handle: function(id) {
         setModalConfirmationOpen(false);
         rejectDelivery(drizzle, account, id);
+        clearCurrrentSelection();
       }
     });
 
@@ -472,7 +489,7 @@ const Project = ({ drizzle, account }) => {
       visible: true,
       handle: function() {
         setModalConfirmationOpen(false);
-        onCancelModal();
+        clearCurrrentSelection();
       }
     });
   };
@@ -492,6 +509,7 @@ const Project = ({ drizzle, account }) => {
       handle: function(id) {
         setModalConfirmationOpen(false);
         cancelContract(drizzle, account, id);
+        clearCurrrentSelection();
       }
     });
 
@@ -500,7 +518,7 @@ const Project = ({ drizzle, account }) => {
       visible: true,
       handle: function() {
         setModalConfirmationOpen(false);
-        onCancelModal();
+        clearCurrrentSelection();
       }
     });
   };

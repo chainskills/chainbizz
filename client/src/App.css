@@ -92,7 +92,7 @@ nav .brand-logo {
 }
 
 .new-project {
-  position: absolute;
+  position: fixed;
   top: 13px;
   right: 140px;
   z-index: 21;
@@ -144,6 +144,14 @@ a: .btn {
 .number-projects {
   font-size: 2.1rem;
   color: #4fa6da;
+}
+
+.card-action a {
+  color: #4fa6da !important;
+}
+
+.project-additional .material-icons {
+  font-size: 20px;
 }
 
 @media only screen and (max-width: 992px) {
