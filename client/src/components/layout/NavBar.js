@@ -94,12 +94,7 @@ const NavBar = ({ account }) => {
                 href='#!'
                 data-target='menu-dropdown'
               >
-                <Blockies
-                  seed={account}
-                  size={8}
-                  scale={5}
-                  className='circle'
-                />
+                <Blockies seed={account} size={8} scale={5} />
               </a>
             )}
           </div>

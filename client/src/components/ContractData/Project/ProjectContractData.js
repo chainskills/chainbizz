@@ -108,9 +108,9 @@ const ProjectContractData = ({ projectId, drizzle, drizzleState, account }) => {
                 <div style={{ marginTop: '20px' }}>
                   <Blockies
                     seed={account}
-                    size={10}
+                    size={8}
                     scale={5}
-                    className='circle left'
+                    className='left'
                     style={{
                       width: '40px',
                       height: '40px',

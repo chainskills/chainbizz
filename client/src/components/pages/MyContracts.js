@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 
 import 'materialize-css/dist/css/materialize.min.css';
 
@@ -59,8 +59,10 @@ const MyContracts = ({ drizzle, drizzleState, account }) => {
     <div>
       <div className='row'>
         <div className='col s12 m12'>
-          <span className='number-projects'>{nbProjects}</span>
-          <span> {nbProjects > 1 ? ' Projects' : ' Project'}</span>
+          <h5>
+            <span className='number-projects'>{nbProjects}</span>
+            <span> Ongoing {nbProjects > 1 ? ' projects' : ' project'}</span>
+          </h5>
         </div>
       </div>
       <div className='row'>{allProjects}</div>

@@ -57,8 +57,10 @@ const MyOffers = ({ drizzle, drizzleState, account }) => {
     <div>
       <div className='row'>
         <div className='col s12 m12'>
+          <h5>
           <span className='number-projects'>{nbProjects}</span>
-          <span> {nbProjects > 1 ? ' Projects' : ' Project'}</span>
+          <span> {nbProjects > 1 ? ' Projects' : ' Project'} fulfilled</span>
+          </h5>
         </div>
       </div>
       <div className='row'>{allProjects}</div>
