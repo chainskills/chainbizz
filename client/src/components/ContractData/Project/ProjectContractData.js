@@ -133,15 +133,15 @@ const ProjectContractData = ({ projectId, drizzle, drizzleState, account }) => {
               </div>
               <div className='col s3 project-additional'>
                 <ul style={{ margin: '-10px 0 0 0' }}>
-                  <li style={{ fontWeight: '200' }}>
+                  <li style={{ fontWeight: '600' }}>
                     <i className='material-icons'>perm_data_setting</i>Beginner{' '}
                     <span>difficulty</span>
                   </li>
-                  <li style={{ fontWeight: '200' }}>
+                  <li style={{ fontWeight: '600' }}>
                     <i className='material-icons'>history</i>5{' '}
                     <span>days remaining</span>
                   </li>
-                  <li style={{ fontWeight: '200' }}>
+                  <li style={{ fontWeight: '600' }}>
                     <i className='material-icons'>thumb_up</i>0{' '}
                     <span>submissions</span>
                   </li>

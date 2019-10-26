@@ -1,14 +1,22 @@
 .card-custom .col:nth-child(2) span,
-.card-custom .card-icon {
-  color: #4fa6da;
+.card-custom .material-icons {
+  color: grey;
+}
+.card-custom .material-icons {
+  font-size: 18px;
+  margin-top: 13px;
+  position: relative;
+  top: 4px;
+  margin-right: 9px;
+}
+.card-custom .col:nth-child(2) span {
+  font-weight: 300;
 }
 .card-custom .card-icon {
+  color: #4fa6da;
   font-size: 30px;
   margin-top: 0;
   position: relative;
   top: 0;
   margin-right: 9px;
-}
-.card-custom .col:nth-child(2) span {
-  font-weight: 300;
 }
