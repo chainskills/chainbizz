@@ -21,7 +21,7 @@ const Canceled = ({ drizzle, drizzleState, account }) => {
   // Retrieve all projects IDs linked to the current owner
 
   // prepare projects cards
-  let allCanceled = [];
+  let allProjects = [];
   let projectIds = null;
   if (dataKeys !== null) {
     if (
@@ -45,14 +45,22 @@ const Canceled = ({ drizzle, drizzleState, account }) => {
           />
         );
 
-        allCanceled.push(projectDetail);
+        allProjects.push(projectDetail);
       }
     }
   }
 
+  const nbProjects = projectIds !== null ? projectIds.length : 0;
+
   return (
     <div>
-      <div className='row'>{allCanceled}</div>
+      <div className='row'>
+        <div className='col s12 m12'>
+          <span className='number-projects'>{nbProjects}</span>
+          <span> {nbProjects > 0 ? ' Projects' : ' Project'}</span>
+        </div>
+      </div>
+      <div className='row'>{allProjects}</div>
     </div>
   );
 };

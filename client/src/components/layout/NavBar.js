@@ -79,7 +79,7 @@ const NavBar = ({ account }) => {
             <i className='material-icons left'>notifications_none</i>
           </button>
           <div className='user-view'>
-            <ul id='dropdown1' class='dropdown-content'>
+            <ul id='menu-dropdown' class='dropdown-content'>
               <li>
                 <a href='#!'>Profile</a>
               </li>
@@ -89,7 +89,7 @@ const NavBar = ({ account }) => {
               </li>
             </ul>
             {account !== null && (
-              <a class='dropdown-trigger' href='#!' data-target='dropdown1'>
+              <a class='dropdown-trigger' href='#!' data-target='menu-dropdown'>
                 <Blockies
                   seed={account}
                   size={8}

@@ -568,10 +568,10 @@ const Project = ({ drizzle, account }) => {
       <div className='row container'>
         <div className='col s12 m4'>
           <a
-            className='waves-effect waves-light btn blue-grey lighten-1 new-project'
+            className='waves-effect waves-light btn blue-grey lighten-1 new-project no-uppercase'
             onClick={() => handleNewProject()}
           >
-            <i className='material-icons left'>add</i>New
+            <i className='material-icons left'>add</i>New Project
           </a>
         </div>
       </div>

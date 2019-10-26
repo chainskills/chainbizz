@@ -51,8 +51,16 @@ const PublishedProjects = ({ drizzle, drizzleState, account }) => {
     }
   }
 
+  const nbProjects = projectIds !== null ? projectIds.length : 0;
+
   return (
     <div>
+      <div className='row'>
+        <div className='col s12 m12'>
+          <span className='number-projects'>{nbProjects}</span>
+          <span> {nbProjects > 0 ? ' Projects' : ' Project'}</span>
+        </div>
+      </div>
       <div className='row'>{allProjects}</div>
     </div>
   );

@@ -94,7 +94,7 @@ nav .brand-logo {
 .new-project {
   position: absolute;
   top: 13px;
-  right: 200px;
+  right: 140px;
   z-index: 21;
 }
 
@@ -127,6 +127,23 @@ body {
 
 [data-target='slide-out'] {
   display: none;
+}
+
+a: .btn {
+  text-transform: none;
+}
+
+.no-uppercase {
+  text-transform: none;
+}
+
+.dropdown-content li a {
+  color: #4fa6da;
+}
+
+.number-projects {
+  font-size: 2.1rem;
+  color: #4fa6da;
 }
 
 @media only screen and (max-width: 992px) {
