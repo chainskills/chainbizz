@@ -112,12 +112,6 @@ nav .brand-logo {
   display: inline-block;
 }
 
-.notifications-list a {
-  float: right;
-  text-align: center;
-  line-height: 35px;
-}
-
 .notifications-item {
   color: #4fa6da;
 }

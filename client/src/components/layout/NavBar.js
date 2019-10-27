@@ -8,7 +8,7 @@ import EventContext from '../context/events/eventContext';
 
 import logo from '../../assets/images/chainskills-logo.png';
 
-const NavBar = ({ drizzle, account }) => {
+const NavBar = ({ account }) => {
   const eventContext = useContext(EventContext);
   const { events, currentEventId, onClearEvents } = eventContext;
   const [eventsList, setEventsList] = useState([]);
@@ -60,11 +60,6 @@ const NavBar = ({ drizzle, account }) => {
       setNewNotification(false);
     }
     setShowNotifications(isVisible);
-  };
-
-  const handleClearEvents = () => {
-    console.log('into handle');
-    onClearEvents(drizzle);
   };
 
   let networkName = '';
@@ -164,13 +159,6 @@ const NavBar = ({ drizzle, account }) => {
             <div className='notifications-list'>
               <div>
                 <h5>Notifications</h5>
-
-                <a
-                  className='waves-effect waves-light btn blue-grey lighten-1 no-uppercase'
-                  onClick={() => handleClearEvents()}
-                >
-                  Clear
-                </a>
               </div>
 
               <div> {eventsList}</div>

@@ -5,9 +5,7 @@ import eventReducer from './eventReducer';
 import {
   SUBSCRIBED_EVENT,
   UNSUBSCRIBED_ALL_EVENTS,
-  NEW_EVENT,
-  ON_CLEAR_EVENTS,
-  CLEARED_EVENTS
+  NEW_EVENT
 } from '../types';
 
 const EventState = props => {
@@ -23,12 +21,10 @@ const EventState = props => {
 
   // Subscribe to events
   const subscribeEvent = async drizzle => {
-    /*
     if (eventNewProject !== null) {
       // event already registered
       return;
     }
-    */
 
     const { ChainBizz } = drizzle.contracts;
 
@@ -67,20 +63,9 @@ const EventState = props => {
     }
 
     eventNewProject.unsubscribe();
-    //setEventNewProject(null);
+    setEventNewProject(null);
 
     dispatch({ type: UNSUBSCRIBED_ALL_EVENTS });
-  };
-
-  // Clear current events
-  const onClearEvents = async drizzle => {
-    console.log('into clear events');
-
-    // unsubscribe
-    unsubscribeAllEvents();
-
-    // subscribe
-    subscribeEvent(drizzle);
   };
 
   return (
@@ -89,8 +74,7 @@ const EventState = props => {
         events: state.events,
         currentEventId: state.currentEventId,
         subscribeEvent,
-        unsubscribeAllEvents,
-        onClearEvents
+        unsubscribeAllEvents
       }}
     >
       {props.children}
