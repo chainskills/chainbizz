@@ -550,6 +550,7 @@ const Project = ({ drizzle, account }) => {
     setContractEnable(enabled);
   }, [enabled]);
 
+  /*
   useEffect(() => {
     if (events !== null) {
       // received a new event
@@ -562,6 +563,7 @@ const Project = ({ drizzle, account }) => {
       });
     }
   }, [lastEventId]);
+  */
 
   useEffect(() => {
     if (projectId !== null) {

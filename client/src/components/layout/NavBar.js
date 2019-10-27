@@ -1,17 +1,35 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { withRouter } from 'react-router-dom';
 import Blockies from 'react-blockies';
 import 'materialize-css/dist/css/materialize.min.css';
 import M from 'materialize-css/dist/js/materialize.min.js';
 
+import EventContext from '../context/events/eventContext';
+
 import logo from '../../assets/images/chainskills-logo.png';
 
 const NavBar = ({ account }) => {
+  const eventContext = useContext(EventContext);
+  const { events, lastEventId } = eventContext;
+
   useEffect(() => {
     // Initialize Materialize JS
     M.AutoInit();
     // eslint-disable-next-line
   }, []);
+
+  useEffect(() => {
+    if (events !== null && typeof events !== 'undefined') {
+      // received a new event
+      events.forEach((evt, key) => {
+        console.log('Key: ' + key);
+        console.log('Project Id: ' + evt.id);
+        console.log('Issuer: ' + evt.issuer);
+        console.log('Project title: ' + evt.title);
+        console.log('Price: ' + evt.price);
+      });
+    }
+  }, [lastEventId]);
 
   let networkName = '';
   let networkFlag = 'grey';
@@ -97,6 +115,14 @@ const NavBar = ({ account }) => {
                 <Blockies seed={account} size={8} scale={5} />
               </a>
             )}
+          </div>
+          <div className='notifications-list'>
+            <h5>Notifications</h5>
+            <div className='row'>
+              <div className='col s12'>One</div>
+              <div className='col s12'>Two</div>
+              <div className='col s12'>Three</div>
+            </div>
           </div>
         </div>
       </nav>

@@ -91,6 +91,19 @@ nav .brand-logo {
   margin: 0;
 }
 
+.notifications-list {
+  color: black;
+  top: 60px;
+  right: 90px;
+  width: 500px;
+  height: 400px;
+  position: absolute;
+  display: block;
+  background-color: white;
+  border: 1px solid grey;
+  border-radius: 5px;
+  padding: 5px 10px;
+}
 .new-project {
   position: fixed;
   top: 13px;
