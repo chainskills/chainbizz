@@ -37,15 +37,6 @@ const NavBar = ({ account }) => {
         );
 
         allEvents.push(currentEvent);
-
-        /*
-        console.log('Key: ' + evt.key);
-        console.log('Event name: ' + evt.name);
-        console.log('Project Id: ' + evt.id);
-        console.log('Issuer: ' + evt.issuer);
-        console.log('Project title: ' + evt.title);
-        console.log('Price: ' + evt.price);
-        */
       });
 
       if (showNotifications === false) {

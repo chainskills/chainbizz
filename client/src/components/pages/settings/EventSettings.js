@@ -1,12 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+
+import EventContext from '../../context/events/eventContext';
 
 import 'materialize-css/dist/css/materialize.min.css';
 import M from 'materialize-css/dist/js/materialize.min.js';
 
-const EventSettings = () => {
+const EventSettings = ({ drizzle }) => {
   const [settings, setSettings] = useState({
-    newProject: false
+    newProject: false,
+    publishedProject: false
   });
+
+  const eventContext = useContext(EventContext);
+  const { setupEvents, unsubscribeAllEvents } = eventContext;
 
   useEffect(() => {
     // Initialize Materialize JS
@@ -17,8 +23,15 @@ const EventSettings = () => {
       const retrieveSettings = JSON.parse(
         localStorage.getItem('eventSettings')
       );
-      setSettings(retrieveSettings);
-    } catch (error) {}
+      if (
+        retrieveSettings !== null &&
+        typeof retrieveSettings !== 'undefined'
+      ) {
+        setSettings(retrieveSettings);
+      }
+    } catch (error) {
+      console.error(error);
+    }
 
     // eslint-disable-next-line
   }, []);
@@ -31,8 +44,11 @@ const EventSettings = () => {
   };
 
   const handleSaveSettings = () => {
-    console.log(settings);
+    // save settings
     localStorage.setItem('eventSettings', JSON.stringify(settings));
+
+    // then we subscribe/unsubscribe to all selected events
+    setupEvents(drizzle);
   };
 
   return (
@@ -43,9 +59,7 @@ const EventSettings = () => {
         that follows each project.
       </p>
       <div className='row'>
-        <div className='col s8 m6'>
-          Listen events when a new project is created
-        </div>
+        <div className='col s8 m6'>A new project is created</div>
 
         <div className='col s4 m6 switch'>
           <label>
@@ -61,6 +75,24 @@ const EventSettings = () => {
           </label>
         </div>
       </div>
+      <div className='row'>
+        <div className='col s8 m6'>A project is published</div>
+
+        <div className='col s4 m6 switch'>
+          <label>
+            Off
+            <input
+              type='checkbox'
+              name='publishedProject'
+              checked={settings !== null ? settings.publishedProject : false}
+              onChange={onChange}
+            />
+            <span className='lever'></span>
+            On
+          </label>
+        </div>
+      </div>
+
       <div className='row'>
         <div className='col s6 offset-s6'>
           <a

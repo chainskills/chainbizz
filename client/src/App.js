@@ -117,13 +117,7 @@ const App = ({ drizzleContext }) => {
                   <Route
                     exact
                     path='/events'
-                    render={() => (
-                      <EventSettings
-                        drizzle={drizzle}
-                        drizzleState={drizzleState}
-                        account={account}
-                      />
-                    )}
+                    render={() => <EventSettings drizzle={drizzle} />}
                   />
 
                   <Route

@@ -52,7 +52,7 @@ const Project = ({ drizzle, account }) => {
   const {
     events,
     lastEventId,
-    subscribeEvent,
+    setupEvents,
     unsubscribeAllEvents
   } = eventContext;
 
@@ -538,7 +538,7 @@ const Project = ({ drizzle, account }) => {
     isEnabled(drizzle);
 
     // listen for events
-    subscribeEvent(drizzle);
+    setupEvents(drizzle);
 
     return () => {
       unsubscribeAllEvents();

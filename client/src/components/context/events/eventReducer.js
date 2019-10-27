@@ -1,12 +1,13 @@
-import { SUBSCRIBED_EVENT, UNSUBSCRIBED_ALL_EVENTS, NEW_EVENT } from '../types';
+import { SETUP_EVENT, UNSUBSCRIBED_ALL_EVENTS, NEW_EVENT } from '../types';
 
 export default (state, action) => {
   switch (action.type) {
-    case SUBSCRIBED_EVENT:
-      console.log('Subscribed to event');
+    case SETUP_EVENT:
+      console.log('Setup events');
       return {
         ...state,
-        events: null
+        events: null,
+        currentEventId: null
       };
     case UNSUBSCRIBED_ALL_EVENTS:
       console.log('Unsubscribed to all events');
