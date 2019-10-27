@@ -7,6 +7,7 @@ import M from 'materialize-css/dist/js/materialize.min.js';
 import './App.css';
 
 import ProjectState from './components/context/projects/ProjectState';
+import EventState from './components/context/events/EventState';
 
 import NavBar from './components/layout/NavBar';
 import Project from './components/pages/Project';
@@ -22,10 +23,12 @@ import Canceled from './components/pages/Canceled';
 const App = ({ drizzleContext }) => {
   const { drizzleState, drizzle, initialized } = drizzleContext;
   const [account, setAccount] = useState(null);
+  const [eventNewProject, setEventNewProject] = useState(null);
 
   useEffect(() => {
     // Initialize Materialize JS
     M.AutoInit();
+
     // eslint-disable-next-line
   }, []);
 
@@ -57,7 +60,7 @@ const App = ({ drizzleContext }) => {
   }
 
   // disable auto-refresh page when network is changed
-  window.ethereum.autoRefreshOnNetworkChange = false;
+  window.ethereum.autoRefreshOnNetworkChange = true;
 
   // detect account changes using Metamask
   window.ethereum.on('accountsChanged', function(accounts) {
@@ -76,137 +79,139 @@ const App = ({ drizzleContext }) => {
   */
 
   return (
-    <ProjectState>
-      <Router>
-        <Fragment>
-          <NavBar account={account} />
+    <EventState>
+      <ProjectState>
+        <Router>
+          <Fragment>
+            <NavBar account={account} />
 
-          <Project drizzle={drizzle} account={account} />
+            <Project drizzle={drizzle} account={account} />
 
-          <div className='container'>
-            {!initialized && (
-              <div>
-                <h2>Preparing the Dapp</h2>
-                <div className='progress'>
-                  <div className='indeterminate' />
+            <div className='container'>
+              {!initialized && (
+                <div>
+                  <h2>Preparing the Dapp</h2>
+                  <div className='progress'>
+                    <div className='indeterminate' />
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
 
-            {initialized && (
-              <Switch>
-                <Route
-                  exact
-                  path='/'
-                  render={() => (
-                    <PublishedProjects
-                      drizzle={drizzle}
-                      drizzleState={drizzleState}
-                      account={account}
-                    />
-                  )}
-                />
+              {initialized && (
+                <Switch>
+                  <Route
+                    exact
+                    path='/'
+                    render={() => (
+                      <PublishedProjects
+                        drizzle={drizzle}
+                        drizzleState={drizzleState}
+                        account={account}
+                      />
+                    )}
+                  />
 
-                <Route
-                  exact
-                  path='/myprojects'
-                  render={() => (
-                    <MyProjects
-                      drizzle={drizzle}
-                      drizzleState={drizzleState}
-                      account={account}
-                    />
-                  )}
-                />
+                  <Route
+                    exact
+                    path='/myprojects'
+                    render={() => (
+                      <MyProjects
+                        drizzle={drizzle}
+                        drizzleState={drizzleState}
+                        account={account}
+                      />
+                    )}
+                  />
 
-                <Route
-                  exact
-                  path='/myoffers'
-                  render={() => (
-                    <MyOffers
-                      drizzle={drizzle}
-                      drizzleState={drizzleState}
-                      account={account}
-                    />
-                  )}
-                />
+                  <Route
+                    exact
+                    path='/myoffers'
+                    render={() => (
+                      <MyOffers
+                        drizzle={drizzle}
+                        drizzleState={drizzleState}
+                        account={account}
+                      />
+                    )}
+                  />
 
-                <Route
-                  exact
-                  path='/myreviews'
-                  render={() => (
-                    <OffersReview
-                      drizzle={drizzle}
-                      drizzleState={drizzleState}
-                      account={account}
-                    />
-                  )}
-                />
+                  <Route
+                    exact
+                    path='/myreviews'
+                    render={() => (
+                      <OffersReview
+                        drizzle={drizzle}
+                        drizzleState={drizzleState}
+                        account={account}
+                      />
+                    )}
+                  />
 
-                <Route
-                  exact
-                  path='/mycontracts'
-                  render={() => (
-                    <MyContracts
-                      drizzle={drizzle}
-                      drizzleState={drizzleState}
-                      account={account}
-                    />
-                  )}
-                />
+                  <Route
+                    exact
+                    path='/mycontracts'
+                    render={() => (
+                      <MyContracts
+                        drizzle={drizzle}
+                        drizzleState={drizzleState}
+                        account={account}
+                      />
+                    )}
+                  />
 
-                <Route
-                  exact
-                  path='/deliveries'
-                  render={() => (
-                    <DeliveriesReview
-                      drizzle={drizzle}
-                      drizzleState={drizzleState}
-                      account={account}
-                    />
-                  )}
-                />
+                  <Route
+                    exact
+                    path='/deliveries'
+                    render={() => (
+                      <DeliveriesReview
+                        drizzle={drizzle}
+                        drizzleState={drizzleState}
+                        account={account}
+                      />
+                    )}
+                  />
 
-                <Route
-                  exact
-                  path='/completed'
-                  render={() => (
-                    <Completed
-                      drizzle={drizzle}
-                      drizzleState={drizzleState}
-                      account={account}
-                    />
-                  )}
-                />
+                  <Route
+                    exact
+                    path='/completed'
+                    render={() => (
+                      <Completed
+                        drizzle={drizzle}
+                        drizzleState={drizzleState}
+                        account={account}
+                      />
+                    )}
+                  />
 
-                <Route
-                  exact
-                  path='/canceled'
-                  render={() => (
-                    <Canceled
-                      drizzle={drizzle}
-                      drizzleState={drizzleState}
-                      account={account}
-                    />
-                  )}
-                />
+                  <Route
+                    exact
+                    path='/canceled'
+                    render={() => (
+                      <Canceled
+                        drizzle={drizzle}
+                        drizzleState={drizzleState}
+                        account={account}
+                      />
+                    )}
+                  />
 
-                <Route
-                  exact
-                  path='/home'
-                  render={() => (
-                    <PublishedProjects
-                      drizzle={drizzle}
-                      drizzleState={drizzleState}
-                    />
-                  )}
-                />
-              </Switch>
-            )}
-          </div>
-        </Fragment>
-      </Router>
-    </ProjectState>
+                  <Route
+                    exact
+                    path='/home'
+                    render={() => (
+                      <PublishedProjects
+                        drizzle={drizzle}
+                        drizzleState={drizzleState}
+                      />
+                    )}
+                  />
+                </Switch>
+              )}
+            </div>
+          </Fragment>
+        </Router>
+      </ProjectState>
+    </EventState>
   );
 };
 

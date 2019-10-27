@@ -3,6 +3,8 @@ import React, { useState, useEffect, useContext } from 'react';
 import 'materialize-css/dist/css/materialize.min.css';
 
 import ProjectContext from '../context/projects/projectContext';
+import EventContext from '../context/events/eventContext';
+
 import ProjectModal from '../dialog/modal/project/ProjectModal';
 import ConfirmModal from '../dialog/modal/confirm/ConfirmModal';
 
@@ -45,6 +47,14 @@ const Project = ({ drizzle, account }) => {
     isEnabled,
     projectId
   } = projectContext;
+
+  const eventContext = useContext(EventContext);
+  const {
+    events,
+    lastEventId,
+    subscribeEvent,
+    unsubscribeAllEvents
+  } = eventContext;
 
   const [contractEnable, setContractEnable] = useState(false);
 
@@ -526,12 +536,32 @@ const Project = ({ drizzle, account }) => {
   useEffect(() => {
     // retrieve the status of the contract
     isEnabled(drizzle);
+
+    // listen for events
+    subscribeEvent(drizzle);
+
+    return () => {
+      unsubscribeAllEvents();
+    };
     //eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     setContractEnable(enabled);
   }, [enabled]);
+
+  useEffect(() => {
+    if (events !== null) {
+      // received a new event
+      events.forEach((evt, key) => {
+        console.log('Key: ' + key);
+        console.log('Project Id: ' + evt.id);
+        console.log('Issuer: ' + evt.issuer);
+        console.log('Project title: ' + evt.title);
+        console.log('Price: ' + evt.price);
+      });
+    }
+  }, [lastEventId]);
 
   useEffect(() => {
     if (projectId !== null) {
