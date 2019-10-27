@@ -104,6 +104,10 @@ nav .brand-logo {
   border-radius: 5px;
   padding: 5px 10px;
 }
+
+.notifications-item {
+  color: #4fa6da;
+}
 .new-project {
   position: fixed;
   top: 13px;

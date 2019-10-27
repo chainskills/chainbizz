@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import Blockies from 'react-blockies';
 import 'materialize-css/dist/css/materialize.min.css';
@@ -11,6 +11,9 @@ import logo from '../../assets/images/chainskills-logo.png';
 const NavBar = ({ account }) => {
   const eventContext = useContext(EventContext);
   const { events, currentEventId } = eventContext;
+  const [eventsList, setEventsList] = useState([]);
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [newNotification, setNewNotification] = useState(false);
 
   useEffect(() => {
     // Initialize Materialize JS
@@ -20,17 +23,45 @@ const NavBar = ({ account }) => {
 
   useEffect(() => {
     if (events !== null && typeof events !== 'undefined') {
+      let allEvents = [];
+
       // received a new event
       events.forEach(evt => {
+        const currentEvent = (
+          <p key={evt.key}>
+            Received <span className='notifications-item'>{evt.name}</span> from{' '}
+            <span className='notifications-item'>{evt.issuer}</span>. Title is{' '}
+            <span className='notifications-item'>{evt.title}</span> Price is{' '}
+            <span className='notifications-item'>{evt.price}</span>
+          </p>
+        );
+
+        allEvents.push(currentEvent);
+
+        /*
         console.log('Key: ' + evt.key);
         console.log('Event name: ' + evt.name);
         console.log('Project Id: ' + evt.id);
         console.log('Issuer: ' + evt.issuer);
         console.log('Project title: ' + evt.title);
         console.log('Price: ' + evt.price);
+        */
       });
+
+      setEventsList(allEvents);
+
+      if (showNotifications === false) {
+        setNewNotification(true);
+      }
     }
   }, [currentEventId]);
+
+  const handleNotifications = isVisible => {
+    if (isVisible) {
+      setNewNotification(false);
+    }
+    setShowNotifications(isVisible);
+  };
 
   let networkName = '';
   let networkFlag = 'grey';
@@ -94,8 +125,16 @@ const NavBar = ({ account }) => {
           >
             {networkName}
           </button>
-          <button className={'notifications btn-flat'}>
-            <i className='material-icons left'>notifications_none</i>
+          <button
+            className={'notifications btn-flat'}
+            onClick={() => handleNotifications(!showNotifications)}
+          >
+            {newNotification === true && (
+              <i className='material-icons left'>notifications_active</i>
+            )}
+            {newNotification !== true && (
+              <i className='material-icons left'>notifications_none</i>
+            )}
           </button>
           <div className='user-view'>
             <ul id='menu-dropdown' className='dropdown-content'>
@@ -117,14 +156,12 @@ const NavBar = ({ account }) => {
               </a>
             )}
           </div>
-          <div className='notifications-list'>
-            <h5>Notifications</h5>
-            <div className='row'>
-              <div className='col s12'>One</div>
-              <div className='col s12'>Two</div>
-              <div className='col s12'>Three</div>
+          {showNotifications === true && (
+            <div className='notifications-list'>
+              <h5>Notifications</h5>
+              <div>{eventsList}</div>
             </div>
-          </div>
+          )}
         </div>
       </nav>
 
