@@ -10,7 +10,7 @@ import logo from '../../assets/images/chainskills-logo.png';
 
 const NavBar = ({ account }) => {
   const eventContext = useContext(EventContext);
-  const { events, lastEventId } = eventContext;
+  const { events, currentEventId } = eventContext;
 
   useEffect(() => {
     // Initialize Materialize JS
@@ -21,15 +21,16 @@ const NavBar = ({ account }) => {
   useEffect(() => {
     if (events !== null && typeof events !== 'undefined') {
       // received a new event
-      events.forEach((evt, key) => {
-        console.log('Key: ' + key);
+      events.forEach(evt => {
+        console.log('Key: ' + evt.key);
+        console.log('Event name: ' + evt.name);
         console.log('Project Id: ' + evt.id);
         console.log('Issuer: ' + evt.issuer);
         console.log('Project title: ' + evt.title);
         console.log('Price: ' + evt.price);
       });
     }
-  }, [lastEventId]);
+  }, [currentEventId]);
 
   let networkName = '';
   let networkFlag = 'grey';

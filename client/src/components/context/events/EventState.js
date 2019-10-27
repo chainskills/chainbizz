@@ -7,7 +7,7 @@ import { SUBSCRIBED_EVENT, UNSUBSCRIBED_ALL_EVENTS, NEW_EVENT } from '../types';
 const EventState = props => {
   const initialState = {
     events: null,
-    lastEventId: null
+    currentEventId: null
   };
 
   const [state, dispatch] = useReducer(eventReducer, initialState);
@@ -27,11 +27,11 @@ const EventState = props => {
     const event = ChainBizz.events
       .NewProject({ fromBlock: 'latest', toBlock: 'latest' })
       .on('data', function(event) {
-        console.log(event.id);
-        console.log(eventMap.get(event.id));
-
+        console.log(event);
         if (typeof eventMap.get(event.id) === 'undefined') {
           eventMap.set(event.id, {
+            key: event.id,
+            name: event.event,
             id: event.returnValues.id,
             issuer: event.returnValues.issuer,
             title: event.returnValues.title,
@@ -39,7 +39,6 @@ const EventState = props => {
           });
           setEventMap(eventMap);
 
-          console.log('before dispatch new event');
           dispatch({ type: NEW_EVENT, payload: eventMap, eventId: event.id });
         }
       })
@@ -69,7 +68,7 @@ const EventState = props => {
     <EventContext.Provider
       value={{
         events: state.events,
-        lastEventId: state.lastEventId,
+        currentEventId: state.currentEventId,
         subscribeEvent,
         unsubscribeAllEvents
       }}

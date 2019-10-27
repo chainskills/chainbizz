@@ -13,13 +13,13 @@ export default (state, action) => {
       return {
         ...state,
         events: null,
-        lastEventId: null
+        currentEventId: null
       };
     case NEW_EVENT:
       return {
         ...state,
         events: action.payload,
-        lastEventId: action.eventId
+        currentEventId: action.eventId
       };
     default:
       return state;
