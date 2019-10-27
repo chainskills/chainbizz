@@ -103,6 +103,19 @@ nav .brand-logo {
   border: 1px solid grey;
   border-radius: 5px;
   padding: 5px 10px;
+  line-height: normal;
+  overflow: auto;
+}
+
+.notifications-list h5 {
+  color: #4fa6da;
+  display: inline-block;
+}
+
+.notifications-list a {
+  float: right;
+  text-align: center;
+  line-height: 35px;
 }
 
 .notifications-item {

@@ -2,7 +2,13 @@ import React, { useReducer, useState } from 'react';
 import EventContext from './eventContext';
 import eventReducer from './eventReducer';
 
-import { SUBSCRIBED_EVENT, UNSUBSCRIBED_ALL_EVENTS, NEW_EVENT } from '../types';
+import {
+  SUBSCRIBED_EVENT,
+  UNSUBSCRIBED_ALL_EVENTS,
+  NEW_EVENT,
+  ON_CLEAR_EVENTS,
+  CLEARED_EVENTS
+} from '../types';
 
 const EventState = props => {
   const initialState = {
@@ -17,10 +23,12 @@ const EventState = props => {
 
   // Subscribe to events
   const subscribeEvent = async drizzle => {
+    /*
     if (eventNewProject !== null) {
       // event already registered
       return;
     }
+    */
 
     const { ChainBizz } = drizzle.contracts;
 
@@ -59,9 +67,20 @@ const EventState = props => {
     }
 
     eventNewProject.unsubscribe();
-    setEventNewProject(null);
+    //setEventNewProject(null);
 
     dispatch({ type: UNSUBSCRIBED_ALL_EVENTS });
+  };
+
+  // Clear current events
+  const onClearEvents = async drizzle => {
+    console.log('into clear events');
+
+    // unsubscribe
+    unsubscribeAllEvents();
+
+    // subscribe
+    subscribeEvent(drizzle);
   };
 
   return (
@@ -70,7 +89,8 @@ const EventState = props => {
         events: state.events,
         currentEventId: state.currentEventId,
         subscribeEvent,
-        unsubscribeAllEvents
+        unsubscribeAllEvents,
+        onClearEvents
       }}
     >
       {props.children}

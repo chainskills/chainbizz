@@ -85,7 +85,7 @@ const App = ({ drizzleContext }) => {
       <ProjectState>
         <Router>
           <Fragment>
-            <NavBar account={account} />
+            <NavBar drizzle={drizzle} account={account} />
 
             <Project drizzle={drizzle} account={account} />
 

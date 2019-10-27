@@ -8,9 +8,9 @@ import EventContext from '../context/events/eventContext';
 
 import logo from '../../assets/images/chainskills-logo.png';
 
-const NavBar = ({ account }) => {
+const NavBar = ({ drizzle, account }) => {
   const eventContext = useContext(EventContext);
-  const { events, currentEventId } = eventContext;
+  const { events, currentEventId, onClearEvents } = eventContext;
   const [eventsList, setEventsList] = useState([]);
   const [showNotifications, setShowNotifications] = useState(false);
   const [newNotification, setNewNotification] = useState(false);
@@ -22,9 +22,9 @@ const NavBar = ({ account }) => {
   }, []);
 
   useEffect(() => {
+    console.log('New effect');
+    let allEvents = [];
     if (events !== null && typeof events !== 'undefined') {
-      let allEvents = [];
-
       // received a new event
       events.forEach(evt => {
         const currentEvent = (
@@ -48,12 +48,11 @@ const NavBar = ({ account }) => {
         */
       });
 
-      setEventsList(allEvents);
-
       if (showNotifications === false) {
         setNewNotification(true);
       }
     }
+    setEventsList(allEvents);
   }, [currentEventId]);
 
   const handleNotifications = isVisible => {
@@ -61,6 +60,11 @@ const NavBar = ({ account }) => {
       setNewNotification(false);
     }
     setShowNotifications(isVisible);
+  };
+
+  const handleClearEvents = () => {
+    console.log('into handle');
+    onClearEvents(drizzle);
   };
 
   let networkName = '';
@@ -158,8 +162,18 @@ const NavBar = ({ account }) => {
           </div>
           {showNotifications === true && (
             <div className='notifications-list'>
-              <h5>Notifications</h5>
-              <div>{eventsList}</div>
+              <div>
+                <h5>Notifications</h5>
+
+                <a
+                  className='waves-effect waves-light btn blue-grey lighten-1 no-uppercase'
+                  onClick={() => handleClearEvents()}
+                >
+                  Clear
+                </a>
+              </div>
+
+              <div> {eventsList}</div>
             </div>
           )}
         </div>
