@@ -142,7 +142,7 @@ const NavBar = ({ account }) => {
               </li>
 
               <li>
-                <a href='#!'>Events</a>
+                <a href='/events'>Events</a>
               </li>
             </ul>
             {account !== null && (

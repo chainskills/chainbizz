@@ -10,6 +10,7 @@ import ProjectState from './components/context/projects/ProjectState';
 import EventState from './components/context/events/EventState';
 
 import NavBar from './components/layout/NavBar';
+import EventSettings from './components/pages/settings/EventSettings';
 import Project from './components/pages/Project';
 import MyProjects from './components/pages/MyProjects';
 import PublishedProjects from './components/pages/PublishedProjects';
@@ -106,6 +107,18 @@ const App = ({ drizzleContext }) => {
                     path='/'
                     render={() => (
                       <PublishedProjects
+                        drizzle={drizzle}
+                        drizzleState={drizzleState}
+                        account={account}
+                      />
+                    )}
+                  />
+
+                  <Route
+                    exact
+                    path='/events'
+                    render={() => (
+                      <EventSettings
                         drizzle={drizzle}
                         drizzleState={drizzleState}
                         account={account}

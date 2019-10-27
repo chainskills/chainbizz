@@ -36,36 +36,6 @@ const ProjectContractData = ({ projectId, drizzle, drizzleState, account }) => {
 
   const status = Number(projectDetails.status);
 
-  /*
-
-   <div className='col s12 m4'>
-      <div className='card medium blue-grey darken-1'>
-        <div className='card-content white-text'>
-          <span className='card-title'>{projectDetails.title}</span>
-          <p>
-            <span className='badge blue white-text'>
-              {drizzle.web3.utils.fromWei(
-                projectDetails.price.toString(),
-                'ether'
-              )}
-              {' ETH'}
-            </span>
-          </p>
-          <p>{projectDetails.description}</p>
-        </div>
-        <div className='card-action'>
-          {projectDetails.owner === account && (
-            <ActionsOwner projectId={projectId} status={status} />
-          )}
-
-          {projectDetails.owner !== account && (
-            <ActionsProvider projectId={projectId} status={status} />
-          )}
-        </div>
-      </div>
-    </div>
-
-  */
   return (
     <div className='col s12 m12'>
       <div className='card card-custom'>

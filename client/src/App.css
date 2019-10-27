@@ -122,6 +122,10 @@ nav .brand-logo {
   z-index: 21;
 }
 
+.save-settings {
+  margin-top: 100px;
+}
+
 span.badge.new,
 .blue-grey.lighten-1 {
   background-color: rgb(79, 166, 218) !important;
