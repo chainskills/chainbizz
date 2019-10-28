@@ -4,7 +4,7 @@ import JazzIcon, { jsNumberForAddress } from 'react-jazzicon';
 import ActionsOwner from './ActionsOwner';
 import ActionsProvider from './ActionsProvider';
 
-import './ProjectCard.css';
+import './ProjectContractData.css';
 
 const ProjectContractData = ({ projectId, drizzle, drizzleState, account }) => {
   const [dataKey, setDataKey] = useState(null);
@@ -75,8 +75,7 @@ const ProjectContractData = ({ projectId, drizzle, drizzleState, account }) => {
                     text
                   </span>
                 </div>
-                <div style={{ marginTop: '20px' }} className='avatar'
-                >
+                <div style={{ marginTop: '20px' }} className='avatar'>
                   <JazzIcon
                     diameter={40}
                     seed={jsNumberForAddress(projectDetails.issuer)}
