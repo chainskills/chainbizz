@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Blockies from 'react-blockies';
+import JazzIcon, { jsNumberForAddress } from 'react-jazzicon';
 
 import ActionsOwner from './ActionsOwner';
 import ActionsProvider from './ActionsProvider';
@@ -75,18 +75,11 @@ const ProjectContractData = ({ projectId, drizzle, drizzleState, account }) => {
                     text
                   </span>
                 </div>
-                <div style={{ marginTop: '20px' }}>
-                  <Blockies
-                    seed={account}
-                    size={8}
-                    scale={5}
-                    className='left'
-                    style={{
-                      width: '40px',
-                      height: '40px',
-                      borderRadius: '100%',
-                      verticalAlign: 'top'
-                    }}
+                <div style={{ marginTop: '20px' }} className='avatar'
+                >
+                  <JazzIcon
+                    diameter={40}
+                    seed={jsNumberForAddress(projectDetails.issuer)}
                   />
                   <p
                     className='truncate'
@@ -97,7 +90,7 @@ const ProjectContractData = ({ projectId, drizzle, drizzleState, account }) => {
                       paddingLeft: '10px'
                     }}
                   >
-                    {account}
+                    {projectDetails.issuer}
                   </p>
                 </div>
               </div>

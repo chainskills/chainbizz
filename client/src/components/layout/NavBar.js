@@ -1,10 +1,11 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { withRouter } from 'react-router-dom';
-import Blockies from 'react-blockies';
 import 'materialize-css/dist/css/materialize.min.css';
 import M from 'materialize-css/dist/js/materialize.min.js';
 
 import EventContext from '../context/events/eventContext';
+
+import JazzIcon, { jsNumberForAddress } from 'react-jazzicon';
 
 import logo from '../../assets/images/chainskills-logo.png';
 
@@ -46,7 +47,7 @@ const NavBar = ({ account }) => {
     setEventsList(allEvents);
   }, [currentEventId]);
 
-  const handleNotifications = isVisible => {
+  const displayNotifications = isVisible => {
     if (isVisible) {
       setNewNotification(false);
     }
@@ -117,7 +118,7 @@ const NavBar = ({ account }) => {
           </button>
           <button
             className={'notifications btn-flat'}
-            onClick={() => handleNotifications(!showNotifications)}
+            onClick={() => displayNotifications(!showNotifications)}
           >
             {newNotification === true && (
               <i className='material-icons left'>notifications_active</i>
@@ -142,17 +143,22 @@ const NavBar = ({ account }) => {
                 href='#!'
                 data-target='menu-dropdown'
               >
-                <Blockies seed={account} size={8} scale={5} />
+                <JazzIcon diameter={40} seed={jsNumberForAddress(account)} />
               </a>
             )}
           </div>
           {showNotifications === true && (
-            <div className='notifications-list'>
-              <div>
-                <h5>Notifications</h5>
-              </div>
+            <div
+              className='notifications-background'
+              onClick={() => displayNotifications(false)}
+            >
+              <div className='notifications-list'>
+                <div>
+                  <h5>Notifications</h5>
+                </div>
 
-              <div> {eventsList}</div>
+                <div> {eventsList}</div>
+              </div>
             </div>
           )}
         </div>
