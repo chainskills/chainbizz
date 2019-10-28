@@ -17,7 +17,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "contracts": "cp ../build/contracts/ChainBizz.json src/contracts"
+    "contracts": "cp ../build/contracts/ChainBizz.json src/contracts",
+    "migrate": "truffle migrate --reset --network ganache"
   },
   "eslintConfig": {
     "extends": "react-app"

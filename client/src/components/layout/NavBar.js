@@ -1,5 +1,12 @@
 import React, { useEffect, useContext, useState } from 'react';
-import { withRouter } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  NavLink,
+  withRouter
+} from 'react-router-dom';
+
 import 'materialize-css/dist/css/materialize.min.css';
 import M from 'materialize-css/dist/js/materialize.min.js';
 
@@ -24,6 +31,8 @@ const NavBar = ({ account }) => {
 
   useEffect(() => {
     console.log('New effect');
+    console.log('CurrentEventId: ' + currentEventId);
+    console.log(events);
     let allEvents = [];
     if (events !== null && typeof events !== 'undefined') {
       // received a new event
@@ -174,40 +183,40 @@ const NavBar = ({ account }) => {
           }}
         ></li>
         <li>
-          <a href='/'>Available projects</a>
+          <NavLink to='/'>Available projects</NavLink>
         </li>
         <li>
           <div className='divider'></div>
         </li>
         <li>
-          <a href='/myprojects'>My projects</a>
+          <NavLink to='/myprojects'>My projects</NavLink>
         </li>
         <li>
-          <a href='/mycontracts'>My ongoing contracts</a>
+          <NavLink to='/mycontracts'>My ongoing contracts</NavLink>
         </li>
         <li>
-          <a href='/myoffers'>My offers</a>
-        </li>
-        <li>
-          <div className='divider'></div>
-        </li>
-        <li>
-          <a href='/myreviews'>Offers to review</a>
+          <NavLink to='/myoffers'>My offers</NavLink>
         </li>
         <li>
           <div className='divider'></div>
         </li>
         <li>
-          <a href='/deliveries'>Deliveries to review</a>
+          <NavLink to='/myreviews'>Offers to review</NavLink>
         </li>
         <li>
           <div className='divider'></div>
         </li>
         <li>
-          <a href='/completed'>Contracts completed</a>
+          <NavLink to='/deliveries'>Deliveries to review</NavLink>
         </li>
         <li>
-          <a href='/canceled'>Contracts canceled</a>
+          <div className='divider'></div>
+        </li>
+        <li>
+          <NavLink to='/completed'>Contracts completed</NavLink>
+        </li>
+        <li>
+          <NavLink to='/canceled'>Contracts canceled</NavLink>
         </li>
       </ul>
       <a href='#' data-target='slide-out' className='sidenav-trigger'>
