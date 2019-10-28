@@ -91,6 +91,15 @@ nav .brand-logo {
   margin: 0;
 }
 
+.notifications-background {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 20;
+}
+
 .notifications-list {
   color: black;
   top: 60px;
@@ -181,6 +190,7 @@ a: .btn {
 .project-additional .material-icons {
   font-size: 20px;
 }
+
 
 @media only screen and (max-width: 992px) {
   header,
