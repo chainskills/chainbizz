@@ -59,7 +59,7 @@ const MyProjects = ({ drizzle, drizzleState, account }) => {
         <div className='col s12 m12'>
           <h5>
             <span className='number-projects'>{nbProjects}</span>
-            <span> Draft {nbProjects > 1 ? ' projects' : ' project'}</span>
+            <span> Owned {nbProjects > 1 ? ' projects' : ' project'}</span>
           </h5>
         </div>
       </div>
