@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
 import 'materialize-css/dist/css/materialize.min.css';
 
@@ -33,7 +33,7 @@ const PublishedProjects = ({ drizzle, drizzleState, account }) => {
     }
 
     if (projectIds !== null) {
-      for (let i = 0; i < projectIds.length; i++) {
+      for (let i = projectIds.length - 1; i >= 0; i--) {
         const projectId = projectIds[i];
 
         const projectDetail = (

@@ -33,7 +33,7 @@ const Completed = ({ drizzle, drizzleState, account }) => {
     }
 
     if (projectIds !== null) {
-      for (let i = 0; i < projectIds.length; i++) {
+      for (let i = projectIds.length - 1; i >= 0; i--) {
         const projectId = projectIds[i];
 
         const projectDetail = (
@@ -58,8 +58,8 @@ const Completed = ({ drizzle, drizzleState, account }) => {
       <div className='row'>
         <div className='col s12 m12'>
           <h5>
-          <span className='number-projects'>{nbProjects}</span>
-          <span> {nbProjects > 1 ? ' Projects' : ' Project'} completed</span>
+            <span className='number-projects'>{nbProjects}</span>
+            <span> {nbProjects > 1 ? ' Projects' : ' Project'} completed</span>
           </h5>
         </div>
       </div>

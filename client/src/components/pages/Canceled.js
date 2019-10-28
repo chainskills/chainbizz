@@ -32,7 +32,7 @@ const Canceled = ({ drizzle, drizzleState, account }) => {
     }
 
     if (projectIds !== null) {
-      for (let i = 0; i < projectIds.length; i++) {
+      for (let i = projectIds.length - 1; i >= 0; i--) {
         const projectId = projectIds[i];
 
         const projectDetail = (
