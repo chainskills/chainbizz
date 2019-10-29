@@ -16,7 +16,7 @@ const OffersReview = ({ drizzle, drizzleState, account }) => {
     );
 
     //eslint-disable-next-line
-  }, []);
+  }, [account]);
 
   // Retrieve all projects that required a reviews from the owner
 
@@ -57,9 +57,9 @@ const OffersReview = ({ drizzle, drizzleState, account }) => {
     <div>
       <div className='row'>
         <div className='col s12 m12'>
-        <h5>
-          <span className='number-projects'>{nbProjects}</span>
-          <span> {nbProjects > 1 ? ' Projects' : ' Project'} to review</span>
+          <h5>
+            <span className='number-projects'>{nbProjects}</span>
+            <span> {nbProjects > 1 ? ' Projects' : ' Project'} to review</span>
           </h5>
         </div>
       </div>
