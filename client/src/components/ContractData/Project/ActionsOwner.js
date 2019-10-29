@@ -4,10 +4,6 @@ import ProjectContext from '../../context/projects/projectContext';
 
 import { projectStatus } from './ProjectStatus';
 
-import contractReview from '../../../assets/images/contract-review.svg';
-import contractCancel from '../../../assets/images/contract-cancel.svg';
-import thumbUp from '../../../assets/images/thumb-up.svg';
-import thumbDown from '../../../assets/images/thumb-down.svg';
 
 const ActionsOwner = ({ projectId, status }) => {
   const projectContext = useContext(ProjectContext);
@@ -79,7 +75,7 @@ const ActionsOwner = ({ projectId, status }) => {
             }}
             title={'Reject the proposal'}
           >
-            <img src={contractCancel} style={{ width: '35px' }} alt={''} />
+            <i className='material-icons card-icon'>clear</i>
           </a>
           <a
             href={'#!'}
@@ -88,7 +84,7 @@ const ActionsOwner = ({ projectId, status }) => {
             }}
             title={'Accept the proposal'}
           >
-            <img src={contractReview} style={{ width: '35px' }} alt={''} />
+            <i className='material-icons card-icon'>check</i>
           </a>
         </span>
       )}
@@ -102,7 +98,7 @@ const ActionsOwner = ({ projectId, status }) => {
             }}
             title={'Reject the delivery'}
           >
-            <img src={thumbDown} style={{ width: '35px' }} alt={''} />
+            <i className='material-icons card-icon'>clear</i>
           </a>
           <a
             href={'#!'}
@@ -111,7 +107,7 @@ const ActionsOwner = ({ projectId, status }) => {
             }}
             title={'Accept the delivery'}
           >
-            <img src={thumbUp} style={{ width: '35px' }} alt={''} />
+            <i className='material-icons card-icon'>check</i>
           </a>
         </span>
       )}
@@ -125,7 +121,7 @@ const ActionsOwner = ({ projectId, status }) => {
           }}
           title={'Cancel the contract'}
         >
-          <img src={contractCancel} style={{ width: '35px' }} alt={''} />
+          <i className='material-icons card-icon'>block</i>
         </a>
       )}
     </div>
