@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { createBrowserHistory } from 'history';
 
 import EventContext from '../../context/events/eventContext';
 
@@ -6,6 +7,8 @@ import 'materialize-css/dist/css/materialize.min.css';
 import M from 'materialize-css/dist/js/materialize.min.js';
 
 const EventSettings = ({ drizzle }) => {
+  const history = createBrowserHistory();
+
   const [settings, setSettings] = useState({
     newProject: false,
     publishedProject: false
@@ -49,6 +52,9 @@ const EventSettings = ({ drizzle }) => {
 
     // then we subscribe/unsubscribe to all selected events
     setupEvents(drizzle);
+
+    // go back to the previous page
+    history.goBack();
   };
 
   return (

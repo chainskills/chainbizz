@@ -1,11 +1,5 @@
 import React, { useEffect, useContext, useState } from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  NavLink,
-  withRouter
-} from 'react-router-dom';
+import { BrowserRouter as Router, NavLink, withRouter } from 'react-router-dom';
 
 import 'materialize-css/dist/css/materialize.min.css';
 import M from 'materialize-css/dist/js/materialize.min.js';
@@ -101,8 +95,8 @@ const NavBar = ({ account }) => {
     <div>
       <nav className='top-navbar'>
         <div className='nav-wrapper white'>
-          <a
-            href='/'
+          <NavLink
+            to='/'
             className='brand-logo black-text'
             style={{ textDecoration: 'none', marginLeft: '20px' }}
           >
@@ -117,7 +111,7 @@ const NavBar = ({ account }) => {
               alt={''}
             />
             <span style={{ color: '#4fa6da' }}>ChainBizz</span>
-          </a>
+          </NavLink>
           <button
             href={null}
             style={{ position: 'relative', left: '310px', color: 'grey' }}
@@ -139,11 +133,11 @@ const NavBar = ({ account }) => {
           <div className='user-view'>
             <ul id='menu-dropdown' className='dropdown-content'>
               <li>
-                <a href='#!'>Profile</a>
+                <NavLink to='#!'>Profile</NavLink>
               </li>
 
               <li>
-                <a href='/events'>Events</a>
+                <NavLink to='/events'>Events</NavLink>
               </li>
             </ul>
             {account !== null && (
