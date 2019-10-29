@@ -36,6 +36,8 @@ const ProjectModal = ({ action1, action2, onClose }) => {
     // eslint-disable-next-line
   }, [escPress]);
 
+  // TODO removing projectContext, solve the issue with the clear of fields
+  // But if we change the account, the list of owned project is not properly replaced
   useEffect(() => {
     if (current !== null) {
       setProject(current);
@@ -46,7 +48,7 @@ const ProjectModal = ({ action1, action2, onClose }) => {
         price: 0
       });
     }
-  }, [projectContext, current]);
+  }, [current]);
 
   const { title, description, price } = project;
 

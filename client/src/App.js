@@ -62,6 +62,7 @@ const App = ({ drizzleContext }) => {
     );
   }
 
+  /*
   // disable auto-refresh page when network is changed
   window.ethereum.autoRefreshOnNetworkChange = true;
 
@@ -73,6 +74,7 @@ const App = ({ drizzleContext }) => {
       setAccount(accounts[0]);
     }
   });
+  */
 
   /*
   // detect network changes using Metamask

@@ -548,7 +548,7 @@ const Project = ({ drizzle, account }) => {
 
   useEffect(() => {
     setContractEnable(enabled);
-  }, [enabled]);
+  }, [enabled, account]);
 
   /*
   useEffect(() => {
