@@ -16,7 +16,7 @@ const OffersReview = ({ drizzle, drizzleState, account }) => {
     );
 
     //eslint-disable-next-line
-  }, [account]);
+  }, []);
 
   // Retrieve all projects that required a reviews from the owner
 

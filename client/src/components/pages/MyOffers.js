@@ -16,7 +16,7 @@ const MyOffers = ({ drizzle, drizzleState, account }) => {
     );
 
     //eslint-disable-next-line
-  }, [account]);
+  }, []);
 
   // Retrieve all projects IDs for which the owner has offer his/her services
 
