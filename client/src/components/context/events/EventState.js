@@ -151,15 +151,21 @@ const EventState = props => {
     const event = ChainBizz.events
       .NewProject({ fromBlock: 'latest', toBlock: 'latest' })
       .on('data', function(event) {
-        console.log(event);
         if (typeof eventMap.get(event.id) === 'undefined') {
+          const eventMessage =
+            'id: ' +
+            event.returnValues.id +
+            ', issuer: ' +
+            event.returnValues.issuer +
+            ', title: ' +
+            event.returnValues.title +
+            ', price: ' +
+            event.returnValues.price;
+
           eventMap.set(event.id, {
             key: event.id,
             name: event.event,
-            id: event.returnValues.id,
-            issuer: event.returnValues.issuer,
-            title: event.returnValues.title,
-            price: event.returnValues.price
+            message: eventMessage
           });
           setEventMap(eventMap);
 
@@ -184,15 +190,21 @@ const EventState = props => {
     const event = ChainBizz.events
       .UpdateProject({ fromBlock: 'latest', toBlock: 'latest' })
       .on('data', function(event) {
-        console.log(event);
         if (typeof eventMap.get(event.id) === 'undefined') {
+          const eventMessage =
+            'id: ' +
+            event.returnValues.id +
+            ', issuer: ' +
+            event.returnValues.issuer +
+            ', title: ' +
+            event.returnValues.title +
+            ', price: ' +
+            event.returnValues.price;
+
           eventMap.set(event.id, {
             key: event.id,
             name: event.event,
-            id: event.returnValues.id,
-            issuer: event.returnValues.issuer,
-            title: event.returnValues.title,
-            price: event.returnValues.price
+            message: eventMessage
           });
           setEventMap(eventMap);
 
@@ -217,14 +229,19 @@ const EventState = props => {
     const event = ChainBizz.events
       .RemoveProject({ fromBlock: 'latest', toBlock: 'latest' })
       .on('data', function(event) {
-        console.log(event);
         if (typeof eventMap.get(event.id) === 'undefined') {
+          const eventMessage =
+            'id: ' +
+            event.returnValues.id +
+            ', issuer: ' +
+            event.returnValues.issuer +
+            ', title: ' +
+            event.returnValues.title;
+
           eventMap.set(event.id, {
             key: event.id,
             name: event.event,
-            id: event.returnValues.id,
-            issuer: event.returnValues.issuer,
-            title: event.returnValues.title
+            message: eventMessage
           });
           setEventMap(eventMap);
 
@@ -249,15 +266,21 @@ const EventState = props => {
     const event = ChainBizz.events
       .PublishedProject({ fromBlock: 'latest', toBlock: 'latest' })
       .on('data', function(event) {
-        console.log(event);
         if (typeof eventMap.get(event.id) === 'undefined') {
+          const eventMessage =
+            'id: ' +
+            event.returnValues.id +
+            ', issuer: ' +
+            event.returnValues.issuer +
+            ', title: ' +
+            event.returnValues.title +
+            ', price: ' +
+            event.returnValues.price;
+
           eventMap.set(event.id, {
             key: event.id,
             name: event.event,
-            id: event.returnValues.id,
-            issuer: event.returnValues.issuer,
-            title: event.returnValues.title,
-            price: event.returnValues.price
+            message: eventMessage
           });
           setEventMap(eventMap);
 
@@ -282,15 +305,21 @@ const EventState = props => {
     const event = ChainBizz.events
       .UnpublishedProject({ fromBlock: 'latest', toBlock: 'latest' })
       .on('data', function(event) {
-        console.log(event);
         if (typeof eventMap.get(event.id) === 'undefined') {
+          const eventMessage =
+            'id: ' +
+            event.returnValues.id +
+            ', issuer: ' +
+            event.returnValues.issuer +
+            ', title: ' +
+            event.returnValues.title +
+            ', price: ' +
+            event.returnValues.price;
+
           eventMap.set(event.id, {
             key: event.id,
             name: event.event,
-            id: event.returnValues.id,
-            issuer: event.returnValues.issuer,
-            title: event.returnValues.title,
-            price: event.returnValues.price
+            message: eventMessage
           });
           setEventMap(eventMap);
 
@@ -316,13 +345,20 @@ const EventState = props => {
       .OfferSubmitted({ fromBlock: 'latest', toBlock: 'latest' })
       .on('data', function(event) {
         if (typeof eventMap.get(event.id) === 'undefined') {
+          const eventMessage =
+            'id: ' +
+            event.returnValues.id +
+            ', issuer: ' +
+            event.returnValues.issuer +
+            ', title: ' +
+            event.returnValues.title +
+            ', price: ' +
+            event.returnValues.price;
+
           eventMap.set(event.id, {
             key: event.id,
             name: event.event,
-            id: event.returnValues.id,
-            issuer: event.returnValues.issuer,
-            title: event.returnValues.title,
-            price: event.returnValues.price
+            message: eventMessage
           });
           setEventMap(eventMap);
 
@@ -348,13 +384,22 @@ const EventState = props => {
       .OfferCanceled({ fromBlock: 'latest', toBlock: 'latest' })
       .on('data', function(event) {
         if (typeof eventMap.get(event.id) === 'undefined') {
+          const eventMessage =
+            'id: ' +
+            event.returnValues.id +
+            ', issuer: ' +
+            event.returnValues.id +
+            ', fulfiller: ' +
+            event.returnValues.fulfiller +
+            ', title: ' +
+            event.returnValues.title +
+            ', price: ' +
+            event.returnValues.price;
+
           eventMap.set(event.id, {
             key: event.id,
             name: event.event,
-            id: event.returnValues.id,
-            issuer: event.returnValues.issuer,
-            title: event.returnValues.title,
-            price: event.returnValues.price
+            message: eventMessage
           });
           setEventMap(eventMap);
 
@@ -380,13 +425,22 @@ const EventState = props => {
       .AcceptProposal({ fromBlock: 'latest', toBlock: 'latest' })
       .on('data', function(event) {
         if (typeof eventMap.get(event.id) === 'undefined') {
+          const eventMessage =
+            'id: ' +
+            event.returnValues.id +
+            ', issuer: ' +
+            event.returnValues.id +
+            ', fulfiller: ' +
+            event.returnValues.fulfiller +
+            ', title: ' +
+            event.returnValues.title +
+            ', price: ' +
+            event.returnValues.price;
+
           eventMap.set(event.id, {
             key: event.id,
             name: event.event,
-            id: event.returnValues.id,
-            issuer: event.returnValues.issuer,
-            title: event.returnValues.title,
-            price: event.returnValues.price
+            message: eventMessage
           });
           setEventMap(eventMap);
 
@@ -412,13 +466,22 @@ const EventState = props => {
       .RejectProposal({ fromBlock: 'latest', toBlock: 'latest' })
       .on('data', function(event) {
         if (typeof eventMap.get(event.id) === 'undefined') {
+          const eventMessage =
+            'id: ' +
+            event.returnValues.id +
+            ', issuer: ' +
+            event.returnValues.id +
+            ', fulfiller: ' +
+            event.returnValues.fulfiller +
+            ', title: ' +
+            event.returnValues.title +
+            ', price: ' +
+            event.returnValues.price;
+
           eventMap.set(event.id, {
             key: event.id,
             name: event.event,
-            id: event.returnValues.id,
-            issuer: event.returnValues.issuer,
-            title: event.returnValues.title,
-            price: event.returnValues.price
+            message: eventMessage
           });
           setEventMap(eventMap);
 
@@ -444,13 +507,22 @@ const EventState = props => {
       .ProjectDelivered({ fromBlock: 'latest', toBlock: 'latest' })
       .on('data', function(event) {
         if (typeof eventMap.get(event.id) === 'undefined') {
+          const eventMessage =
+            'id: ' +
+            event.returnValues.id +
+            ', issuer: ' +
+            event.returnValues.id +
+            ', fulfiller: ' +
+            event.returnValues.fulfiller +
+            ', title: ' +
+            event.returnValues.title +
+            ', price: ' +
+            event.returnValues.price;
+
           eventMap.set(event.id, {
             key: event.id,
             name: event.event,
-            id: event.returnValues.id,
-            issuer: event.returnValues.issuer,
-            title: event.returnValues.title,
-            price: event.returnValues.price
+            message: eventMessage
           });
           setEventMap(eventMap);
 
@@ -476,13 +548,22 @@ const EventState = props => {
       .ServicesCanceled({ fromBlock: 'latest', toBlock: 'latest' })
       .on('data', function(event) {
         if (typeof eventMap.get(event.id) === 'undefined') {
+          const eventMessage =
+            'id: ' +
+            event.returnValues.id +
+            ', issuer: ' +
+            event.returnValues.id +
+            ', fulfiller: ' +
+            event.returnValues.fulfiller +
+            ', title: ' +
+            event.returnValues.title +
+            ', price: ' +
+            event.returnValues.price;
+
           eventMap.set(event.id, {
             key: event.id,
             name: event.event,
-            id: event.returnValues.id,
-            issuer: event.returnValues.issuer,
-            title: event.returnValues.title,
-            price: event.returnValues.price
+            message: eventMessage
           });
           setEventMap(eventMap);
 
@@ -508,13 +589,22 @@ const EventState = props => {
       .DeliveryAccepted({ fromBlock: 'latest', toBlock: 'latest' })
       .on('data', function(event) {
         if (typeof eventMap.get(event.id) === 'undefined') {
+          const eventMessage =
+            'id: ' +
+            event.returnValues.id +
+            ', issuer: ' +
+            event.returnValues.id +
+            ', fulfiller: ' +
+            event.returnValues.fulfiller +
+            ', title: ' +
+            event.returnValues.title +
+            ', price: ' +
+            event.returnValues.price;
+
           eventMap.set(event.id, {
             key: event.id,
             name: event.event,
-            id: event.returnValues.id,
-            issuer: event.returnValues.issuer,
-            title: event.returnValues.title,
-            price: event.returnValues.price
+            message: eventMessage
           });
           setEventMap(eventMap);
 
@@ -540,13 +630,22 @@ const EventState = props => {
       .DeliveryRejected({ fromBlock: 'latest', toBlock: 'latest' })
       .on('data', function(event) {
         if (typeof eventMap.get(event.id) === 'undefined') {
+          const eventMessage =
+            'id: ' +
+            event.returnValues.id +
+            ', issuer: ' +
+            event.returnValues.id +
+            ', fulfiller: ' +
+            event.returnValues.fulfiller +
+            ', title: ' +
+            event.returnValues.title +
+            ', price: ' +
+            event.returnValues.price;
+
           eventMap.set(event.id, {
             key: event.id,
             name: event.event,
-            id: event.returnValues.id,
-            issuer: event.returnValues.issuer,
-            title: event.returnValues.title,
-            price: event.returnValues.price
+            message: eventMessage
           });
           setEventMap(eventMap);
 
@@ -572,13 +671,22 @@ const EventState = props => {
       .ContractCanceled({ fromBlock: 'latest', toBlock: 'latest' })
       .on('data', function(event) {
         if (typeof eventMap.get(event.id) === 'undefined') {
+          const eventMessage =
+            'id: ' +
+            event.returnValues.id +
+            ', issuer: ' +
+            event.returnValues.id +
+            ', fulfiller: ' +
+            event.returnValues.fulfiller +
+            ', title: ' +
+            event.returnValues.title +
+            ', price: ' +
+            event.returnValues.price;
+
           eventMap.set(event.id, {
             key: event.id,
             name: event.event,
-            id: event.returnValues.id,
-            issuer: event.returnValues.issuer,
-            title: event.returnValues.title,
-            price: event.returnValues.price
+            message: eventMessage
           });
           setEventMap(eventMap);
 

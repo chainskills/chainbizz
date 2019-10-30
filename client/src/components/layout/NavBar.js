@@ -31,10 +31,8 @@ const NavBar = ({ account }) => {
       eventsList.reverse().forEach(evt => {
         const currentEvent = (
           <p key={evt.key}>
-            Received <span className='notifications-item'>{evt.name}</span> from{' '}
-            <span className='notifications-item'>{evt.issuer}</span>. Title is{' '}
-            <span className='notifications-item'>{evt.title}</span> Price is{' '}
-            <span className='notifications-item'>{evt.price}</span>
+            [<span className='notifications-item'>{evt.name}</span>] ->{' '}
+            <span>{evt.message}</span>
           </p>
         );
 
