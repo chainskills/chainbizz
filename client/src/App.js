@@ -62,27 +62,14 @@ const App = ({ drizzleContext }) => {
     );
   }
 
-  // disable auto-refresh page when network is changed
+  // enable auto-refresh page when network is changed
   window.ethereum.autoRefreshOnNetworkChange = true;
 
   // detect account changes using Metamask
   window.ethereum.on('accountsChanged', function(accounts) {
-    /*
-    //console.log('Meta-mask: ' + accounts[0]);
-    if (initialized) {
-      //console.log('Drizzle: ' + drizzleState.accounts[0]);
-      setAccount(accounts[0]);
-    }
-    */
+    // reload the app when the account changes to ensure that all context and caches are properly cleaned
     window.location.reload();
   });
-
-  /*
-  // detect network changes using Metamask
-  window.ethereum.on('networkChanged', function(network) {
-    console.log('New network ID is: ' + network);
-  });
-  */
 
   return (
     <EventState>
