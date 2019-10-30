@@ -4,7 +4,6 @@ import ProjectContext from '../../context/projects/projectContext';
 
 import { projectStatus } from './ProjectStatus';
 
-
 const ActionsOwner = ({ projectId, status }) => {
   const projectContext = useContext(ProjectContext);
   const {
@@ -89,6 +88,19 @@ const ActionsOwner = ({ projectId, status }) => {
         </span>
       )}
 
+      {(status === projectStatus.ONGOING ||
+        status === projectStatus.VALIDATE) && (
+        <a
+          href={'#!'}
+          onClick={() => {
+            onCancelContract(projectId);
+          }}
+          title={'Cancel the contract'}
+        >
+          <i className='material-icons card-icon'>block</i>
+        </a>
+      )}
+
       {status === projectStatus.VALIDATE && (
         <span>
           <a
@@ -110,19 +122,6 @@ const ActionsOwner = ({ projectId, status }) => {
             <i className='material-icons card-icon'>check</i>
           </a>
         </span>
-      )}
-
-      {(status === projectStatus.ONGOING ||
-        status === projectStatus.VALIDATE) && (
-        <a
-          href={'#!'}
-          onClick={() => {
-            onCancelContract(projectId);
-          }}
-          title={'Cancel the contract'}
-        >
-          <i className='material-icons card-icon'>block</i>
-        </a>
       )}
     </div>
   );
