@@ -11,7 +11,19 @@ const EventSettings = ({ drizzle }) => {
 
   const [settings, setSettings] = useState({
     newProject: false,
-    publishedProject: false
+    updateProject: false,
+    removeProject: false,
+    publishedProject: false,
+    unpublishedProject: false,
+    offerSubmitted: false,
+    offerCanceled: false,
+    acceptProposal: false,
+    rejectProposal: false,
+    deliveryProject: false,
+    servicesCanceled: false,
+    deliveryAccepted: false,
+    deliveryRejected: false,
+    contractCanceled: false
   });
 
   const eventContext = useContext(EventContext);
@@ -82,6 +94,40 @@ const EventSettings = ({ drizzle }) => {
         </div>
       </div>
       <div className='row'>
+        <div className='col s8 m6'>A project is updated</div>
+
+        <div className='col s4 m6 switch'>
+          <label>
+            Off
+            <input
+              type='checkbox'
+              name='updateProject'
+              checked={settings !== null ? settings.updateProject : false}
+              onChange={onChange}
+            />
+            <span className='lever'></span>
+            On
+          </label>
+        </div>
+      </div>
+      <div className='row'>
+        <div className='col s8 m6'>A project is removed</div>
+
+        <div className='col s4 m6 switch'>
+          <label>
+            Off
+            <input
+              type='checkbox'
+              name='removeProject'
+              checked={settings !== null ? settings.removeProject : false}
+              onChange={onChange}
+            />
+            <span className='lever'></span>
+            On
+          </label>
+        </div>
+      </div>
+      <div className='row'>
         <div className='col s8 m6'>A project is published</div>
 
         <div className='col s4 m6 switch'>
@@ -91,6 +137,176 @@ const EventSettings = ({ drizzle }) => {
               type='checkbox'
               name='publishedProject'
               checked={settings !== null ? settings.publishedProject : false}
+              onChange={onChange}
+            />
+            <span className='lever'></span>
+            On
+          </label>
+        </div>
+      </div>
+      <div className='row'>
+        <div className='col s8 m6'>A project is unpublished</div>
+
+        <div className='col s4 m6 switch'>
+          <label>
+            Off
+            <input
+              type='checkbox'
+              name='unpublishedProject'
+              checked={settings !== null ? settings.unpublishedProject : false}
+              onChange={onChange}
+            />
+            <span className='lever'></span>
+            On
+          </label>
+        </div>
+      </div>
+      <div className='row'>
+        <div className='col s8 m6'>An offer is submitted</div>
+
+        <div className='col s4 m6 switch'>
+          <label>
+            Off
+            <input
+              type='checkbox'
+              name='offerSubmitted'
+              checked={settings !== null ? settings.offerSubmitted : false}
+              onChange={onChange}
+            />
+            <span className='lever'></span>
+            On
+          </label>
+        </div>
+      </div>
+      <div className='row'>
+        <div className='col s8 m6'>An offer is canceled</div>
+
+        <div className='col s4 m6 switch'>
+          <label>
+            Off
+            <input
+              type='checkbox'
+              name='offerCanceled'
+              checked={settings !== null ? settings.offerCanceled : false}
+              onChange={onChange}
+            />
+            <span className='lever'></span>
+            On
+          </label>
+        </div>
+      </div>
+      <div className='row'>
+        <div className='col s8 m6'>The proposal is accepted</div>
+
+        <div className='col s4 m6 switch'>
+          <label>
+            Off
+            <input
+              type='checkbox'
+              name='acceptProposal'
+              checked={settings !== null ? settings.acceptProposal : false}
+              onChange={onChange}
+            />
+            <span className='lever'></span>
+            On
+          </label>
+        </div>
+      </div>
+      <div className='row'>
+        <div className='col s8 m6'>The proposal is refused</div>
+
+        <div className='col s4 m6 switch'>
+          <label>
+            Off
+            <input
+              type='checkbox'
+              name='rejectProposal'
+              checked={settings !== null ? settings.rejectProposal : false}
+              onChange={onChange}
+            />
+            <span className='lever'></span>
+            On
+          </label>
+        </div>
+      </div>
+      <div className='row'>
+        <div className='col s8 m6'>The project is delivered</div>
+
+        <div className='col s4 m6 switch'>
+          <label>
+            Off
+            <input
+              type='checkbox'
+              name='deliveryProject'
+              checked={settings !== null ? settings.deliveryProject : false}
+              onChange={onChange}
+            />
+            <span className='lever'></span>
+            On
+          </label>
+        </div>
+      </div>
+      <div className='row'>
+        <div className='col s8 m6'>The services are canceled</div>
+
+        <div className='col s4 m6 switch'>
+          <label>
+            Off
+            <input
+              type='checkbox'
+              name='servicesCanceled'
+              checked={settings !== null ? settings.servicesCanceled : false}
+              onChange={onChange}
+            />
+            <span className='lever'></span>
+            On
+          </label>
+        </div>
+      </div>
+      <div className='row'>
+        <div className='col s8 m6'>The delivery is accepted</div>
+
+        <div className='col s4 m6 switch'>
+          <label>
+            Off
+            <input
+              type='checkbox'
+              name='deliveryAccepted'
+              checked={settings !== null ? settings.deliveryAccepted : false}
+              onChange={onChange}
+            />
+            <span className='lever'></span>
+            On
+          </label>
+        </div>
+      </div>
+      <div className='row'>
+        <div className='col s8 m6'>The delivery is rejected</div>
+
+        <div className='col s4 m6 switch'>
+          <label>
+            Off
+            <input
+              type='checkbox'
+              name='deliveryRejected'
+              checked={settings !== null ? settings.deliveryRejected : false}
+              onChange={onChange}
+            />
+            <span className='lever'></span>
+            On
+          </label>
+        </div>
+      </div>
+      <div className='row'>
+        <div className='col s8 m6'>The contract is canceled</div>
+
+        <div className='col s4 m6 switch'>
+          <label>
+            Off
+            <input
+              type='checkbox'
+              name='contractCanceled'
+              checked={settings !== null ? settings.contractCanceled : false}
               onChange={onChange}
             />
             <span className='lever'></span>

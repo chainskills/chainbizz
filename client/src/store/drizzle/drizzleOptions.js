@@ -8,9 +8,25 @@ const drizzleOptions = {
       url: 'ws://127.0.0.1:8545'
     }
   },
+
   contracts: [ChainBizz],
   events: {
-    ChainBizz: ['NewProject', 'PublishedProject']
+    ChainBizz: [
+      'NewProject',
+      'UpdateProject',
+      'RemoveProject',
+      'PublishedProject',
+      'UnpublishedProject',
+      'OfferSubmitted',
+      'OfferCanceled',
+      'AcceptProposal',
+      'RejectProposal',
+      'ProjectDelivered',
+      'ServicesCanceled',
+      'DeliveryAccepted',
+      'DeliveryRejected',
+      'ContractCanceled'
+    ]
   },
   polls: {
     accounts: 1500
