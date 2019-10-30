@@ -24,13 +24,11 @@ const NavBar = ({ account }) => {
   }, []);
 
   useEffect(() => {
-    console.log('New effect');
-    console.log('CurrentEventId: ' + currentEventId);
-    console.log(events);
     let allEvents = [];
     if (events !== null && typeof events !== 'undefined') {
       // received a new event
-      events.forEach(evt => {
+      const eventsList = Array.from(events.values());
+      eventsList.reverse().forEach(evt => {
         const currentEvent = (
           <p key={evt.key}>
             Received <span className='notifications-item'>{evt.name}</span> from{' '}
