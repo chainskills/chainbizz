@@ -111,7 +111,18 @@ const App = ({ drizzleContext }) => {
                     render={() => <EventSettings drizzle={drizzle} />}
                   />
 
-                  <Route exact path='/project/:id' component={ProjectDetail} />
+                  <Route
+                    exact
+                    path='/project/:id'
+                    render={({ match }) => (
+                      <ProjectDetail
+                        drizzle={drizzle}
+                        drizzleState={drizzleState}
+                        account={account}
+                        match={match}
+                      />
+                    )}
+                  />
 
                   <Route
                     exact
