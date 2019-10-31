@@ -7,8 +7,6 @@ import 'materialize-css/dist/css/materialize.min.css';
 import M from 'materialize-css/dist/js/materialize.min.js';
 
 const EventSettings = ({ drizzle }) => {
-  const history = createBrowserHistory();
-
   const [settings, setSettings] = useState({
     newProject: false,
     updateProject: false,
@@ -66,6 +64,7 @@ const EventSettings = ({ drizzle }) => {
     setupEvents(drizzle);
 
     // go back to the previous page
+    const history = createBrowserHistory();
     history.goBack();
   };
 
