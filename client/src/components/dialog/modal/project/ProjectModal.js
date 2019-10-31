@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 
 import ProjectContext from '../../../context/projects/projectContext';
 
@@ -11,6 +11,7 @@ import '../Modal.css';
 
 const ProjectModal = ({ action1, action2, onClose }) => {
   const escPress = useKeyPress('Escape');
+  const refFirstField = useRef(null);
 
   const projectContext = useContext(ProjectContext);
   const { current } = projectContext;
@@ -26,6 +27,12 @@ const ProjectModal = ({ action1, action2, onClose }) => {
     M.CharacterCounter.init(
       document.querySelectorAll('.has-character-counter')
     );
+
+    // give focus to the first field
+    if (refFirstField !== null) {
+      refFirstField.current.focus();
+    }
+
     // eslint-disable-next-line
   }, []);
 
@@ -98,6 +105,7 @@ const ProjectModal = ({ action1, action2, onClose }) => {
                 <div className='input-field col s12'>
                   <textarea
                     className='materialize-textarea has-character-counter'
+                    ref={refFirstField}
                     type='text'
                     name='title'
                     value={title}
