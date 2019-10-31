@@ -95,7 +95,6 @@ const ProjectModal = ({ action1, action2, onClose }) => {
 
   return (
     <div className='container'>
-      {' '}
       <div className='modalEx-overlay'>
         <div className='modalEx'>
           <div className='modal-content'>
@@ -153,7 +152,7 @@ const ProjectModal = ({ action1, action2, onClose }) => {
               {action1.visible && (
                 <a
                   href='#!'
-                  className='col s12 m2 waves-effect blue btn-small right'
+                  className='col s12 m2 waves-effect waves-light btn-small right primary-content action'
                   onClick={() => onSubmit()}
                   style={{ margin: '5px' }}
                 >
@@ -164,7 +163,7 @@ const ProjectModal = ({ action1, action2, onClose }) => {
               {action2.visible && (
                 <a
                   href='#!'
-                  className='col s12 m2 waves-effect blue btn-small right'
+                  className='col s12 m2 waves-effect waves-light btn-small right secondary-content action'
                   onClick={() => action2.handle()}
                   style={{ margin: '5px' }}
                 >

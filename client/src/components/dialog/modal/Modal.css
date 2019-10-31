@@ -29,6 +29,17 @@
   outline: none;
 }
 
+.action {
+  background-color: #4fa6da;
+  width: 100px;
+}
+.action:focus {
+  background-color: blue;
+}
+.action:hover {
+  background-color: blue;
+}
+
 @media only screen and (max-width: 992px) {
   .modalEx {
     width: 80%;
