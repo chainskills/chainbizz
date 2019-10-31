@@ -27,9 +27,6 @@ const drizzleOptions = {
       'DeliveryRejected',
       'ContractCanceled'
     ]
-  },
-  polls: {
-    accounts: 1500
   }
 };
 
