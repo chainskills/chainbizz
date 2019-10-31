@@ -10,6 +10,7 @@ import ProjectState from './components/context/projects/ProjectState';
 import EventState from './components/context/events/EventState';
 
 import NavBar from './components/layout/NavBar';
+import ProjectDetail from './components/pages/project/ProjectDetail';
 import EventSettings from './components/pages/settings/EventSettings';
 import Project from './components/pages/Project';
 import MyProjects from './components/pages/MyProjects';
@@ -109,6 +110,8 @@ const App = ({ drizzleContext }) => {
                     path='/events'
                     render={() => <EventSettings drizzle={drizzle} />}
                   />
+
+                  <Route exact path='/project/:id' component={ProjectDetail} />
 
                   <Route
                     exact

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import JazzIcon, { jsNumberForAddress } from 'react-jazzicon';
+import { Link } from 'react-router-dom';
 
 import ActionsOwner from './ActionsOwner';
 import ActionsProvider from './ActionsProvider';
@@ -51,9 +52,12 @@ const ProjectContractData = ({ projectId, drizzle, drizzleState, account }) => {
                     marginBottom: '10px'
                   }}
                 >
-                  <a href='#' style={{ color: '#676767' }}>
+                  <Link
+                    to={`/project/${projectId}`}
+                    style={{ color: '#676767' }}
+                  >
                     {projectDetails.title}
-                  </a>
+                  </Link>
                 </h1>
                 <div>
                   <span
