@@ -36,7 +36,6 @@ const ProjectContractData = ({ projectId, drizzle, drizzleState, account }) => {
   }
 
   const status = Number(projectDetails.status);
-  console.log('Into Contract data');
 
   return (
     <div className='col s12 m12'>

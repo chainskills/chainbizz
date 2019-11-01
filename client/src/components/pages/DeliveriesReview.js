@@ -36,8 +36,6 @@ const DeliveriesReview = ({ drizzle, drizzleState, account }) => {
       for (let i = projectIds.length - 1; i >= 0; i--) {
         const projectId = projectIds[i];
 
-        console.log('Project Id: ' + projectId);
-
         const projectDetail = (
           <ProjectContractData
             drizzle={drizzle}
@@ -60,8 +58,11 @@ const DeliveriesReview = ({ drizzle, drizzleState, account }) => {
       <div className='row'>
         <div className='col s12 m12'>
           <h5>
-          <span className='number-projects'>{nbProjects}</span>
-          <span> {nbProjects > 1 ? ' Deliveries' : ' Delivery'} to review</span>
+            <span className='number-projects'>{nbProjects}</span>
+            <span>
+              {' '}
+              {nbProjects > 1 ? ' Deliveries' : ' Delivery'} to review
+            </span>
           </h5>
         </div>
       </div>

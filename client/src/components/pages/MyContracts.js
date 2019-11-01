@@ -36,8 +36,6 @@ const MyContracts = ({ drizzle, drizzleState, account }) => {
       for (let i = projectIds.length - 1; i >= 0; i--) {
         const projectId = projectIds[i];
 
-        console.log('Project Id: ' + projectId);
-
         const projectDetail = (
           <ProjectContractData
             drizzle={drizzle}

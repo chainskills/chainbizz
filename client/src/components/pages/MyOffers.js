@@ -28,8 +28,7 @@ const MyOffers = ({ drizzle, drizzleState, account }) => {
       drizzleState.contracts.ChainBizz.getMyOffers[dataKeys] &&
       drizzleState.contracts.ChainBizz.getMyOffers[dataKeys].value
     ) {
-      projectIds =
-        drizzleState.contracts.ChainBizz.getMyOffers[dataKeys].value;
+      projectIds = drizzleState.contracts.ChainBizz.getMyOffers[dataKeys].value;
     }
 
     if (projectIds !== null) {
@@ -58,8 +57,8 @@ const MyOffers = ({ drizzle, drizzleState, account }) => {
       <div className='row'>
         <div className='col s12 m12'>
           <h5>
-          <span className='number-projects'>{nbProjects}</span>
-          <span> {nbProjects > 1 ? ' Projects' : ' Project'} fulfilled</span>
+            <span className='number-projects'>{nbProjects}</span>
+            <span> {nbProjects > 1 ? ' Projects' : ' Project'} fulfilled</span>
           </h5>
         </div>
       </div>

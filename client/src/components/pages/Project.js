@@ -190,7 +190,6 @@ const Project = ({ drizzle, account }) => {
   };
 
   const handleRemove = id => {
-    console.log('debug: handleRemove: ' + new Date());
     setDataID(id);
     setModalConfirmationOpen(true);
 
@@ -218,7 +217,6 @@ const Project = ({ drizzle, account }) => {
   };
 
   const handlePublish = id => {
-    console.log('debug: handlePublish: ' + new Date());
     setDataID(id);
     setModalConfirmationOpen(true);
 
@@ -538,7 +536,7 @@ const Project = ({ drizzle, account }) => {
     isEnabled(drizzle);
 
     // listen for events
-    setupEvents(drizzle);
+    setupEvents(drizzle, account);
 
     return () => {
       unsubscribeAllEvents();
@@ -549,21 +547,6 @@ const Project = ({ drizzle, account }) => {
   useEffect(() => {
     setContractEnable(enabled);
   }, [enabled, account]);
-
-  /*
-  useEffect(() => {
-    if (events !== null) {
-      // received a new event
-      events.forEach((evt, key) => {
-        console.log('Key: ' + key);
-        console.log('Project Id: ' + evt.id);
-        console.log('Issuer: ' + evt.issuer);
-        console.log('Project title: ' + evt.title);
-        console.log('Price: ' + evt.price);
-      });
-    }
-  }, [lastEventId]);
-  */
 
   useEffect(() => {
     if (projectId !== null) {
@@ -595,7 +578,6 @@ const Project = ({ drizzle, account }) => {
         handleCancelContract(projectId);
       }
     }
-    //eslint-disable-next-line
   }, [
     projectId,
     showEdit,
