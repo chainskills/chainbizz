@@ -5,9 +5,11 @@ import JazzIcon, { jsNumberForAddress } from 'react-jazzicon';
 
 import ProjectContext from '../../context/projects/projectContext';
 
+import { projectStatus } from '../../ContractData/Project/ProjectStatus';
+
 import './ProjectDetail.css';
 
-const ProjectDetail = ({ match, drizzle, drizzleState, account }) => {
+const ProjectDetail = ({ match, drizzle, account }) => {
   let projectId = null;
   try {
     projectId = match.params.id;
@@ -42,8 +44,14 @@ const ProjectDetail = ({ match, drizzle, drizzleState, account }) => {
 
   useEffect(() => {
     if (current !== null) {
-      console.log('changed: ' + current.id);
-      setProject(current);
+      // get the status
+      const statusNames = Object.keys(projectStatus);
+
+      // apply the current project with its status in plain english
+      setProject({
+        ...current,
+        status: statusNames[current.status]
+      });
     } else {
       setProject({
         title: '',
@@ -52,9 +60,6 @@ const ProjectDetail = ({ match, drizzle, drizzleState, account }) => {
       });
     }
   }, [current]);
-
-  // TODO: why useEffect is called even if current doesn't changed ?
-  //console.log(current);
 
   return (
     <div>
@@ -101,7 +106,7 @@ const ProjectDetail = ({ match, drizzle, drizzleState, account }) => {
                     text
                   </span>
                 </div>
-                <code className=' language-markup'>flow-text</code>
+                <code className=' language-markup'>{project.status}</code>
               </div>
               {project && project.issuer && (
                 <div>
