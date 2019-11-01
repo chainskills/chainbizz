@@ -117,7 +117,6 @@ const App = ({ drizzleContext }) => {
                     render={({ match }) => (
                       <ProjectDetail
                         drizzle={drizzle}
-                        drizzleState={drizzleState}
                         account={account}
                         match={match}
                       />
