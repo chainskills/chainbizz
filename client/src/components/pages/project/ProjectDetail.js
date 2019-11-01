@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 
 import { createBrowserHistory } from 'history';
+import JazzIcon, { jsNumberForAddress } from 'react-jazzicon';
 
 import ProjectContext from '../../context/projects/projectContext';
 
@@ -58,13 +59,10 @@ const ProjectDetail = ({ match, drizzle, drizzleState, account }) => {
               <div className='row'>
                 <div className='col s2'>
                   <div className='single__meta'>
-                    <span className='single__metaTitle'>Payout</span>
-                    <span className='single__metaValue'>2 ETH</span>
-                    <span className='single__metaSubvalue'>180€</span>
-
-                    <span className='single__metaTitle'>Remaining Balance</span>
-                    <span className='single__metaValue'>4 ETH</span>
-                    <span className='single__metaSubvalue'>360€</span>
+                    <span className='single__metaTitle'>Price</span>
+                    <span className='single__metaValue'>
+                      {project.price} ETH
+                    </span>
                   </div>
                 </div>
                 <div className='col s10'>
@@ -77,7 +75,7 @@ const ProjectDetail = ({ match, drizzle, drizzleState, account }) => {
                     }}
                   >
                     <a href='#' style={{ color: '#676767' }}>
-                      Streamix [STRX] - BitcoinTalk ANN thread Comment
+                      {project.title}
                     </a>
                   </h1>
                   <div>
@@ -101,29 +99,25 @@ const ProjectDetail = ({ match, drizzle, drizzleState, account }) => {
                     </span>
                   </div>
                   <code className=' language-markup'>flow-text</code>
-                  <div style={{ marginTop: '20px' }}>
-                    <img
-                      src='https://www.abeautifulsite.net/uploads/2014/08/bit-face.png?width=600&key=c6d70b7b067981cded2d49fc8a5e3ca1dc9dc9fdaab2ac05db4cb96481a36a77'
-                      className='left'
-                      style={{
-                        width: '40px',
-                        height: '40px',
-                        borderRadius: '100%',
-                        verticalAlign: 'top'
-                      }}
-                    />
-                    <p
-                      className='truncate'
-                      style={{
-                        position: 'relative',
-                        top: '7px',
-                        width: '130px',
-                        paddingLeft: '10px'
-                      }}
-                    >
-                      0xe11e30dea3459deab3219ee32a14ec3400c89
-                    </p>
-                  </div>
+                  {project && project.issuer && (
+                    <div style={{ marginTop: '20px' }} className='avatar'>
+                      <JazzIcon
+                        diameter={40}
+                        seed={jsNumberForAddress(project.issuer)}
+                      />
+                      <p
+                        className='truncate'
+                        style={{
+                          position: 'relative',
+                          top: '7px',
+                          width: '130px',
+                          paddingLeft: '10px'
+                        }}
+                      >
+                        {project.issuer}
+                      </p>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -138,12 +132,7 @@ const ProjectDetail = ({ match, drizzle, drizzleState, account }) => {
                     <div className='row'>
                       <div className='col s9'>
                         <div>
-                          <p>
-                            Esta tarefa é para os alunos do curso de Blockchain
-                            apoiados pelo Banco Mundial na vila olímpica de
-                            Acari, com organização da Blockchain Academy e
-                            patrocínio da Maker DAO.
-                          </p>
+                          <p>{project.description}</p>
                         </div>
                       </div>
                       <div className='col s3'>
