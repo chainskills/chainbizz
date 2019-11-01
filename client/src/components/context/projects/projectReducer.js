@@ -30,6 +30,7 @@ import {
   ON_CANCEL_MODAL,
   CLEAR_CURRENT_SELECTION,
   GET_PROJECT,
+  GET_PROJECT_DETAIL,
   PROJECT_ERROR
 } from '../types';
 
@@ -144,6 +145,12 @@ export default (state, action) => {
         current: action.payload,
         loading: false
       };
+    case GET_PROJECT_DETAIL:
+      return {
+        ...state,
+        projectDetail: action.payload,
+        loading: false
+      };
     case PROJECT_ERROR:
       return {
         ...state,
@@ -172,6 +179,7 @@ export default (state, action) => {
       return {
         ...state,
         current: null,
+        projectDetail: null,
         projectId: null,
         loading: false,
         showEdit: false,

@@ -43,6 +43,7 @@ export const CLEAR_CURRENT_SELECTION = 'CLEAR_CURRENT_SELECTION';
 
 // Related to the getter
 export const GET_PROJECT = 'GET_PROJECT';
+export const GET_PROJECT_DETAIL = 'GET_PROJECT_DETAIL';
 
 // Related to the errors
 export const PROJECT_ERROR = 'PROJECT_ERROR';

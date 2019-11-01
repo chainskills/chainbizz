@@ -34,12 +34,14 @@ import {
   ON_CANCEL_MODAL,
   CLEAR_CURRENT_SELECTION,
   GET_PROJECT,
+  GET_PROJECT_DETAIL,
   PROJECT_ERROR
 } from '../types';
 
 const ProjectState = props => {
   const initialState = {
     current: null,
+    projectDetail: null,
     enabled: true,
     projects: null,
     error: null,
@@ -489,9 +491,26 @@ const ProjectState = props => {
       project.price.toString(),
       'ether'
     );
-
     dispatch({
       type: GET_PROJECT,
+      payload: project
+    });
+  };
+
+  // Get a project detail
+  const getProjectDetail = async (drizzle, account, projectId) => {
+    const { ChainBizz } = drizzle.contracts;
+
+    let project = await ChainBizz.methods.getProject(projectId).call({
+      from: account
+    });
+
+    project.price = drizzle.web3.utils.fromWei(
+      project.price.toString(),
+      'ether'
+    );
+    dispatch({
+      type: GET_PROJECT_DETAIL,
       payload: project
     });
   };
@@ -505,6 +524,7 @@ const ProjectState = props => {
     <ProjectContext.Provider
       value={{
         current: state.current,
+        projectDetail: state.projectDetail,
         enabled: state.enabled,
         project: state.project,
         error: state.error,
@@ -551,6 +571,7 @@ const ProjectState = props => {
         onCancelContract,
         onCancelModal,
         getProject,
+        getProjectDetail,
         clearCurrrentSelection,
         isEnabled,
         disableContract,

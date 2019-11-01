@@ -36,6 +36,7 @@ const ProjectContractData = ({ projectId, drizzle, drizzleState, account }) => {
   }
 
   const status = Number(projectDetails.status);
+  console.log('Into Contract data');
 
   return (
     <div className='col s12 m12'>
@@ -46,7 +47,6 @@ const ProjectContractData = ({ projectId, drizzle, drizzleState, account }) => {
               <div className='col s6'>
                 <h1 className='navlink-title'>
                   <NavLink
-                    exact
                     activeClassName='chosen'
                     to={`/project/${projectId}`}
                   >
@@ -107,7 +107,7 @@ const ProjectContractData = ({ projectId, drizzle, drizzleState, account }) => {
                   </li>
                 </ul>
               </div>
-              <div className='col s3'>
+              <div className='col s3 project-additional'>
                 <p
                   className='right-align'
                   style={{ fontSize: '24px', color: '#546e7a' }}

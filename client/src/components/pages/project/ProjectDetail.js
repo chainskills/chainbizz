@@ -8,8 +8,22 @@ import ProjectContext from '../../context/projects/projectContext';
 import './ProjectDetail.css';
 
 const ProjectDetail = ({ match, drizzle, drizzleState, account }) => {
-  const projectContext = useContext(ProjectContext);
-  const { getProject, current } = projectContext;
+  let projectId = null;
+  try {
+    projectId = match.params.id;
+  } catch (error) {
+    // unable to process input argument
+  }
+
+  const goBack = () => {
+    // go back to the previous page
+    const history = createBrowserHistory();
+    history.goBack();
+  };
+
+  if (projectId === null) {
+    goBack();
+  }
 
   const [project, setProject] = useState({
     id: null,
@@ -18,29 +32,19 @@ const ProjectDetail = ({ match, drizzle, drizzleState, account }) => {
     price: 0
   });
 
-  const goBack = () => {
-    // go back to the previous page
-    const history = createBrowserHistory();
-    history.goBack();
-  };
-
-  let projectId = null;
-  try {
-    projectId = match.params.id;
-  } catch (error) {
-    // unable to process input argument
-  }
-
-  if (projectId === null) {
-    goBack();
-  }
-
-  // fetch project
-  getProject(drizzle, account, projectId);
+  console.log('Before get project');
+  const projectContext = useContext(ProjectContext);
+  const { getProjectDetail, projectDetail } = projectContext;
+  //getProjectDetail(drizzle, account, projectId);
 
   useEffect(() => {
-    if (current !== null) {
-      setProject(current);
+    getProjectDetail(drizzle, account, projectId);
+  }, []);
+
+  useEffect(() => {
+    if (projectDetail !== null) {
+      console.log('changed: ' + projectDetail.id);
+      setProject(projectDetail);
     } else {
       setProject({
         title: '',
@@ -48,117 +52,110 @@ const ProjectDetail = ({ match, drizzle, drizzleState, account }) => {
         price: 0
       });
     }
-  }, [current]);
+  }, [projectDetail]);
 
-  if (typeof project.issuer !== 'undefined') {
-    const value = drizzle.web3.utils.toBN(project.issuer).toString();
-    console.log(value === '0' ? 'null' : value);
-  }
+  // TODO: why useEffect is called even if current doesn't changed ?
+  //console.log(current);
 
   return (
     <div>
       <div>
-        <div className='row'>
-          <div className='col s12 m12'>
-            <div className='single__header'>
-              <div className='row'>
-                <div className='col s2'>
-                  <div className='single__meta'>
-                    <span className='single__metaTitle'>Price</span>
-                    <span className='single__metaValue'>
-                      {project.price} ETH
-                    </span>
-                  </div>
+        <div className='col s12 m12'>
+          <div className='single__header'>
+            <div className='row'>
+              <div className='col s2'>
+                <div className='single__meta'>
+                  <span className='single__metaTitle'>Price</span>
+                  <span className='single__metaValue'>{project.price} ETH</span>
                 </div>
-                <div className='col s10'>
-                  <h1
-                    style={{
-                      fontSize: '24px',
-                      margin: '0',
-                      fontWeight: 'bold',
-                      marginBottom: '10px'
-                    }}
-                  >
-                    <a href='#' style={{ color: '#676767' }}>
-                      {project.title}
-                    </a>
-                  </h1>
-                  <div>
-                    <span
-                      className='new badge'
-                      style={{ float: 'inherit', margin: '0 5px 0 0' }}
-                    >
-                      text
-                    </span>
-                    <span
-                      className='new badge'
-                      style={{ float: 'inherit', margin: '0 5px 0 0' }}
-                    >
-                      text
-                    </span>
-                    <span
-                      className='new badge'
-                      style={{ float: 'inherit', margin: '0 5px 0 0' }}
-                    >
-                      text
-                    </span>
-                  </div>
-                  <code className=' language-markup'>flow-text</code>
-                </div>
-                {project && project.issuer && (
-                  <div>
-                    <div className='col s5'>
-                      <div style={{ marginTop: '20px' }} className='avatar'>
-                        <span className='single__metaAddress'>Issuer</span>
-                        <JazzIcon
-                          diameter={40}
-                          seed={jsNumberForAddress(project.issuer)}
-                        />
-                        <p
-                          className='truncate'
-                          style={{
-                            position: 'relative',
-                            top: '7px',
-                            width: '130px',
-                            paddingLeft: '10px'
-                          }}
-                        >
-                          {project.issuer}
-                        </p>
-                      </div>
-                    </div>
-                    {project &&
-                      drizzle.web3.utils.toBN(project.fulfiller).toString() !==
-                        '0' && (
-                        <div className='col s5'>
-                          <div style={{ marginTop: '20px' }} className='avatar'>
-                            <span className='single__metaAddress'>
-                              Fulfiller
-                            </span>
-                            <JazzIcon
-                              diameter={40}
-                              seed={jsNumberForAddress(project.fulfiller)}
-                            />
-                            <p
-                              className='truncate'
-                              style={{
-                                position: 'relative',
-                                top: '7px',
-                                width: '130px',
-                                paddingLeft: '10px'
-                              }}
-                            >
-                              {project.fulfiller}
-                            </p>
-                          </div>
-                        </div>
-                      )}
-                  </div>
-                )}
               </div>
+              <div className='col s10'>
+                <h1
+                  style={{
+                    fontSize: '24px',
+                    margin: '0',
+                    fontWeight: 'bold',
+                    marginBottom: '10px'
+                  }}
+                >
+                  <a href='#' style={{ color: '#676767' }}>
+                    {project.title}
+                  </a>
+                </h1>
+                <div>
+                  <span
+                    className='new badge'
+                    style={{ float: 'inherit', margin: '0 5px 0 0' }}
+                  >
+                    text
+                  </span>
+                  <span
+                    className='new badge'
+                    style={{ float: 'inherit', margin: '0 5px 0 0' }}
+                  >
+                    text
+                  </span>
+                  <span
+                    className='new badge'
+                    style={{ float: 'inherit', margin: '0 5px 0 0' }}
+                  >
+                    text
+                  </span>
+                </div>
+                <code className=' language-markup'>flow-text</code>
+              </div>
+              {project && project.issuer && (
+                <div>
+                  <div className='col s5'>
+                    <div style={{ marginTop: '20px' }} className='avatar'>
+                      <span className='single__metaAddress'>Issuer</span>
+                      <JazzIcon
+                        diameter={40}
+                        seed={jsNumberForAddress(project.issuer)}
+                      />
+                      <p
+                        className='truncate'
+                        style={{
+                          position: 'relative',
+                          top: '7px',
+                          width: '130px',
+                          paddingLeft: '10px'
+                        }}
+                      >
+                        {project.issuer}
+                      </p>
+                    </div>
+                  </div>
+                  {project &&
+                    drizzle.web3.utils.toBN(project.fulfiller).toString() !==
+                      '0' && (
+                      <div className='col s5'>
+                        <div style={{ marginTop: '20px' }} className='avatar'>
+                          <span className='single__metaAddress'>Fulfiller</span>
+                          <JazzIcon
+                            diameter={40}
+                            seed={jsNumberForAddress(project.fulfiller)}
+                          />
+                          <p
+                            className='truncate'
+                            style={{
+                              position: 'relative',
+                              top: '7px',
+                              width: '130px',
+                              paddingLeft: '10px'
+                            }}
+                          >
+                            {project.fulfiller}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                </div>
+              )}
             </div>
           </div>
         </div>
+
         <div className='col s12 m12'>
           <div className='card card-custom'>
             <div className='card-content'>
@@ -198,16 +195,14 @@ const ProjectDetail = ({ match, drizzle, drizzleState, account }) => {
             </div>
           </div>
         </div>
-        <div className='row'>
-          <div className='col s12 offset-s10'>
-            <a
-              className='waves-effect waves-light btn blue-grey lighten-1 no-uppercase'
-              style={{ width: '150px' }}
-              onClick={() => goBack()}
-            >
-              Close
-            </a>
-          </div>
+        <div className='col s12 m12'>
+          <a
+            className='waves-effect waves-light btn blue-grey lighten-1 no-uppercase right'
+            style={{ width: '150px' }}
+            onClick={() => goBack()}
+          >
+            Close
+          </a>
         </div>
       </div>
     </div>
