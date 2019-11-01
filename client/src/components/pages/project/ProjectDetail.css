@@ -1,0 +1,63 @@
+.single__meta {
+  border: 1px solid #e0e0e0;
+  padding: 20px;
+}
+.single__metaTitle {
+  font-size: 12px;
+  display: block;
+}
+.single__metaTitle {
+  font-size: 12px;
+  display: block;
+}
+.single__header {
+  padding: 40px 0 20px 0;
+}
+.single__metaValue {
+  font-size: 20px;
+  display: block;
+}
+.single__metaSubvalue {
+  font-size: 16px;
+  color: grey;
+  display: block;
+  margin-bottom: 15px;
+}
+.single__metaSubvalue:last-child {
+  margin-bottom: 0;
+}
+.single__content h2 {
+  font-size: 24px;
+}
+
+.card-custom .col:nth-child(2) span,
+.card-custom .material-icons {
+  color: grey;
+}
+.card-custom .material-icons {
+  font-size: 18px;
+  margin-top: 13px;
+  position: relative;
+  top: 4px;
+  margin-right: 9px;
+}
+.card-custom .col:nth-child(2) span {
+  font-weight: 300;
+}
+.card-custom .card-icon {
+  color: #4fa6da;
+  font-size: 30px;
+  margin-top: 0;
+  position: relative;
+  top: 0;
+  margin-right: 9px;
+}
+
+.avatar .paper {
+  float: left !important;
+  position: relative !important;
+  width: 42px !important;
+  height: 42px !important;
+  border-radius: 100% !important;
+  vertical-align: top !important;
+}
