@@ -29,3 +29,16 @@
   border-radius: 100% !important;
   vertical-align: top !important;
 }
+
+.navlink-title {
+  color: #676767;
+  font-size: 18px;
+  margin: 0;
+  margin-bottom: 10px;
+}
+
+.navlink-title a.chosen,
+.navlink-title a:hover {
+  border-bottom: 1px solid #4fa6da;
+  font-weight: bold;
+}

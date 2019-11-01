@@ -44,17 +44,11 @@ const ProjectContractData = ({ projectId, drizzle, drizzleState, account }) => {
           <div>
             <div className='row'>
               <div className='col s6'>
-                <h1
-                  style={{
-                    fontSize: '18px',
-                    margin: '0',
-                    fontWeight: 'bold',
-                    marginBottom: '10px'
-                  }}
-                >
+                <h1 className='navlink-title'>
                   <NavLink
+                    exact
+                    activeClassName='chosen'
                     to={`/project/${projectId}`}
-                    style={{ color: '#676767' }}
                   >
                     {projectDetails.title}
                   </NavLink>
