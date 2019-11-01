@@ -34,17 +34,16 @@ const ProjectDetail = ({ match, drizzle, drizzleState, account }) => {
 
   console.log('Before get project');
   const projectContext = useContext(ProjectContext);
-  const { getProjectDetail, projectDetail } = projectContext;
-  //getProjectDetail(drizzle, account, projectId);
+  const { getProject, current } = projectContext;
 
   useEffect(() => {
-    getProjectDetail(drizzle, account, projectId);
+    getProject(drizzle, account, projectId);
   }, []);
 
   useEffect(() => {
-    if (projectDetail !== null) {
-      console.log('changed: ' + projectDetail.id);
-      setProject(projectDetail);
+    if (current !== null) {
+      console.log('changed: ' + current.id);
+      setProject(current);
     } else {
       setProject({
         title: '',
@@ -52,7 +51,7 @@ const ProjectDetail = ({ match, drizzle, drizzleState, account }) => {
         price: 0
       });
     }
-  }, [projectDetail]);
+  }, [current]);
 
   // TODO: why useEffect is called even if current doesn't changed ?
   //console.log(current);
