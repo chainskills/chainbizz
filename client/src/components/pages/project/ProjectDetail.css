@@ -1,11 +1,7 @@
 .single__meta {
   border: 1px solid #e0e0e0;
   padding: 20px;
-  height: 150px;
-}
-.single__metaTitle {
-  font-size: 12px;
-  display: block;
+  height: 180px;
 }
 .single__metaTitle {
   font-size: 12px;
@@ -29,6 +25,12 @@
 }
 .single__content h2 {
   font-size: 24px;
+}
+.single__metaAddress {
+  font-size: 12px;
+  display: block;
+  margin-left: 3px;
+  margin-bottom: 5px;
 }
 
 .card-custom .col:nth-child(2) span,

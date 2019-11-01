@@ -50,6 +50,11 @@ const ProjectDetail = ({ match, drizzle, drizzleState, account }) => {
     }
   }, [current]);
 
+  if (typeof project.issuer !== 'undefined') {
+    const value = drizzle.web3.utils.toBN(project.issuer).toString();
+    console.log(value === '0' ? 'null' : value);
+  }
+
   return (
     <div>
       <div>
@@ -99,26 +104,57 @@ const ProjectDetail = ({ match, drizzle, drizzleState, account }) => {
                     </span>
                   </div>
                   <code className=' language-markup'>flow-text</code>
-                  {project && project.issuer && (
-                    <div style={{ marginTop: '20px' }} className='avatar'>
-                      <JazzIcon
-                        diameter={40}
-                        seed={jsNumberForAddress(project.issuer)}
-                      />
-                      <p
-                        className='truncate'
-                        style={{
-                          position: 'relative',
-                          top: '7px',
-                          width: '130px',
-                          paddingLeft: '10px'
-                        }}
-                      >
-                        {project.issuer}
-                      </p>
-                    </div>
-                  )}
                 </div>
+                {project && project.issuer && (
+                  <div>
+                    <div className='col s5'>
+                      <div style={{ marginTop: '20px' }} className='avatar'>
+                        <span className='single__metaAddress'>Issuer</span>
+                        <JazzIcon
+                          diameter={40}
+                          seed={jsNumberForAddress(project.issuer)}
+                        />
+                        <p
+                          className='truncate'
+                          style={{
+                            position: 'relative',
+                            top: '7px',
+                            width: '130px',
+                            paddingLeft: '10px'
+                          }}
+                        >
+                          {project.issuer}
+                        </p>
+                      </div>
+                    </div>
+                    {project &&
+                      drizzle.web3.utils.toBN(project.fulfiller).toString() !==
+                        '0' && (
+                        <div className='col s5'>
+                          <div style={{ marginTop: '20px' }} className='avatar'>
+                            <span className='single__metaAddress'>
+                              Fulfiller
+                            </span>
+                            <JazzIcon
+                              diameter={40}
+                              seed={jsNumberForAddress(project.fulfiller)}
+                            />
+                            <p
+                              className='truncate'
+                              style={{
+                                position: 'relative',
+                                top: '7px',
+                                width: '130px',
+                                paddingLeft: '10px'
+                              }}
+                            >
+                              {project.fulfiller}
+                            </p>
+                          </div>
+                        </div>
+                      )}
+                  </div>
+                )}
               </div>
             </div>
           </div>
