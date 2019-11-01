@@ -30,7 +30,7 @@ const EventState = props => {
   const [eventMap, setEventMap] = useState(new Map());
 
   // set-up events
-  const setupEvents = async drizzle => {
+  const setupEvents = async (drizzle, account) => {
     // default values
     let eventSettings = {
       newProject: false,
@@ -69,79 +69,79 @@ const EventState = props => {
 
     // New project event
     if (eventSettings.newProject === true) {
-      subscribeNewProjectEvent(drizzle);
+      subscribeNewProjectEvent(drizzle, account);
     }
 
     // Updated project event
     if (eventSettings.updateProject === true) {
-      subscribeUpdateProjectEvent(drizzle);
+      subscribeUpdateProjectEvent(drizzle, account);
     }
 
     // Removed project event
     if (eventSettings.removeProject === true) {
-      subscribeRemoveProjectEvent(drizzle);
+      subscribeRemoveProjectEvent(drizzle, account);
     }
 
     // Published project event
     if (eventSettings.publishedProject === true) {
-      subscribePublishedProjectEvent(drizzle);
+      subscribePublishedProjectEvent(drizzle, account);
     }
 
     // Unpublished project event
     if (eventSettings.unpublishedProject === true) {
-      subscribeUnpublishedProjectEvent(drizzle);
+      subscribeUnpublishedProjectEvent(drizzle, account);
     }
 
     // Offer submitted event
     if (eventSettings.offerSubmitted === true) {
-      subscribeOfferSubmittedEvent(drizzle);
+      subscribeOfferSubmittedEvent(drizzle, account);
     }
 
     // Offer canceled event
     if (eventSettings.offerCanceled === true) {
-      subscribeOfferCanceledEvent(drizzle);
+      subscribeOfferCanceledEvent(drizzle, account);
     }
 
     // Accept proposal event
     if (eventSettings.acceptProposal === true) {
-      subscribeAcceptProposalEvent(drizzle);
+      subscribeAcceptProposalEvent(drizzle, account);
     }
 
     // Reject proposal event
     if (eventSettings.rejectProposal === true) {
-      subscribeRejectProposalEvent(drizzle);
+      subscribeRejectProposalEvent(drizzle, account);
     }
 
     // Delivered event
     if (eventSettings.deliveryAccepted === true) {
-      subscribeDeliveredProjectEvent(drizzle);
+      subscribeDeliveredProjectEvent(drizzle, account);
     }
 
     // Services canceled event
     if (eventSettings.servicesCanceled === true) {
-      subscribeServicesCanceledEvent(drizzle);
+      subscribeServicesCanceledEvent(drizzle, account);
     }
 
     // Delivery accepted event
     if (eventSettings.deliveryAccepted === true) {
-      subscribeDeliveryAcceptedEvent(drizzle);
+      subscribeDeliveryAcceptedEvent(drizzle, account);
     }
 
     // Delivery rejected event
     if (eventSettings.deliveryRejected === true) {
-      subscribeDeliveryRejectedEvent(drizzle);
+      subscribeDeliveryRejectedEvent(drizzle, account);
     }
 
     // Contract canceled event
     if (eventSettings.contractCanceled === true) {
-      subscribeContractCanceledEvent(drizzle);
+      subscribeContractCanceledEvent(drizzle, account);
     }
 
     dispatch({ type: SETUP_EVENT });
   };
 
   // subscribe to the new project event
-  const subscribeNewProjectEvent = drizzle => {
+  const subscribeNewProjectEvent = (drizzle, account) => {
     if (eventNewProject !== null) {
       // event already registered
       return;
@@ -149,7 +149,11 @@ const EventState = props => {
     const { ChainBizz } = drizzle.contracts;
 
     const event = ChainBizz.events
-      .NewProject({ fromBlock: 'latest', toBlock: 'latest' })
+      .NewProject({
+        fromBlock: 'latest',
+        toBlock: 'latest',
+        filter: { issuer: [account] }
+      })
       .on('data', function(event) {
         if (typeof eventMap.get(event.id) === 'undefined') {
           const eventMessage =
@@ -180,7 +184,7 @@ const EventState = props => {
   };
 
   // subscribe to the update project event
-  const subscribeUpdateProjectEvent = drizzle => {
+  const subscribeUpdateProjectEvent = (drizzle, account) => {
     if (eventUpdateProject !== null) {
       // event already registered
       return;
@@ -188,7 +192,11 @@ const EventState = props => {
     const { ChainBizz } = drizzle.contracts;
 
     const event = ChainBizz.events
-      .UpdateProject({ fromBlock: 'latest', toBlock: 'latest' })
+      .UpdateProject({
+        fromBlock: 'latest',
+        toBlock: 'latest',
+        filter: { issuer: [account] }
+      })
       .on('data', function(event) {
         if (typeof eventMap.get(event.id) === 'undefined') {
           const eventMessage =
@@ -219,15 +227,19 @@ const EventState = props => {
   };
 
   // subscribe to the remove project event
-  const subscribeRemoveProjectEvent = drizzle => {
-    if (eventNewProject !== null) {
+  const subscribeRemoveProjectEvent = (drizzle, account) => {
+    if (eventRemoveProject !== null) {
       // event already registered
       return;
     }
     const { ChainBizz } = drizzle.contracts;
 
     const event = ChainBizz.events
-      .RemoveProject({ fromBlock: 'latest', toBlock: 'latest' })
+      .RemoveProject({
+        fromBlock: 'latest',
+        toBlock: 'latest',
+        filter: { issuer: [account] }
+      })
       .on('data', function(event) {
         if (typeof eventMap.get(event.id) === 'undefined') {
           const eventMessage =
@@ -256,7 +268,7 @@ const EventState = props => {
   };
 
   // subscribe to the published project event
-  const subscribePublishedProjectEvent = drizzle => {
+  const subscribePublishedProjectEvent = (drizzle, account) => {
     if (eventPublishedProject !== null) {
       // event already registered
       return;
@@ -264,7 +276,11 @@ const EventState = props => {
     const { ChainBizz } = drizzle.contracts;
 
     const event = ChainBizz.events
-      .PublishedProject({ fromBlock: 'latest', toBlock: 'latest' })
+      .PublishedProject({
+        fromBlock: 'latest',
+        toBlock: 'latest',
+        filter: { issuer: [account] }
+      })
       .on('data', function(event) {
         if (typeof eventMap.get(event.id) === 'undefined') {
           const eventMessage =
@@ -295,7 +311,7 @@ const EventState = props => {
   };
 
   // subscribe to the unpublished project event
-  const subscribeUnpublishedProjectEvent = drizzle => {
+  const subscribeUnpublishedProjectEvent = (drizzle, account) => {
     if (eventUnpublishedProject !== null) {
       // event already registered
       return;
@@ -303,7 +319,11 @@ const EventState = props => {
     const { ChainBizz } = drizzle.contracts;
 
     const event = ChainBizz.events
-      .UnpublishedProject({ fromBlock: 'latest', toBlock: 'latest' })
+      .UnpublishedProject({
+        fromBlock: 'latest',
+        toBlock: 'latest',
+        filter: { issuer: [account] }
+      })
       .on('data', function(event) {
         if (typeof eventMap.get(event.id) === 'undefined') {
           const eventMessage =
@@ -334,7 +354,7 @@ const EventState = props => {
   };
 
   // subscribe to the offer submitted project event
-  const subscribeOfferSubmittedEvent = drizzle => {
+  const subscribeOfferSubmittedEvent = (drizzle, account) => {
     if (eventOfferSubmitted !== null) {
       // event already registered
       return;
@@ -342,7 +362,11 @@ const EventState = props => {
     const { ChainBizz } = drizzle.contracts;
 
     const event = ChainBizz.events
-      .OfferSubmitted({ fromBlock: 'latest', toBlock: 'latest' })
+      .OfferSubmitted({
+        fromBlock: 'latest',
+        toBlock: 'latest',
+        filter: { issuer: account }
+      })
       .on('data', function(event) {
         if (typeof eventMap.get(event.id) === 'undefined') {
           const eventMessage =
@@ -350,6 +374,8 @@ const EventState = props => {
             event.returnValues.id +
             ', issuer: ' +
             event.returnValues.issuer +
+            ', fulfiller: ' +
+            event.returnValues.fulfiller +
             ', title: ' +
             event.returnValues.title +
             ', price: ' +
@@ -373,7 +399,7 @@ const EventState = props => {
   };
 
   // subscribe to the offer canceled project event
-  const subscribeOfferCanceledEvent = drizzle => {
+  const subscribeOfferCanceledEvent = (drizzle, account) => {
     if (eventOfferCanceled !== null) {
       // event already registered
       return;
@@ -381,14 +407,18 @@ const EventState = props => {
     const { ChainBizz } = drizzle.contracts;
 
     const event = ChainBizz.events
-      .OfferCanceled({ fromBlock: 'latest', toBlock: 'latest' })
+      .OfferCanceled({
+        fromBlock: 'latest',
+        toBlock: 'latest',
+        filter: { issuer: [account] }
+      })
       .on('data', function(event) {
         if (typeof eventMap.get(event.id) === 'undefined') {
           const eventMessage =
             'id: ' +
             event.returnValues.id +
             ', issuer: ' +
-            event.returnValues.id +
+            event.returnValues.issuer +
             ', fulfiller: ' +
             event.returnValues.fulfiller +
             ', title: ' +
@@ -414,7 +444,7 @@ const EventState = props => {
   };
 
   // subscribe to the accept proposal project event
-  const subscribeAcceptProposalEvent = drizzle => {
+  const subscribeAcceptProposalEvent = (drizzle, account) => {
     if (eventAcceptProposal !== null) {
       // event already registered
       return;
@@ -422,14 +452,18 @@ const EventState = props => {
     const { ChainBizz } = drizzle.contracts;
 
     const event = ChainBizz.events
-      .AcceptProposal({ fromBlock: 'latest', toBlock: 'latest' })
+      .AcceptProposal({
+        fromBlock: 'latest',
+        toBlock: 'latest',
+        filter: { fulfiller: [account] }
+      })
       .on('data', function(event) {
         if (typeof eventMap.get(event.id) === 'undefined') {
           const eventMessage =
             'id: ' +
             event.returnValues.id +
             ', issuer: ' +
-            event.returnValues.id +
+            event.returnValues.issuer +
             ', fulfiller: ' +
             event.returnValues.fulfiller +
             ', title: ' +
@@ -455,7 +489,7 @@ const EventState = props => {
   };
 
   // subscribe to the offer rejected project event
-  const subscribeRejectProposalEvent = drizzle => {
+  const subscribeRejectProposalEvent = (drizzle, account) => {
     if (eventRejectProposal !== null) {
       // event already registered
       return;
@@ -463,14 +497,18 @@ const EventState = props => {
     const { ChainBizz } = drizzle.contracts;
 
     const event = ChainBizz.events
-      .RejectProposal({ fromBlock: 'latest', toBlock: 'latest' })
+      .RejectProposal({
+        fromBlock: 'latest',
+        toBlock: 'latest',
+        filter: { fulfiller: [account] }
+      })
       .on('data', function(event) {
         if (typeof eventMap.get(event.id) === 'undefined') {
           const eventMessage =
             'id: ' +
             event.returnValues.id +
             ', issuer: ' +
-            event.returnValues.id +
+            event.returnValues.issuer +
             ', fulfiller: ' +
             event.returnValues.fulfiller +
             ', title: ' +
@@ -496,7 +534,7 @@ const EventState = props => {
   };
 
   // subscribe to the project delivered event
-  const subscribeDeliveredProjectEvent = drizzle => {
+  const subscribeDeliveredProjectEvent = (drizzle, account) => {
     if (eventDeliveredProject !== null) {
       // event already registered
       return;
@@ -504,14 +542,18 @@ const EventState = props => {
     const { ChainBizz } = drizzle.contracts;
 
     const event = ChainBizz.events
-      .ProjectDelivered({ fromBlock: 'latest', toBlock: 'latest' })
+      .ProjectDelivered({
+        fromBlock: 'latest',
+        toBlock: 'latest',
+        filter: { issuer: [account] }
+      })
       .on('data', function(event) {
         if (typeof eventMap.get(event.id) === 'undefined') {
           const eventMessage =
             'id: ' +
             event.returnValues.id +
             ', issuer: ' +
-            event.returnValues.id +
+            event.returnValues.issuer +
             ', fulfiller: ' +
             event.returnValues.fulfiller +
             ', title: ' +
@@ -537,7 +579,7 @@ const EventState = props => {
   };
 
   // subscribe to the services canceled event
-  const subscribeServicesCanceledEvent = drizzle => {
+  const subscribeServicesCanceledEvent = (drizzle, account) => {
     if (eventServicesCanceled !== null) {
       // event already registered
       return;
@@ -545,14 +587,18 @@ const EventState = props => {
     const { ChainBizz } = drizzle.contracts;
 
     const event = ChainBizz.events
-      .ServicesCanceled({ fromBlock: 'latest', toBlock: 'latest' })
+      .ServicesCanceled({
+        fromBlock: 'latest',
+        toBlock: 'latest',
+        filter: { issuer: [account] }
+      })
       .on('data', function(event) {
         if (typeof eventMap.get(event.id) === 'undefined') {
           const eventMessage =
             'id: ' +
             event.returnValues.id +
             ', issuer: ' +
-            event.returnValues.id +
+            event.returnValues.issuer +
             ', fulfiller: ' +
             event.returnValues.fulfiller +
             ', title: ' +
@@ -578,7 +624,7 @@ const EventState = props => {
   };
 
   // subscribe to the delivery accepted event
-  const subscribeDeliveryAcceptedEvent = drizzle => {
+  const subscribeDeliveryAcceptedEvent = (drizzle, account) => {
     if (eventDeliveryAccepted !== null) {
       // event already registered
       return;
@@ -586,14 +632,18 @@ const EventState = props => {
     const { ChainBizz } = drizzle.contracts;
 
     const event = ChainBizz.events
-      .DeliveryAccepted({ fromBlock: 'latest', toBlock: 'latest' })
+      .DeliveryAccepted({
+        fromBlock: 'latest',
+        toBlock: 'latest',
+        filter: { fulfiller: [account] }
+      })
       .on('data', function(event) {
         if (typeof eventMap.get(event.id) === 'undefined') {
           const eventMessage =
             'id: ' +
             event.returnValues.id +
             ', issuer: ' +
-            event.returnValues.id +
+            event.returnValues.issuer +
             ', fulfiller: ' +
             event.returnValues.fulfiller +
             ', title: ' +
@@ -619,7 +669,7 @@ const EventState = props => {
   };
 
   // subscribe to the delivery rejected event
-  const subscribeDeliveryRejectedEvent = drizzle => {
+  const subscribeDeliveryRejectedEvent = (drizzle, account) => {
     if (eventDeliveryRejected !== null) {
       // event already registered
       return;
@@ -627,14 +677,18 @@ const EventState = props => {
     const { ChainBizz } = drizzle.contracts;
 
     const event = ChainBizz.events
-      .DeliveryRejected({ fromBlock: 'latest', toBlock: 'latest' })
+      .DeliveryRejected({
+        fromBlock: 'latest',
+        toBlock: 'latest',
+        filter: { fulfiller: [account] }
+      })
       .on('data', function(event) {
         if (typeof eventMap.get(event.id) === 'undefined') {
           const eventMessage =
             'id: ' +
             event.returnValues.id +
             ', issuer: ' +
-            event.returnValues.id +
+            event.returnValues.issuer +
             ', fulfiller: ' +
             event.returnValues.fulfiller +
             ', title: ' +
@@ -660,7 +714,7 @@ const EventState = props => {
   };
 
   // subscribe to the contract canceled event
-  const subscribeContractCanceledEvent = drizzle => {
+  const subscribeContractCanceledEvent = (drizzle, account) => {
     if (eventContractCanceled !== null) {
       // event already registered
       return;
@@ -668,14 +722,18 @@ const EventState = props => {
     const { ChainBizz } = drizzle.contracts;
 
     const event = ChainBizz.events
-      .ContractCanceled({ fromBlock: 'latest', toBlock: 'latest' })
+      .ContractCanceled({
+        fromBlock: 'latest',
+        toBlock: 'latest',
+        filter: { fulfiller: [account] }
+      })
       .on('data', function(event) {
         if (typeof eventMap.get(event.id) === 'undefined') {
           const eventMessage =
             'id: ' +
             event.returnValues.id +
             ', issuer: ' +
-            event.returnValues.id +
+            event.returnValues.issuer +
             ', fulfiller: ' +
             event.returnValues.fulfiller +
             ', title: ' +
@@ -709,7 +767,7 @@ const EventState = props => {
 
     if (eventUpdateProject !== null) {
       eventPublishedProject.unsubscribe();
-      setEventUpdateProject(null);
+      setEventPublishedProject(null);
     }
 
     if (eventRemoveProject !== null) {

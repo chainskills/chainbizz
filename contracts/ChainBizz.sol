@@ -35,11 +35,11 @@ contract ChainBizz {
   struct ProjectItem {
     uint256 id;               // unique ID
     address payable issuer;
-    address payable fulfiller;             
+    address payable fulfiller;
     string title;
     string description;
     uint256 price;            // price in Wei
-    ProjectStatus status;      
+    ProjectStatus status;
   }
 
   /*
@@ -76,20 +76,20 @@ contract ChainBizz {
   /*
    * Events
    */
-  event NewProject(uint256 id, address payable issuer, string title, uint256 price);
-  event UpdateProject(uint256 id, address payable issuer, string title, uint256 price);
-  event RemoveProject(uint256 id, address payable issuer, string title);
-  event PublishedProject(uint256 id, address payable issuer, string title, uint256 price);
-  event UnpublishedProject(uint256 id, address payable issuer, string title, uint256 price);
-  event OfferSubmitted(uint256 id, address payable issuer, string title, uint256 price);
-  event OfferCanceled(uint256 id, address payable issuer, address payable fulfiller, string title, uint256 price);
-  event AcceptProposal(uint256 id, address payable issuer, address payable fulfiller, string title, uint256 price);
-  event RejectProposal(uint256 id, address payable issuer, address payable fulfiller, string title, uint256 price);
-  event ProjectDelivered(uint256 id, address payable issuer, address payable fulfiller, string title, uint256 price);
-  event ServicesCanceled(uint256 id, address payable issuer, address payable fulfiller, string title, uint256 price);
-  event DeliveryAccepted(uint256 id, address payable issuer, address payable fulfiller, string title, uint256 price);
-  event DeliveryRejected(uint256 id, address payable issuer, address payable fulfiller, string title, uint256 price);
-  event ContractCanceled(uint256 id, address payable issuer, address payable fulfiller, string title, uint256 price);
+  event NewProject(uint256 id, address payable indexed issuer, string title, uint256 price);
+  event UpdateProject(uint256 id, address payable indexed issuer, string title, uint256 price);
+  event RemoveProject(uint256 id, address payable indexed issuer, string title);
+  event PublishedProject(uint256 id, address payable indexed issuer, string title, uint256 price);
+  event UnpublishedProject(uint256 id, address payable indexed issuer, string title, uint256 price);
+  event OfferSubmitted(uint256 id, address payable indexed issuer,address payable indexed fulfiller, string title, uint256 price);
+  event OfferCanceled(uint256 id, address payable indexed issuer, address payable indexed fulfiller, string title, uint256 price);
+  event AcceptProposal(uint256 id, address payable indexed issuer, address payable indexed fulfiller, string title, uint256 price);
+  event RejectProposal(uint256 id, address payable indexed issuer, address payable indexed fulfiller, string title, uint256 price);
+  event ProjectDelivered(uint256 id, address payable indexed issuer, address payable indexed fulfiller, string title, uint256 price);
+  event ServicesCanceled(uint256 id, address payable indexed issuer, address payable indexed fulfiller, string title, uint256 price);
+  event DeliveryAccepted(uint256 id, address payable indexed issuer, address payable indexed fulfiller, string title, uint256 price);
+  event DeliveryRejected(uint256 id, address payable indexed issuer, address payable indexed fulfiller, string title, uint256 price);
+  event ContractCanceled(uint256 id, address payable indexed issuer, address payable indexed fulfiller, string title, uint256 price);
 
  /*
   * Public functions
@@ -292,7 +292,7 @@ contract ChainBizz {
     // project is under review
     project.status = ProjectStatus.InReview;
 
-    emit OfferSubmitted(_id, msg.sender, project.title, project.price);
+    emit OfferSubmitted(_id, project.issuer, msg.sender, project.title, project.price);
   }
 
   // Cancel offer made by the fulfiller
@@ -318,7 +318,7 @@ contract ChainBizz {
     project.status = ProjectStatus.Available;
     project.fulfiller = address(0x0);
 
-    emit OfferCanceled(_id, msg.sender, fulfiller, project.title, project.price);
+    emit OfferCanceled(_id, project.issuer, fulfiller, project.title, project.price);
   }
 
   // Accept services from the fulfiller
@@ -345,7 +345,7 @@ contract ChainBizz {
     // project is now ongoing
     project.status = ProjectStatus.OnGoing;
 
-    emit AcceptProposal(_id, msg.sender, project.fulfiller, project.title, project.price);
+    emit AcceptProposal(_id, project.issuer, project.fulfiller, project.title, project.price);
   }
 
   // Reject proposal from the fulfiller
@@ -371,7 +371,7 @@ contract ChainBizz {
     project.status = ProjectStatus.Available;
     project.fulfiller = address(0x0);
     
-    emit RejectProposal(_id, msg.sender, fulfiller, project.title, project.price);
+    emit RejectProposal(_id, project.issuer, fulfiller, project.title, project.price);
   }
 
   // Deliver the project to the customer
@@ -395,7 +395,7 @@ contract ChainBizz {
     // project is now validation process
     project.status = ProjectStatus.Validate;
 
-    emit ProjectDelivered(_id, msg.sender, project.fulfiller, project.title, project.price);
+    emit ProjectDelivered(_id, project.issuer, project.fulfiller, project.title, project.price);
   }
 
    // Cancel services from the fulfiller
@@ -421,7 +421,7 @@ contract ChainBizz {
     project.status = ProjectStatus.Available;
     project.fulfiller = address(0x0);
     
-    emit ServicesCanceled(_id, msg.sender, fulfiller, project.title, project.price);
+    emit ServicesCanceled(_id, project.issuer, fulfiller, project.title, project.price);
   }
 
   // Accept the project delivery from the fulfiller
@@ -448,7 +448,7 @@ contract ChainBizz {
     // project is now completed
     project.status = ProjectStatus.Completed;
 
-    emit DeliveryAccepted(_id, msg.sender, project.fulfiller, project.title, project.price);
+    emit DeliveryAccepted(_id, project.issuer, project.fulfiller, project.title, project.price);
   }
 
   // Reject the project delivery from the fulfiller
@@ -472,7 +472,7 @@ contract ChainBizz {
     // project remains ongoing
     project.status = ProjectStatus.OnGoing;
     
-    emit DeliveryRejected(_id, msg.sender, project.fulfiller, project.title, project.price);
+    emit DeliveryRejected(_id, project.issuer, project.fulfiller, project.title, project.price);
   }
 
   // Contract canceled by the issuer
@@ -499,7 +499,7 @@ contract ChainBizz {
     // contract becomes canceled
     project.status = ProjectStatus.Canceled;
     
-    emit ContractCanceled(_id, msg.sender, project.fulfiller, project.title, project.price);
+    emit ContractCanceled(_id, project.issuer, project.fulfiller, project.title, project.price);
   }
 
   //

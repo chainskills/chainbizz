@@ -63,7 +63,7 @@ const EventSettings = ({ drizzle }) => {
     localStorage.setItem('eventSettings', JSON.stringify(settings));
 
     // then we subscribe/unsubscribe to all selected events
-    setupEvents(drizzle);
+    setupEvents(drizzle, null);
 
     // go back to the previous page
     const history = createBrowserHistory();
