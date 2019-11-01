@@ -1,6 +1,7 @@
 .single__meta {
   border: 1px solid #e0e0e0;
   padding: 20px;
+  height: 150px;
 }
 .single__metaTitle {
   font-size: 12px;
