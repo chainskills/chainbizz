@@ -2,7 +2,7 @@ header,
 main,
 footer,
 .container {
-  padding-left: 150px;
+  padding-left: 230px;
 }
 
 body {
@@ -191,6 +191,10 @@ a: .btn {
   font-size: 20px;
 }
 
+.container {
+  width: 80% !important;
+}
+
 @media only screen and (max-width: 992px) {
   header,
   main,
@@ -199,8 +203,43 @@ a: .btn {
     padding-left: 0;
   }
 
+  nav .brand-logo span,
+  .network-status {
+    display: none;
+  }
+
+  .sidenav.sidenav-fixed {
+    box-shadow: none !important;
+  }
+
+  nav .brand-logo {
+    padding-left: 155px !important;
+    left: 0;
+  }
+
+  [data-target='slide-out'] {
+    display: block;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 500;
+  }
+
+  .sidenav li:first-child {
+    margin-bottom: 20px !important;
+  }
+
+  .sidenav-overlay {
+    z-index: 300;
+  }
+
+  .top-navbar {
+    z-index: 400;
+  }
+
   .sidenav {
     top: 64px;
+    z-index: 1000;
   }
 
   #formSearch {

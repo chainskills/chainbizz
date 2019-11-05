@@ -163,10 +163,7 @@ const NavBar = ({ account }) => {
         </div>
       </nav>
 
-      <ul
-        id='slide-out'
-        className='sidenav sidenav-fixed blue-grey lighten-5 left-nav'
-      >
+      <ul id='slide-out' className='sidenav sidenav-fixed left-nav'>
         <li
           style={{
             marginBottom: '120px'

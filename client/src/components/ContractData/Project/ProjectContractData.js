@@ -43,7 +43,7 @@ const ProjectContractData = ({ projectId, drizzle, drizzleState, account }) => {
         <div className='card-content'>
           <div>
             <div className='row'>
-              <div className='col s6'>
+              <div className='col s12 m6'>
                 <h1 className='navlink-title'>
                   <NavLink
                     activeClassName='chosen'
@@ -90,7 +90,7 @@ const ProjectContractData = ({ projectId, drizzle, drizzleState, account }) => {
                   </p>
                 </div>
               </div>
-              <div className='col s3 project-additional'>
+              <div className='col s12 m3 project-additional'>
                 <ul style={{ margin: '-10px 0 0 0' }}>
                   <li style={{ fontWeight: '600' }}>
                     <i className='material-icons'>perm_data_setting</i>Beginner{' '}
@@ -106,7 +106,7 @@ const ProjectContractData = ({ projectId, drizzle, drizzleState, account }) => {
                   </li>
                 </ul>
               </div>
-              <div className='col s3 project-additional'>
+              <div className='col s12 m3 project-additional'>
                 <p
                   className='right-align'
                   style={{ fontSize: '24px', color: '#546e7a' }}
