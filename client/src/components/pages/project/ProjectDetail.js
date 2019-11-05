@@ -66,6 +66,14 @@ const ProjectDetail = ({ match, drizzle, account }) => {
       <div>
         <div className='col s12 m12'>
           <div className='single__header'>
+            <a
+              className='btn-flat waves-effect waves-light no-uppercase back-button'
+              style={{ width: '150px' }}
+              onClick={() => goBack()}
+            >
+              <i class='material-icons'>arrow_back</i>
+              <span>Back</span>
+            </a>
             <div className='row'>
               <div className='col s2'>
                 <div className='single__meta'>
@@ -198,15 +206,6 @@ const ProjectDetail = ({ match, drizzle, account }) => {
               </div>
             </div>
           </div>
-        </div>
-        <div className='col s12 m12'>
-          <a
-            className='waves-effect waves-light btn blue-grey lighten-1 no-uppercase right'
-            style={{ width: '150px' }}
-            onClick={() => goBack()}
-          >
-            Close
-          </a>
         </div>
       </div>
     </div>

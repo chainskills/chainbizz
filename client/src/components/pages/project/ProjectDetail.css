@@ -9,6 +9,7 @@
 }
 .single__header {
   padding: 40px 0 20px 0;
+  position: relative;
 }
 .single__metaValue {
   font-size: 20px;
@@ -63,4 +64,18 @@
   height: 42px !important;
   border-radius: 100% !important;
   vertical-align: top !important;
+}
+
+.back-button {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  color: #4fa6da;
+}
+
+.back-button span {
+  position: relative;
+  top: -4px;
+  font-size: 16px;
+  left: 5px;
 }
