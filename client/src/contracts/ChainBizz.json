@@ -64958,12 +64958,13 @@
         }
       },
       "links": {},
-      "address": "0x213Db14700c489De0864a716EC9795dCbE0bd242",
-      "transactionHash": "0xfee73ff7746fad782cbff0cffc3d49c220322ea887b1119a1562a68ae9ba5049"
+      "address": "0xEB9b222EAC67969785e12E08A1410fDe675c3745",
+      "transactionHash": "0x8cff00f6b4245eccbc381406661f1b487ac3414b11db73791c47b47a69a0370b"
     }
   },
-  "schemaVersion": "3.0.16",
-  "updatedAt": "2019-11-01T20:46:32.103Z",
+  "schemaVersion": "3.0.17",
+  "updatedAt": "2019-11-11T22:49:49.258Z",
+  "networkType": "ethereum",
   "devdoc": {
     "author": "Said Eloudrhiri (ChainSkills) - Devoxx Morocco 2019",
     "details": "This smart contract is for illustration purpose only and should not be used in the mainNet",
