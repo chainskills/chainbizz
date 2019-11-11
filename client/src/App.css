@@ -34,7 +34,7 @@ nav .brand-logo {
 }
 
 .network-status::before {
-  content: '';
+  content: "";
   display: inline-block;
   width: 10px;
   height: 10px;
@@ -158,11 +158,11 @@ body {
   z-index: 0;
 }
 
-[data-target='slide-out'] {
+[data-target="slide-out"] {
   display: none;
 }
 
-a: .btn {
+a .btn {
   text-transform: none;
 }
 
@@ -217,7 +217,7 @@ a: .btn {
     left: 0;
   }
 
-  [data-target='slide-out'] {
+  [data-target="slide-out"] {
     display: block;
     position: absolute;
     top: 20px;
