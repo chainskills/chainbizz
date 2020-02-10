@@ -34,7 +34,6 @@ const ProjectDetail = ({ match, drizzle, account }) => {
     price: 0
   });
 
-  console.log('Before get project');
   const projectContext = useContext(ProjectContext);
   const { getProject, current } = projectContext;
 
@@ -71,7 +70,7 @@ const ProjectDetail = ({ match, drizzle, account }) => {
               style={{ width: '150px' }}
               onClick={() => goBack()}
             >
-              <i class='material-icons'>arrow_back</i>
+              <i className='material-icons'>arrow_back</i>
               <span>Back</span>
             </a>
             <div className='row'>
