@@ -7,6 +7,8 @@ import ProjectContext from '../../context/projects/projectContext';
 
 import { projectStatus } from '../../ContractData/Project/ProjectStatus';
 
+import 'materialize-css/dist/css/materialize.min.css';
+
 import './ProjectDetail.css';
 
 const ProjectDetail = ({ match, drizzle, account }) => {
@@ -74,13 +76,13 @@ const ProjectDetail = ({ match, drizzle, account }) => {
               <span>Back</span>
             </a>
             <div className='row'>
-              <div className='col s2'>
+              <div className='col s12 m12 l2 xl2'>
                 <div className='single__meta'>
                   <span className='single__metaTitle'>Price</span>
                   <span className='single__metaValue'>{project.price} ETH</span>
                 </div>
               </div>
-              <div className='col s10'>
+              <div className='col s12 m12 l10 xl10'>
                 <h1
                   style={{
                     fontSize: '24px',
@@ -117,7 +119,7 @@ const ProjectDetail = ({ match, drizzle, account }) => {
               </div>
               {project && project.issuer && (
                 <div>
-                  <div className='col s5'>
+                  <div className='col s12 m12 l5 xl5'>
                     <div style={{ marginTop: '20px' }} className='avatar'>
                       <span className='single__metaAddress'>Issuer</span>
                       <JazzIcon
@@ -140,7 +142,7 @@ const ProjectDetail = ({ match, drizzle, account }) => {
                   {project &&
                     drizzle.web3.utils.toBN(project.fulfiller).toString() !==
                       '0' && (
-                      <div className='col s5'>
+                      <div className='col s12 m12 l5 xl5'>
                         <div style={{ marginTop: '20px' }} className='avatar'>
                           <span className='single__metaAddress'>Fulfiller</span>
                           <JazzIcon
@@ -167,7 +169,7 @@ const ProjectDetail = ({ match, drizzle, account }) => {
           </div>
         </div>
 
-        <div className='col s12 m12'>
+        <div className='col s12 m12 l12 xl12'>
           <div className='card card-custom'>
             <div className='card-content'>
               <div className='row'>
@@ -179,7 +181,7 @@ const ProjectDetail = ({ match, drizzle, account }) => {
                           <p>{project.description}</p>
                         </div>
                       </div>
-                      <div className='col s3'>
+                      <div className='col s12 m12 l3 xl3'>
                         <div className='project-additional'>
                           <ul style={{ margin: '-10px 0 0 0' }}>
                             <li style={{ fontWeight: '600' }}>
