@@ -7,7 +7,13 @@ import ActionsProvider from './ActionsProvider';
 
 import './ProjectContractData.css';
 
-const ProjectContractData = ({ projectId, drizzle, drizzleState, account }) => {
+const ProjectContractData = ({
+  projectId,
+  drizzle,
+  drizzleState,
+  account,
+  hideAction = false
+}) => {
   const [dataKey, setDataKey] = useState(null);
 
   useEffect(() => {
@@ -121,15 +127,17 @@ const ProjectContractData = ({ projectId, drizzle, drizzleState, account }) => {
             </div>
           </div>
         </div>
-        <div className='card-action right-align project-card'>
-          {projectDetails.issuer === account && (
-            <ActionsOwner projectId={projectId} status={status} />
-          )}
+        {hideAction === false && (
+          <div className='card-action right-align project-card'>
+            {projectDetails.issuer === account && (
+              <ActionsOwner projectId={projectId} status={status} />
+            )}
 
-          {projectDetails.issuer !== account && (
-            <ActionsProvider projectId={projectId} status={status} />
-          )}
-        </div>
+            {projectDetails.issuer !== account && (
+              <ActionsProvider projectId={projectId} status={status} />
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

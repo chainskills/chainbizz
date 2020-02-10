@@ -42,6 +42,7 @@ const Canceled = ({ drizzle, drizzleState, account }) => {
             projectId={projectId}
             key={projectId}
             account={account}
+            hideAction={true}
           />
         );
 
