@@ -170,40 +170,56 @@ const NavBar = ({ account }) => {
           }}
         ></li>
         <li>
-          <NavLink to='/'>Available projects</NavLink>
+          <NavLink to='/' className='sidenav-close'>
+            Available projects
+          </NavLink>
         </li>
         <li>
           <div className='divider'></div>
         </li>
         <li>
-          <NavLink to='/myprojects'>My projects</NavLink>
+          <NavLink to='/myprojects' className='sidenav-close'>
+            My projects
+          </NavLink>
         </li>
         <li>
-          <NavLink to='/mycontracts'>My ongoing contracts</NavLink>
+          <NavLink to='/mycontracts' className='sidenav-close'>
+            My ongoing contracts
+          </NavLink>
         </li>
         <li>
-          <NavLink to='/myoffers'>My offers</NavLink>
-        </li>
-        <li>
-          <div className='divider'></div>
-        </li>
-        <li>
-          <NavLink to='/myreviews'>Offers to review</NavLink>
-        </li>
-        <li>
-          <div className='divider'></div>
-        </li>
-        <li>
-          <NavLink to='/deliveries'>Deliveries to review</NavLink>
+          <NavLink to='/myoffers' className='sidenav-close'>
+            My offers
+          </NavLink>
         </li>
         <li>
           <div className='divider'></div>
         </li>
         <li>
-          <NavLink to='/completed'>Contracts completed</NavLink>
+          <NavLink to='/myreviews' className='sidenav-close'>
+            Offers to review
+          </NavLink>
         </li>
         <li>
-          <NavLink to='/canceled'>Contracts canceled</NavLink>
+          <div className='divider'></div>
+        </li>
+        <li>
+          <NavLink to='/deliveries' className='sidenav-close'>
+            Deliveries to review
+          </NavLink>
+        </li>
+        <li>
+          <div className='divider'></div>
+        </li>
+        <li>
+          <NavLink to='/completed' className='sidenav-close'>
+            Contracts completed
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to='/canceled' className='sidenav-close'>
+            Contracts canceled
+          </NavLink>
         </li>
       </ul>
       <a href='#' data-target='slide-out' className='sidenav-trigger'>
