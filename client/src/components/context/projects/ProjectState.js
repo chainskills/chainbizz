@@ -1,6 +1,7 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useState, useEffect } from 'react';
 import ProjectContext from './projectContext';
 import projectReducer from './projectReducer';
+import ipfsClient from 'ipfs-http-client';
 
 import {
   IS_ENABLED,
@@ -58,6 +59,15 @@ const ProjectState = props => {
     showRejectDelivery: false,
     showCancelContract: false
   };
+
+  const [ipfs, setIPFS] = useState(null);
+
+  useEffect(() => {
+    console.log('before ipfs: ' + ipfs);
+    const _ipfs = ipfsClient('https://ipfs.infura.io:5001');
+    setIPFS(_ipfs);
+    console.log('before ipfs: ' + _ipfs);
+  }, []);
 
   const [state, dispatch] = useReducer(projectReducer, initialState);
 
@@ -194,8 +204,20 @@ const ProjectState = props => {
   };
 
   // Publish a project
-  const publishProject = (drizzle, account, projectId) => {
+  const publishProject = async (drizzle, account, projectId) => {
     const { ChainBizz } = drizzle.contracts;
+
+    let project = await ChainBizz.methods.getProject(projectId).call({
+      from: account
+    });
+
+    if (ipfs !== null) {
+      // publish the project in IPFS
+      const doc = JSON.stringify(project);
+      for await (const result of ipfs.add(doc)) {
+        console.log('IPFS hash key: ' + result.path);
+      }
+    }
 
     // publish the project
     ChainBizz.methods
