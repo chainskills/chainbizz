@@ -47,3 +47,25 @@ export const GET_PROJECT_DETAIL = 'GET_PROJECT_DETAIL';
 
 // Related to the errors
 export const PROJECT_ERROR = 'PROJECT_ERROR';
+
+// Related to firebase
+export const CURRENT_USER = 'CURRENT_USER';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAIL = 'LOGIN_FAIL';
+export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
+export const REGISTER_FAIL = 'REGISTER_FAIL';
+export const RESET_SUCCESS = 'RESET_SUCCESS';
+export const RESET_FAIL = 'RESET_FAIL';
+export const LOGOUT = 'LOGOUT';
+
+// Notifications
+export const NOTIFICATION_EVENT = 'NOTIFICATION_EVENT';
+export const NOTIFICATION_ERROR = 'NOTIFICATION_ERROR';
+export const NOTIFICATION_CLEAR_ERRORS = 'NOTIFICATION_CLEAR_ERRORS';
+export const NOTIFICATION_CLEAR_EVENTS = 'NOTIFICATION_CLEAR_EVENTS';
+export const NOTIFICATION_CLEAR_ALL = 'NOTIFICATION_CLEAR_ALL';
+
+// Alerts and errors
+export const SET_ALERT = 'SET_ALERT';
+export const REMOVE_ALERT = 'REMOVE_ALERT';
+export const CLEAR_ERRORS = 'CLEAR_ERRORS';

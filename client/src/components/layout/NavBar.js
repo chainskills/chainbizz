@@ -1,16 +1,28 @@
 import React, { useEffect, useContext, useState } from 'react';
-import { BrowserRouter as Router, NavLink, withRouter } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 
 import 'materialize-css/dist/css/materialize.min.css';
 import M from 'materialize-css/dist/js/materialize.min.js';
 
 import EventContext from '../context/events/eventContext';
 
+import AuthContext from '../context/auth/authContext';
+
+import history from '../../components/pages/route/history';
+
 import JazzIcon, { jsNumberForAddress } from 'react-jazzicon';
 
 import logo from '../../assets/images/chainskills-logo.png';
 
 const NavBar = ({ account }) => {
+  const authContext = useContext(AuthContext);
+  const { isAuthenticated, logout } = authContext;
+
+  const onLogout = async () => {
+    await logout();
+    history.push('/');
+  };
+
   const eventContext = useContext(EventContext);
   const { events, currentEventId, onClearEvents } = eventContext;
   const [eventsList, setEventsList] = useState([]);
@@ -135,6 +147,20 @@ const NavBar = ({ account }) => {
               <li>
                 <NavLink to='/events'>Events</NavLink>
               </li>
+
+              {!isAuthenticated && (
+                <li>
+                  <a href='/login'>Login</a>
+                </li>
+              )}
+
+              {isAuthenticated !== null && isAuthenticated && (
+                <li>
+                  <a href='#!' onClick={onLogout}>
+                    Logout
+                  </a>
+                </li>
+              )}
             </ul>
             {account !== null && (
               <a
