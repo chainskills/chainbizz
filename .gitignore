@@ -2,6 +2,7 @@
 
 # firebase keys file
 /client/src/firebase/default.js
+/client/src/firebase/dev.js
 /client/src/firebase/prod.js
 
 # dependencies
