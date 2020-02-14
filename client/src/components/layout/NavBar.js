@@ -148,18 +148,24 @@ const NavBar = ({ account }) => {
                 <NavLink to='/events'>Events</NavLink>
               </li>
 
-              {!isAuthenticated && (
-                <li>
-                  <a href='/login'>Login</a>
-                </li>
+              {(isAuthenticated == null || !isAuthenticated) && (
+                <div>
+                  <li class='divider'></li>
+                  <li>
+                    <a href='/login'>Login</a>
+                  </li>
+                </div>
               )}
 
               {isAuthenticated !== null && isAuthenticated && (
-                <li>
-                  <a href='#!' onClick={onLogout}>
-                    Logout
-                  </a>
-                </li>
+                <div>
+                  <li class='divider'></li>
+                  <li>
+                    <a href='#!' onClick={onLogout}>
+                      Logout
+                    </a>
+                  </li>
+                </div>
               )}
             </ul>
             {account !== null && (
