@@ -4,6 +4,12 @@ import projectReducer from './projectReducer';
 import ipfsClient from 'ipfs-http-client';
 
 import {
+  firebaseAuth,
+  projectsRef,
+  firebaseStorage
+} from '../../../firebase/firebase';
+
+import {
   IS_ENABLED,
   ADD_PROJECT,
   UPDATE_PROJECT,
@@ -63,10 +69,9 @@ const ProjectState = props => {
   const [ipfs, setIPFS] = useState(null);
 
   useEffect(() => {
-    console.log('before ipfs: ' + ipfs);
     const _ipfs = ipfsClient('https://ipfs.infura.io:5001');
     setIPFS(_ipfs);
-    console.log('before ipfs: ' + _ipfs);
+    // eslint-disable-next-line
   }, []);
 
   const [state, dispatch] = useReducer(projectReducer, initialState);
@@ -133,10 +138,39 @@ const ProjectState = props => {
   };
 
   // Add a project
-  const addProject = (drizzle, account, project) => {
-    const { ChainBizz } = drizzle.contracts;
+  const addProject = async (drizzle, account, project) => {
+    const user = firebaseAuth.currentUser;
+    if (user === null) {
+      // Not connected
+      // todo: send an error message
+      return;
+    }
 
-    const { title, description, price } = project;
+    try {
+      const { title, description, price } = project;
+
+      // save the project
+      const dataRef = await projectsRef
+        .doc(user.uid)
+        .collection('projects')
+        .add({
+          title,
+          description,
+          price,
+          owner: user.uid,
+          creationDate: new Date()
+        });
+
+      console.log(dataRef.id);
+
+      dispatch({ type: ADD_PROJECT, payload: project });
+    } catch (error) {
+      console.error(error);
+      dispatch({ type: PROJECT_ERROR, payload: error });
+    }
+
+    /*
+    const { ChainBizz } = drizzle.contracts;
 
     // save the project
     ChainBizz.methods
@@ -156,6 +190,7 @@ const ProjectState = props => {
         console.error(err);
         dispatch({ type: PROJECT_ERROR, payload: err });
       });
+      */
   };
 
   // Update a project
