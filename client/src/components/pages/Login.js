@@ -15,7 +15,7 @@ const Login = props => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      props.history.push('/certifier');
+      props.history.push('/');
     }
     //eslint-disable-next-line
   }, [

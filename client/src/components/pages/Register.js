@@ -16,7 +16,7 @@ const Register = props => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      props.history.push('/certifier');
+      props.history.push('/');
     }
     //eslint-disable-next-line
   }, [
@@ -52,7 +52,9 @@ const Register = props => {
   return (
     <div className='row'>
       <div className='col s12 m6 offset-m3'>
-        <h4 className='center-align light'>An account is required to manage and publish examination programs</h4>
+        <h4 className='center-align light'>
+          An account is required to manage and publish examination programs
+        </h4>
         <div className='row'>
           <form className='col s12' onSubmit={onSubmit}>
             <div className='row'>
