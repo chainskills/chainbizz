@@ -156,7 +156,8 @@ const ProjectState = props => {
         .add({
           title,
           description,
-          price,
+          price: drizzle.web3.utils.toWei(price.toString(), 'ether'),
+          issuer: account,
           owner: user.uid,
           creationDate: new Date()
         });

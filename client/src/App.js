@@ -17,6 +17,7 @@ import Register from './components/pages/Register';
 import ProjectDetail from './components/pages/project/ProjectDetail';
 import EventSettings from './components/pages/settings/EventSettings';
 import Project from './components/pages/Project';
+import MyDraftProjects from './components/pages/MyDraftProjects';
 import MyProjects from './components/pages/MyProjects';
 import PublishedProjects from './components/pages/PublishedProjects';
 import MyOffers from './components/pages/MyOffers';
@@ -143,7 +144,7 @@ const App = ({ drizzleContext }) => {
                         exact
                         path='/myprojects'
                         render={() => (
-                          <MyProjects
+                          <MyDraftProjects
                             drizzle={drizzle}
                             drizzleState={drizzleState}
                             account={account}
