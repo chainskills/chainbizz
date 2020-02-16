@@ -16,6 +16,7 @@ const Project = ({ drizzle, account }) => {
     updateProject,
     updateDraftProject,
     removeProject,
+    removeDraftProject,
     publishProject,
     unpublishProject,
     showEdit,
@@ -235,6 +236,33 @@ const Project = ({ drizzle, account }) => {
       handle: function(id) {
         setModalConfirmationOpen(false);
         removeProject(drizzle, account, id);
+        clearCurrrentSelection();
+      }
+    });
+
+    setAction2({
+      title: 'No',
+      visible: true,
+      handle: function() {
+        setModalConfirmationOpen(false);
+        clearCurrrentSelection();
+      }
+    });
+  };
+
+  const handleDraftRemove = id => {
+    setDataID(id);
+    setModalConfirmationOpen(true);
+
+    setModalTitle('Remove Project');
+    setModalDescription('Are you sure to remove this project?');
+
+    setAction1({
+      title: 'Yes',
+      visible: true,
+      handle: function(id) {
+        setModalConfirmationOpen(false);
+        removeDraftProject(id);
         clearCurrrentSelection();
       }
     });
@@ -586,7 +614,7 @@ const Project = ({ drizzle, account }) => {
       if (showEdit === true) {
         handleEditDraftProject(projectId);
       } else if (showRemove === true) {
-        handleRemove(projectId);
+        handleDraftRemove(projectId);
       } else if (showPublish === true) {
         handlePublish(projectId);
       } else if (showUnpublish === true) {

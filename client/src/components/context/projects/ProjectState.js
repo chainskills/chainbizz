@@ -271,6 +271,32 @@ const ProjectState = props => {
       });
   };
 
+  // Remove a draft project
+  const removeDraftProject = async projectId => {
+    const user = firebaseAuth.currentUser;
+    if (user === null) {
+      // Not connected
+      // todo: send an error message
+      return;
+    }
+
+    try {
+      // delete the project
+      await projectsRef
+        .doc(user.uid)
+        .collection('projects')
+        .doc(projectId)
+        .delete();
+
+      console.log('project removed: ' + projectId);
+
+      dispatch({ type: REMOVE_PROJECT });
+    } catch (err) {
+      console.log(err);
+      dispatch({ type: PROJECT_ERROR, payload: err });
+    }
+  };
+
   // Publish a project
   const publishProject = async (drizzle, account, projectId) => {
     const { ChainBizz } = drizzle.contracts;
@@ -652,6 +678,7 @@ const ProjectState = props => {
         updateProject,
         updateDraftProject,
         removeProject,
+        removeDraftProject,
         publishProject,
         unpublishProject,
         onEditProject,
