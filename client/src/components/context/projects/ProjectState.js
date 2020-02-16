@@ -220,6 +220,38 @@ const ProjectState = props => {
       });
   };
 
+  // Update a draft project
+  const updateDraftProject = async (drizzle, account, projectId, project) => {
+    const user = firebaseAuth.currentUser;
+    if (user === null) {
+      // Not connected
+      // todo: send an error message
+      return;
+    }
+
+    try {
+      const { title, description, price } = project;
+
+      // save the project
+      const ref = projectsRef
+        .doc(user.uid)
+        .collection('projects')
+        .doc(projectId);
+
+      await ref.update({
+        title: title,
+        description: description,
+        price: drizzle.web3.utils.toWei(price.toString(), 'ether'),
+        updateDate: new Date()
+      });
+
+      dispatch({ type: UPDATE_PROJECT, payload: project });
+    } catch (err) {
+      console.log(err);
+      dispatch({ type: PROJECT_ERROR, payload: err });
+    }
+  };
+
   // Remove a project
   const removeProject = (drizzle, account, projectId) => {
     const { ChainBizz } = drizzle.contracts;
@@ -553,6 +585,43 @@ const ProjectState = props => {
     });
   };
 
+  // Get a draft project
+  const getDraftProject = async (drizzle, account, projectId) => {
+    const user = firebaseAuth.currentUser;
+    if (user === null) {
+      // Not connected
+      // todo: send an error message
+      return;
+    }
+
+    try {
+      // retrieve the project
+      const project = await projectsRef
+        .doc(user.uid)
+        .collection('projects')
+        .doc(projectId)
+        .get();
+
+      if (project.exists) {
+        const price = drizzle.web3.utils.fromWei(
+          project.data().price.toString(),
+          'ether'
+        );
+
+        dispatch({
+          type: GET_PROJECT,
+          id: projectId,
+          payload: { ...project.data(), price: price, id: projectId }
+        });
+      } else {
+        console.log('Not exist');
+      }
+    } catch (err) {
+      console.log(err);
+      dispatch({ type: PROJECT_ERROR, payload: err });
+    }
+  };
+
   // Clear current selection
   const clearCurrrentSelection = () => {
     dispatch({ type: CLEAR_CURRENT_SELECTION });
@@ -581,6 +650,7 @@ const ProjectState = props => {
         showCancelContract: state.showCancelContract,
         addProject,
         updateProject,
+        updateDraftProject,
         removeProject,
         publishProject,
         unpublishProject,
@@ -608,6 +678,7 @@ const ProjectState = props => {
         onCancelContract,
         onCancelModal,
         getProject,
+        getDraftProject,
         clearCurrrentSelection,
         isEnabled,
         disableContract,

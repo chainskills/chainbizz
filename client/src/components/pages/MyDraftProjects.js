@@ -8,23 +8,11 @@ import AuthContext from '../context/auth/authContext';
 
 const MyDraftProjects = ({ drizzle, drizzleState, account }) => {
   const [projects, setProjects] = useState([]);
-
-  const [dataKeys, setDataKeys] = useState(null);
-
+  
   const authContext = useContext(AuthContext);
   const { isAuthenticated } = authContext;
 
-  useEffect(() => {
-    const { ChainBizz } = drizzle.contracts;
-    setDataKeys(
-      ChainBizz.methods.getMyProjects.cacheCall({
-        from: account
-      })
-    );
-
-    //eslint-disable-next-line
-  }, []);
-
+  // Retrieve all projects IDs linked to the current owner
   useEffect(() => {
     if (isAuthenticated) {
       if (firebaseAuth.currentUser !== null) {
@@ -54,46 +42,7 @@ const MyDraftProjects = ({ drizzle, drizzleState, account }) => {
     //eslint-disable-next-line
   }, [firebaseAuth, projectsRef, isAuthenticated]);
 
-  /*
-  // Retrieve all projects IDs linked to the current owner
-
-  // prepare projects cards
-  let allProjects = [];
-  let projectIds = null;
-  if (dataKeys !== null) {
-    if (
-      drizzleState.contracts.ChainBizz.getMyProjects[dataKeys] &&
-      drizzleState.contracts.ChainBizz.getMyProjects[dataKeys].value
-    ) {
-      projectIds =
-        drizzleState.contracts.ChainBizz.getMyProjects[dataKeys].value;
-    }
-
-    if (projectIds !== null) {
-      for (let i = projectIds.length - 1; i >= 0; i--) {
-        const projectId = projectIds[i];
-
-        const projectDetail = (
-          <ProjectContractData
-            drizzle={drizzle}
-            drizzleState={drizzleState}
-            projectId={projectId}
-            key={projectId}
-            account={account}
-          />
-        );
-
-        allProjects.push(projectDetail);
-      }
-    }
-  }
-
-  const nbProjects = projectIds !== null ? projectIds.length : 0;
-*/
-
   const nbProjects = projects !== null ? projects.length : 0;
-
-  console.log(projects);
 
   return (
     <div>

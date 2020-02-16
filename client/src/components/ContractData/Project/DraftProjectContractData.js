@@ -14,15 +14,12 @@ const DraftProjectContractData = ({
   drizzle,
   projectDetails,
   account,
-  hideAction = false,
-  m
+  hideAction = false
 }) => {
   // project not yet ready or not found
   if (projectDetails === null || typeof projectDetails === 'undefined') {
     return <span>Initializing...</span>;
   }
-
-  console.log(projectDetails.issuer);
 
   return (
     <div className='col s12 m12'>

@@ -14,6 +14,7 @@ const Project = ({ drizzle, account }) => {
     enabled,
     addProject,
     updateProject,
+    updateDraftProject,
     removeProject,
     publishProject,
     unpublishProject,
@@ -43,6 +44,7 @@ const Project = ({ drizzle, account }) => {
     showCancelContract,
     clearCurrrentSelection,
     getProject,
+    getDraftProject,
     onCancelModal,
     isEnabled,
     projectId
@@ -175,6 +177,37 @@ const Project = ({ drizzle, account }) => {
       update: function(project) {
         setModalProjectOpen(false);
         updateProject(drizzle, account, id, project);
+        clearCurrrentSelection();
+      }
+    });
+
+    setAction2({
+      title: 'Cancel',
+      visible: true,
+      handle: function() {
+        setModalProjectOpen(false);
+        clearCurrrentSelection();
+      }
+    });
+  };
+
+  const handleEditDraftProject = id => {
+    setDataID(id);
+    clearCurrrentSelection();
+    if (id !== null) {
+      getDraftProject(drizzle, account, id);
+    } else {
+      // todo display error notification message
+      return;
+    }
+
+    setModalProjectOpen(true);
+    setAction1({
+      title: 'Save',
+      visible: true,
+      update: function(project) {
+        setModalProjectOpen(false);
+        updateDraftProject(drizzle, account, id, project);
         clearCurrrentSelection();
       }
     });
@@ -551,7 +584,7 @@ const Project = ({ drizzle, account }) => {
   useEffect(() => {
     if (projectId !== null) {
       if (showEdit === true) {
-        handleEditProject(projectId);
+        handleEditDraftProject(projectId);
       } else if (showRemove === true) {
         handleRemove(projectId);
       } else if (showPublish === true) {

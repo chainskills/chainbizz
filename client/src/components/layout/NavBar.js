@@ -150,7 +150,7 @@ const NavBar = ({ account }) => {
 
               {(isAuthenticated == null || !isAuthenticated) && (
                 <div>
-                  <li class='divider'></li>
+                  <li className='divider'></li>
                   <li>
                     <a href='/login'>Login</a>
                   </li>
@@ -159,7 +159,7 @@ const NavBar = ({ account }) => {
 
               {isAuthenticated !== null && isAuthenticated && (
                 <div>
-                  <li class='divider'></li>
+                  <li className='divider'></li>
                   <li>
                     <a href='#!' onClick={onLogout}>
                       Logout
