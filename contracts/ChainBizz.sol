@@ -315,14 +315,6 @@ contract ChainBizz {
             "You are not the issuer of this project"
         );
 
-        /*
-        // ready to be removed?
-        require(
-            project.status == ProjectStatus.Draft,
-            "Cannot be removed while published"
-        );
-        */
-
         // keep title for future use
         string memory title = project.title;
 
