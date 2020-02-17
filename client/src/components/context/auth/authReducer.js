@@ -13,7 +13,6 @@ import {
 export default (state, action) => {
   switch (action.type) {
     case CURRENT_USER:
-      console.log('action.payload: ' + action.payload);
       return {
         ...state,
         isAuthenticated: action.payload ? true : false,
