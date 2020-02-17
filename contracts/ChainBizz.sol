@@ -38,6 +38,7 @@ contract ChainBizz {
         string title;
         string description;
         uint256 price; // price in Wei
+        string ipfsHash;
         ProjectStatus status;
     }
 
@@ -94,7 +95,8 @@ contract ChainBizz {
         uint256 id,
         address indexed issuer,
         string title,
-        uint256 price
+        uint256 price,
+        string ipfsHash
     );
     event UnpublishedProject(
         uint256 id,
@@ -247,6 +249,7 @@ contract ChainBizz {
             _title,
             _description,
             _price,
+            "",
             ProjectStatus.Draft
         );
 
@@ -328,7 +331,50 @@ contract ChainBizz {
     }
 
     // Publish the project to seek for fulfillers
-    function publishProject(uint256 _id) public onlyEnable {
+    function publishProject(
+        string memory _title,
+        string memory _description,
+        uint256 _price,
+        string memory _ipfsHash
+    ) public onlyEnable {
+        // a title is required
+        bytes memory title = bytes(_title);
+        require(title.length > 0, "A title is required");
+
+        // a description is required
+        bytes memory description = bytes(_description);
+        require(description.length > 0, "A description is required");
+
+        // The hash to IPFS is required
+        bytes memory ipfsHash = bytes(_ipfsHash);
+        require(ipfsHash.length > 0, "A hash to IPFS is required");
+
+        // new project
+        projectsCounter = projectsCounter.add(1);
+
+        // store the new project
+        projects[projectsCounter] = ProjectItem(
+            projectsCounter,
+            msg.sender,
+            address(0x0),
+            _title,
+            _description,
+            _price,
+            _ipfsHash,
+            ProjectStatus.Available
+        );
+
+        emit PublishedProject(
+            projectsCounter,
+            msg.sender,
+            _title,
+            _price,
+            _ipfsHash
+        );
+    }
+
+    // Publish the project to seek for fulfillers
+    function publishProjectOld(uint256 _id) public onlyEnable {
         // retrieve the project
         ProjectItem storage project = projects[_id];
 
@@ -349,7 +395,13 @@ contract ChainBizz {
         // publish the project to be available for services
         project.status = ProjectStatus.Available;
 
-        emit PublishedProject(_id, msg.sender, project.title, project.price);
+        emit PublishedProject(
+            _id,
+            msg.sender,
+            project.title,
+            project.price,
+            ""
+        );
     }
 
     // Unpublish the project
