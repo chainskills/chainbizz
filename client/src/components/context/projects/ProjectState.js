@@ -294,7 +294,7 @@ const ProjectState = props => {
 
       dispatch({ type: REMOVE_PROJECT });
     } catch (err) {
-      console.log(err);
+      console.log(err.message);
       dispatch({ type: PROJECT_ERROR, payload: err });
     }
   };
