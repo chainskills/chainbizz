@@ -299,33 +299,61 @@ const ProjectState = props => {
 
   // Publish a project
   const publishProject = async (drizzle, account, projectId) => {
-    const { ChainBizz } = drizzle.contracts;
-
-    let project = await ChainBizz.methods.getProject(projectId).call({
-      from: account
-    });
-
-    if (ipfs !== null) {
-      // publish the project in IPFS
-      const doc = JSON.stringify(project);
-      for await (const result of ipfs.add(doc)) {
-        console.log('IPFS hash key: ' + result.path);
-      }
+    const user = firebaseAuth.currentUser;
+    if (user === null) {
+      // Not connected
+      // todo: send an error message
+      return;
     }
 
-    // publish the project
-    ChainBizz.methods
-      .publishProject(projectId)
-      .send({
-        from: account,
-        gas: 500000
-      })
-      .on('receipt', receipt => {
-        dispatch({ type: PUBLISH_PROJECT, payload: receipt });
-      })
-      .on('error', err => {
-        dispatch({ type: PROJECT_ERROR, payload: err });
-      });
+    const { ChainBizz } = drizzle.contracts;
+
+    try {
+      // retrieve the project
+      const project = await projectsRef
+        .doc(user.uid)
+        .collection('projects')
+        .doc(projectId)
+        .get();
+
+      if (project.exists) {
+        if (ipfs !== null) {
+          console.log('Before ipfs');
+          console.log(project.data());
+          // publish the project in IPFS
+          const doc = JSON.stringify(project.data());
+          for await (const ipfsDoc of ipfs.add(doc)) {
+            // save the project
+            ChainBizz.methods
+              .publishProject(
+                project.data().title,
+                project.data().description,
+                project.data().price,
+                ipfsDoc.path
+              )
+              .send({
+                from: account,
+                gas: 500000
+              })
+              .on('receipt', receipt => {
+                // remove from firestore
+                removeDraftProject(projectId);
+
+                dispatch({ type: PUBLISH_PROJECT, payload: receipt });
+              })
+              .on('error', err => {
+                console.error(err);
+                dispatch({ type: PROJECT_ERROR, payload: err });
+              });
+          }
+        }
+      } else {
+        console.log('Not exist');
+      }
+    } catch (err) {
+      console.log(err);
+      dispatch({ type: PROJECT_ERROR, payload: err });
+    }
   };
 
   // Unpublish a project
