@@ -1,4 +1,6 @@
 import React, { useReducer, useState, useEffect } from 'react';
+import _ from 'lodash';
+
 import ProjectContext from './projectContext';
 import projectReducer from './projectReducer';
 import ipfsClient from 'ipfs-http-client';
@@ -318,8 +320,6 @@ const ProjectState = props => {
 
       if (project.exists) {
         if (ipfs !== null) {
-          console.log('Before ipfs');
-          console.log(project.data());
           // publish the project in IPFS
           const doc = JSON.stringify(project.data());
           for await (const ipfsDoc of ipfs.add(doc)) {
@@ -356,9 +356,94 @@ const ProjectState = props => {
     }
   };
 
+  // Unpublish the project from the contract (via IPFS) to firestore
+  const unpublishProject = async (drizzle, account, projectId) => {
+    const user = firebaseAuth.currentUser;
+    if (user === null) {
+      // Not connected
+      // todo: send an error message
+      return;
+    }
+
+    const { ChainBizz } = drizzle.contracts;
+
+    console.log('Project ID: ' + projectId);
+    console.log('Account: ' + account);
+
+    // retrieve the ipfsHash of the contract
+    const project = await ChainBizz.methods.getProject(projectId).call({
+      from: account
+    });
+
+    if (project.ipfsHash.length === 0 || ipfs === null) {
+      return;
+    }
+
+    // retrieve the published project from IPFS
+    let data = '';
+    for await (const doc of ipfs.cat(project.ipfsHash)) {
+      data += doc;
+      //console.log(JSON.parse(doc));
+    }
+
+    const projectData = JSON.parse(data);
+
+    const { title, description, price, issuer, owner } = projectData;
+
+    let creationDate = null;
+    if (
+      projectData.creationDate !== null &&
+      typeof projectData.creationDate !== 'undefined'
+    ) {
+      creationDate = new Date(
+        _.get(projectData, 'creationDate.seconds') * 1000
+      );
+    }
+
+    let updateDate = null;
+    if (
+      projectData.updateDate !== null &&
+      typeof projectData.updateDate !== 'undefined'
+    ) {
+      updateDate = new Date(_.get(projectData, 'updateDate.seconds') * 1000);
+    }
+
+    // unpublish the project from the contract
+    ChainBizz.methods
+      .removeProject(projectId)
+      .send({
+        from: account,
+        gas: 500000
+      })
+      .on('receipt', async receipt => {
+        // restore the project to firestore
+        await projectsRef
+          .doc(user.uid)
+          .collection('projects')
+          .add({
+            title,
+            description,
+            price: price,
+            issuer: issuer,
+            owner: owner,
+            creationDate: creationDate,
+            updateDate: updateDate
+          });
+
+        dispatch({ type: UNPUBLISH_PROJECT, payload: receipt });
+      })
+      .on('error', err => {
+        dispatch({ type: PROJECT_ERROR, payload: err });
+      });
+  };
+
+  /*
   // Unpublish a project
   const unpublishProject = (drizzle, account, projectId) => {
     const { ChainBizz } = drizzle.contracts;
+
+    // First we read the ipfs hash from the contract
+    
 
     // unpublish the project
     ChainBizz.methods
@@ -374,6 +459,7 @@ const ProjectState = props => {
         dispatch({ type: PROJECT_ERROR, payload: err });
       });
   };
+*/
 
   // Submit offer of sercices to the project
   const submitOffer = (drizzle, account, projectId) => {
