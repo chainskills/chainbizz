@@ -136,6 +136,20 @@ const App = ({ drizzleContext }) => {
                             drizzle={drizzle}
                             account={account}
                             match={match}
+                            draft={false}
+                          />
+                        )}
+                      />
+
+                      <Route
+                        exact
+                        path='/project/draft/:id'
+                        render={({ match }) => (
+                          <ProjectDetail
+                            drizzle={drizzle}
+                            account={account}
+                            match={match}
+                            draft={true}
                           />
                         )}
                       />

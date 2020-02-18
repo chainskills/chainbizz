@@ -31,7 +31,7 @@ const DraftProjectContractData = ({
                 <h1 className='navlink-title'>
                   <NavLink
                     activeClassName='chosen'
-                    to={`/project/${projectId}`}
+                    to={`/project/draft/${projectId}`}
                   >
                     {projectDetails.title}
                   </NavLink>

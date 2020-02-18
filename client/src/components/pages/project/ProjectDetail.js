@@ -11,7 +11,7 @@ import 'materialize-css/dist/css/materialize.min.css';
 
 import './ProjectDetail.css';
 
-const ProjectDetail = ({ match, drizzle, account }) => {
+const ProjectDetail = ({ match, drizzle, account, draft }) => {
   let projectId = null;
   try {
     projectId = match.params.id;
@@ -37,14 +37,22 @@ const ProjectDetail = ({ match, drizzle, account }) => {
   });
 
   const projectContext = useContext(ProjectContext);
-  const { getProject, current } = projectContext;
+  const { getProject, getDraftProject, current } = projectContext;
 
   useEffect(() => {
-    getProject(drizzle, account, projectId);
+    if (draft === true) {
+      getDraftProject(drizzle, account, projectId);
+    } else {
+      getProject(drizzle, account, projectId);
+    }
   }, []);
 
   useEffect(() => {
     if (current !== null) {
+      console.log('Current is:');
+      console.log(current);
+      console.log('fulfiller: ' + current.fulfiller);
+
       // get the status
       const statusNames = Object.keys(projectStatus);
 
@@ -140,6 +148,7 @@ const ProjectDetail = ({ match, drizzle, account }) => {
                     </div>
                   </div>
                   {project &&
+                    typeof project.fulfiller !== 'undefined' &&
                     drizzle.web3.utils.toBN(project.fulfiller).toString() !==
                       '0' && (
                       <div className='col s12 m12 l5 xl5'>
