@@ -11,6 +11,8 @@ import {
   firebaseStorage
 } from '../../../firebase/firebase';
 
+import { projectStatus } from '../../ContractData/Project/ProjectStatus';
+
 import {
   IS_ENABLED,
   ADD_PROJECT,
@@ -751,7 +753,12 @@ const ProjectState = props => {
         dispatch({
           type: GET_PROJECT,
           id: projectId,
-          payload: { ...project.data(), price: price, id: projectId }
+          payload: {
+            ...project.data(),
+            price: price,
+            id: projectId,
+            status: projectStatus.DRAFT
+          }
         });
       } else {
         console.log('Not exist');

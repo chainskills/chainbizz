@@ -7,6 +7,9 @@ import ProjectContext from '../../context/projects/projectContext';
 
 import { projectStatus } from '../../ContractData/Project/ProjectStatus';
 
+import ActionsOwner from '../../../components/ContractData/Project/ActionsOwner';
+import ActionsProvider from '../../../components/ContractData/Project/ActionsProvider';
+
 import 'materialize-css/dist/css/materialize.min.css';
 
 import './ProjectDetail.css';
@@ -57,9 +60,11 @@ const ProjectDetail = ({ match, drizzle, account, draft }) => {
       const statusNames = Object.keys(projectStatus);
 
       // apply the current project with its status in plain english
+      console.log('Status: ' + current.status);
       setProject({
         ...current,
-        status: statusNames[current.status]
+        status: Number(current.status),
+        statusName: statusNames[current.status]
       });
     } else {
       setProject({
@@ -69,6 +74,9 @@ const ProjectDetail = ({ match, drizzle, account, draft }) => {
       });
     }
   }, [current]);
+
+  console.log(project);
+  console.log(account);
 
   return (
     <div>
@@ -176,6 +184,18 @@ const ProjectDetail = ({ match, drizzle, account, draft }) => {
               )}
             </div>
           </div>
+        </div>
+
+        <div className='card-action right-align project-card'>
+          {project && project.issuer === account && (
+            <div>
+              <ActionsOwner projectId={projectId} status={project.status} />
+            </div>
+          )}
+
+          {project && project.issuer !== account && (
+            <ActionsProvider projectId={projectId} status={project.status} />
+          )}
         </div>
 
         <div className='col s12 m12 l12 xl12'>
