@@ -105,13 +105,11 @@ const Project = ({ drizzle, account }) => {
 
   const handleDisableContract = () => {
     setDataID(null);
-    setModalConfirmationOpen(true);
-
     setModalTitle('Disable the ChainBizz contract');
     setModalDescription(
       'If you disable your contract, all deposits of running contracts will be refunded to their owners and the contract will not more available until being re-enable. Are you sure to accept the delivery?'
     );
-
+    setModalConfirmationOpen(true);
     setAction1({
       title: 'Disable',
       visible: true,
@@ -134,13 +132,12 @@ const Project = ({ drizzle, account }) => {
 
   const handleEnableContract = () => {
     setDataID(null);
-    setModalConfirmationOpen(true);
-
     setModalTitle('Enable the ChainBizz contract');
     setModalDescription(
       'If you (re)enable your contract, all users will be able to interact with and to deposit ethers in the wallet of the contract. Are you sure to accept the delivery?'
     );
 
+    setModalConfirmationOpen(true);
     setAction1({
       title: 'Enable',
       visible: true,
@@ -224,6 +221,7 @@ const Project = ({ drizzle, account }) => {
   };
 
   const handleRemove = id => {
+    console.log('Into handleRemove');
     setDataID(id);
     setModalConfirmationOpen(true);
 
@@ -251,12 +249,12 @@ const Project = ({ drizzle, account }) => {
   };
 
   const handleDraftRemove = id => {
+    console.log('Into handleDraftRemove');
     setDataID(id);
-    setModalConfirmationOpen(true);
-
     setModalTitle('Remove Project');
     setModalDescription('Are you sure to remove this project?');
 
+    setModalConfirmationOpen(true);
     setAction1({
       title: 'Yes',
       visible: true,
@@ -592,6 +590,11 @@ const Project = ({ drizzle, account }) => {
     });
   };
 
+  const hideConfirmationDialog = () => {
+    setModalConfirmationOpen(false);
+    clearCurrrentSelection();
+  };
+
   useEffect(() => {
     // retrieve the status of the contract
     isEnabled(drizzle);
@@ -656,6 +659,9 @@ const Project = ({ drizzle, account }) => {
     showCancelContract
   ]);
 
+  console.log('modalConfirmationOpen: ' + modalConfirmationOpen);
+  console.log('modalProjectOpen: ' + modalProjectOpen);
+
   return (
     <div>
       <div className='row container'>
@@ -674,7 +680,7 @@ const Project = ({ drizzle, account }) => {
           title={modalTitle}
           content={modalDescription}
           dataID={dataID}
-          onClose={() => setModalConfirmationOpen(false)}
+          onClose={() => hideConfirmationDialog()}
           action1={action1}
           action2={action2}
         />
