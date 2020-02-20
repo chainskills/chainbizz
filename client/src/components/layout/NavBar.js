@@ -141,7 +141,7 @@ const NavBar = ({ account }) => {
           <div className='user-view'>
             <ul id='menu-dropdown' className='dropdown-content'>
               <li>
-                <NavLink to='#!'>Profile</NavLink>
+                <NavLink to='/'>Profile</NavLink>
               </li>
 
               <li>
@@ -161,7 +161,7 @@ const NavBar = ({ account }) => {
                 <div>
                   <li className='divider'></li>
                   <li>
-                    <a href='#!' onClick={onLogout}>
+                    <a href={null} onClick={onLogout}>
                       Logout
                     </a>
                   </li>
@@ -171,7 +171,7 @@ const NavBar = ({ account }) => {
             {account !== null && (
               <a
                 className='dropdown-trigger'
-                href='#!'
+                href={null}
                 data-target='menu-dropdown'
               >
                 <JazzIcon diameter={40} seed={jsNumberForAddress(account)} />

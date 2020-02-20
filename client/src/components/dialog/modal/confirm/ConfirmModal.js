@@ -35,7 +35,7 @@ const ConfirmDialog = ({
         <div className='modal-footer'>
           {action2.visible && (
             <a
-              href='#!'
+              href={null}
               className='waves-effect waves-blue btn-flat'
               onClick={() => action2.handle()}
             >
@@ -44,7 +44,7 @@ const ConfirmDialog = ({
           )}
           {action1.visible && (
             <a
-              href='#!'
+              href={null}
               className='waves-effect waves-blue btn-flat'
               onClick={() => action1.handle(dataID)}
             >

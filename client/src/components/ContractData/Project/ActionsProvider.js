@@ -17,7 +17,7 @@ const ActionsProvider = ({ projectId, status }) => {
     <div>
       {status === projectStatus.AVAILABLE && (
         <a
-          href={'#!'}
+          href={null}
           onClick={() => {
             onSubmitOffer(projectId);
           }}
@@ -30,7 +30,7 @@ const ActionsProvider = ({ projectId, status }) => {
       {(status === projectStatus.REVIEW ||
         status === projectStatus.VALIDATE) && (
         <a
-          href={'#!'}
+          href={null}
           onClick={() => {
             onCancelOffer(projectId);
           }}
@@ -43,7 +43,7 @@ const ActionsProvider = ({ projectId, status }) => {
       {status === projectStatus.ONGOING && (
         <span>
           <a
-            href={'#!'}
+            href={null}
             onClick={() => {
               onCancelServices(projectId);
             }}
@@ -52,7 +52,7 @@ const ActionsProvider = ({ projectId, status }) => {
             <i className='material-icons card-icon'>clear</i>
           </a>
           <a
-            href={'#!'}
+            href={null}
             onClick={() => {
               onDeliverProject(projectId);
             }}

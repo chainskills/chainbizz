@@ -24,31 +24,31 @@ const ActionsOwner = ({ projectId, status }) => {
         status === projectStatus.REFUNDED) && (
         <span>
           <a
-            href={'#!'}
+            href={null}
             onClick={() => {
               onRemoveProject(projectId);
             }}
             title={'Remove'}
           >
-            <i className='material-icons card-icon'>delete</i>
+            <i className='material-icons card-icon pointer'>delete</i>
           </a>
           <a
-            href={'#!'}
+            href={null}
             onClick={() => {
               onEditProject(projectId);
             }}
             title={'Edit'}
           >
-            <i className='material-icons card-icon'>edit</i>
+            <i className='material-icons card-icon pointer'>edit</i>
           </a>
           <a
-            href={'#!'}
+            href={null}
             onClick={() => {
               onPublishProject(projectId);
             }}
             title={'Publish'}
           >
-            <i className='material-icons card-icon'>publish</i>
+            <i className='material-icons card-icon pointer'>publish</i>
           </a>
         </span>
       )}
@@ -67,7 +67,7 @@ const ActionsOwner = ({ projectId, status }) => {
       {status === projectStatus.REVIEW && (
         <span>
           <a
-            href={'#!'}
+            href={null}
             onClick={() => {
               onRejectProposal(projectId);
             }}
@@ -76,7 +76,7 @@ const ActionsOwner = ({ projectId, status }) => {
             <i className='material-icons card-icon'>clear</i>
           </a>
           <a
-            href={'#!'}
+            href={null}
             onClick={() => {
               onAcceptProposal(projectId);
             }}
@@ -90,7 +90,7 @@ const ActionsOwner = ({ projectId, status }) => {
       {(status === projectStatus.ONGOING ||
         status === projectStatus.VALIDATE) && (
         <a
-          href={'#!'}
+          href={null}
           onClick={() => {
             onCancelContract(projectId);
           }}
@@ -103,7 +103,7 @@ const ActionsOwner = ({ projectId, status }) => {
       {status === projectStatus.VALIDATE && (
         <span>
           <a
-            href={'#!'}
+            href={null}
             onClick={() => {
               onRejectDelivery(projectId);
             }}
@@ -112,7 +112,7 @@ const ActionsOwner = ({ projectId, status }) => {
             <i className='material-icons card-icon'>clear</i>
           </a>
           <a
-            href={'#!'}
+            href={null}
             onClick={() => {
               onAcceptDelivery(projectId);
             }}
