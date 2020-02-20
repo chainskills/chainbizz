@@ -734,7 +734,6 @@ const ProjectState = props => {
     }
 
     const projectData = JSON.parse(data);
-    console.log(projectData);
 
     const { description, creationDate, updateDate } = projectData;
 

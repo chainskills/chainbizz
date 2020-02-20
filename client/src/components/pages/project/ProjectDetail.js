@@ -51,29 +51,21 @@ const ProjectDetail = ({ match, drizzle, account, draft }) => {
   }, []);
 
   useEffect(() => {
+    console.log(current);
     if (current !== null) {
-      console.log('Current is:');
-      console.log(current);
-      console.log('fulfiller: ' + current.fulfiller);
-
       // get the status
       const statusNames = Object.keys(projectStatus);
 
       // apply the current project with its status in plain english
-      console.log('Status: ' + current.status);
       setProject({
         ...current,
         status: Number(current.status),
         statusName: statusNames[current.status]
       });
-    } else {
-      setProject({
-        title: '',
-        description: '',
-        price: 0
-      });
     }
   }, [current]);
+
+  console.log('Into Project Detail');
 
   return (
     <div>

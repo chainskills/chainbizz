@@ -55,7 +55,6 @@ const ActionsOwner = ({ projectId, status }) => {
 
       {status === projectStatus.AVAILABLE && (
         <a
-          href={'#!'}
           onClick={() => {
             onUnpublishProject(projectId);
           }}

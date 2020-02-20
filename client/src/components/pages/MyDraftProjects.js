@@ -8,7 +8,7 @@ import AuthContext from '../context/auth/authContext';
 
 const MyDraftProjects = ({ drizzle, drizzleState, account }) => {
   const [projects, setProjects] = useState([]);
-  
+
   const authContext = useContext(AuthContext);
   const { isAuthenticated } = authContext;
 
@@ -43,6 +43,8 @@ const MyDraftProjects = ({ drizzle, drizzleState, account }) => {
   }, [firebaseAuth, projectsRef, isAuthenticated]);
 
   const nbProjects = projects !== null ? projects.length : 0;
+
+  console.log('Into My Draft Projects');
 
   return (
     <div>

@@ -46,7 +46,6 @@ const Project = ({ drizzle, account }) => {
     clearCurrrentSelection,
     getProject,
     getDraftProject,
-    onCancelModal,
     isEnabled,
     projectId
   } = projectContext;
