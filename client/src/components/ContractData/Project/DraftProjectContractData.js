@@ -110,7 +110,13 @@ const DraftProjectContractData = ({
         </div>
         <div className='card-reveal'>
           <span className='card-title grey-text text-darken-4'>
-            Card Title<i className='material-icons right'>close</i>
+            <NavLink
+              activeClassName='chosen'
+              to={`/project/draft/${projectId}`}
+            >
+              {projectDetails.title}
+            </NavLink>
+            <i className='material-icons right'>close</i>
           </span>
           <p>{projectDetails.description}</p>
         </div>

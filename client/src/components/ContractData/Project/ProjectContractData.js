@@ -45,19 +45,22 @@ const ProjectContractData = ({
 
   return (
     <div className='col s12 m12'>
-      <div className='card card-custom'>
+      <div className='card card-custom sticky-action'>
         <div className='card-content'>
           <div>
             <div className='row'>
-              <div className='col s12 m6'>
-                <h1 className='navlink-title'>
+              <div className='col s12 m12'>
+                <span className='card-title activator grey-text text-darken-4'>
                   <NavLink
                     activeClassName='chosen'
                     to={`/project/${projectId}`}
                   >
                     {projectDetails.title}
                   </NavLink>
-                </h1>
+                  <i className='material-icons right'>more_vert</i>
+                </span>
+              </div>
+              <div className='col s12 m6'>
                 <div>
                   <span
                     className='new badge'
@@ -126,6 +129,18 @@ const ProjectContractData = ({
               </div>
             </div>
           </div>
+        </div>
+        <div className='card-reveal'>
+          <span className='card-title grey-text text-darken-4'>
+            <NavLink
+              activeClassName='chosen'
+              to={`/project/draft/${projectId}`}
+            >
+              {projectDetails.title}
+            </NavLink>
+            <i className='material-icons right'>close</i>
+          </span>
+          <p>{projectDetails.description}</p>
         </div>
         {hideAction === false && (
           <div className='card-action right-align project-card'>
