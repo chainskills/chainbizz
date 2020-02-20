@@ -659,9 +659,6 @@ const Project = ({ drizzle, account }) => {
     showCancelContract
   ]);
 
-  console.log('modalConfirmationOpen: ' + modalConfirmationOpen);
-  console.log('modalProjectOpen: ' + modalProjectOpen);
-
   return (
     <div>
       <div className='row container'>

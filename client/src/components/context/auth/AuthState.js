@@ -28,10 +28,7 @@ const AuthState = props => {
   };
 
   useEffect(() => {
-    console.log('Into useEffect');
     firebaseAuth.onAuthStateChanged(function(user) {
-      console.log('Into useEffect 2');
-      console.log(user);
       if (user) {
         dispatch({
           type: CURRENT_USER,
