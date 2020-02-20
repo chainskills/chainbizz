@@ -44,8 +44,6 @@ const MyDraftProjects = ({ drizzle, drizzleState, account }) => {
 
   const nbProjects = projects !== null ? projects.length : 0;
 
-  console.log('Into My Draft Projects');
-
   return (
     <div>
       <div className='row'>

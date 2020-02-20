@@ -51,6 +51,8 @@ import {
 const ProjectState = props => {
   const initialState = {
     current: null,
+    lastChanged: null,
+    removed: false,
     enabled: true,
     projects: null,
     error: null,
@@ -801,6 +803,8 @@ const ProjectState = props => {
     <ProjectContext.Provider
       value={{
         current: state.current,
+        lastChanged: state.lastChanged,
+        removed: state.removed,
         enabled: state.enabled,
         project: state.project,
         error: state.error,

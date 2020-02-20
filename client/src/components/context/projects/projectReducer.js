@@ -37,7 +37,6 @@ export default (state, action) => {
   switch (action.type) {
     case ADD_PROJECT:
     case UPDATE_PROJECT:
-    case REMOVE_PROJECT:
     case PUBLISH_PROJECT:
     case UNPUBLISH_PROJECT:
     case SUBMIT_OFFER:
@@ -52,101 +51,127 @@ export default (state, action) => {
       return {
         ...state,
         project: action.payload,
-        loading: false
+        loading: false,
+        lastChanged: Date.now(),
+        removed: false
+      };
+    case REMOVE_PROJECT:
+      return {
+        ...state,
+        project: null,
+        current: null,
+        loading: false,
+        removed: true
       };
     case IS_ENABLED:
       return {
         ...state,
-        enabled: action.payload
+        enabled: action.payload,
+        removed: false
       };
     case ON_EDIT_PROJECT:
       return {
         ...state,
         projectId: action.payload,
-        showEdit: true
+        showEdit: true,
+        removed: false
       };
     case ON_REMOVE_PROJECT:
       return {
         ...state,
         projectId: action.payload,
-        showRemove: true
+        showRemove: true,
+        removed: false
       };
     case ON_PUBLISH_PROJECT:
       return {
         ...state,
         projectId: action.payload,
-        showPublish: true
+        showPublish: true,
+        removed: false
       };
     case ON_UNPUBLISH_PROJECT:
       return {
         ...state,
         projectId: action.payload,
-        showUnpublish: true
+        showUnpublish: true,
+        removed: false
       };
     case ON_SUBMIT_OFFER:
       return {
         ...state,
         projectId: action.payload,
-        showSubmitOffer: true
+        showSubmitOffer: true,
+        removed: false
       };
     case ON_CANCEL_OFFER:
       return {
         ...state,
         projectId: action.payload,
-        showCancelOffer: true
+        showCancelOffer: true,
+        removed: false
       };
     case ON_ACCEPT_PROPOSAL:
       return {
         ...state,
         projectId: action.payload,
-        showAcceptProposal: true
+        showAcceptProposal: true,
+        removed: false
       };
     case ON_REJECT_PROPOSAL:
       return {
         ...state,
         projectId: action.payload,
-        showRejectProposal: true
+        showRejectProposal: true,
+        removed: false
       };
     case ON_DELIVER_PROJECT:
       return {
         ...state,
         projectId: action.payload,
-        showDeliverProject: true
+        showDeliverProject: true,
+        removed: false
       };
     case ON_CANCEL_SERVICES:
       return {
         ...state,
         projectId: action.payload,
-        showCancelServices: true
+        showCancelServices: true,
+        removed: false
       };
     case ON_ACCEPT_DELIVERY:
       return {
         ...state,
         projectId: action.payload,
-        showAcceptDelivery: true
+        showAcceptDelivery: true,
+        removed: false
       };
     case ON_REJECT_DELIVERY:
       return {
         ...state,
         projectId: action.payload,
-        showRejectDelivery: true
+        showRejectDelivery: true,
+        removed: false
       };
     case ON_CANCEL_CONTRACT:
       return {
         ...state,
         projectId: action.payload,
-        showCancelContract: true
+        showCancelContract: true,
+        removed: false
       };
     case GET_PROJECT:
       return {
         ...state,
         current: action.payload,
-        loading: false
+        loading: false,
+        removed: false
       };
     case PROJECT_ERROR:
       return {
         ...state,
-        error: action.payload
+        error: action.payload,
+        removed: false
       };
     case ON_CANCEL_MODAL:
       return {
@@ -163,12 +188,15 @@ export default (state, action) => {
         showCancelServices: false,
         showAcceptDelivery: false,
         showRejectDelivery: false,
-        showCancelContract: false
+        showCancelContract: false,
+        removed: false
       };
     case CLEAR_CURRENT_SELECTION:
       return {
         ...state,
         current: null,
+        lastChanged: null,
+        removed: false,
         projectId: null,
         loading: false,
         showEdit: false,

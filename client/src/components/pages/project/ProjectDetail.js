@@ -40,18 +40,29 @@ const ProjectDetail = ({ match, drizzle, account, draft }) => {
   });
 
   const projectContext = useContext(ProjectContext);
-  const { getProject, getDraftProject, current } = projectContext;
+  const {
+    getProject,
+    getDraftProject,
+    current,
+    lastChanged,
+    removed
+  } = projectContext;
 
   useEffect(() => {
+    if (removed === true) {
+      goBack();
+    }
+
     if (draft === true) {
+      console.log(projectId);
       getDraftProject(drizzle, account, projectId);
     } else {
       getProject(drizzle, account, projectId);
     }
-  }, []);
+  }, [lastChanged, removed]);
 
   useEffect(() => {
-    console.log(current);
+    console.log(lastChanged);
     if (current !== null) {
       // get the status
       const statusNames = Object.keys(projectStatus);
@@ -64,8 +75,6 @@ const ProjectDetail = ({ match, drizzle, account, draft }) => {
       });
     }
   }, [current]);
-
-  console.log('Into Project Detail');
 
   return (
     <div>
@@ -120,7 +129,7 @@ const ProjectDetail = ({ match, drizzle, account, draft }) => {
                     text
                   </span>
                 </div>
-                <code className=' language-markup'>{project.status}</code>
+                <code className=' language-markup'>{project.statusName}</code>
               </div>
               {project && project.issuer && (
                 <div>
@@ -175,18 +184,6 @@ const ProjectDetail = ({ match, drizzle, account, draft }) => {
           </div>
         </div>
 
-        <div className='card-action right-align project-card'>
-          {project && project.issuer === account && (
-            <div>
-              <ActionsOwner projectId={projectId} status={project.status} />
-            </div>
-          )}
-
-          {project && project.issuer !== account && (
-            <ActionsProvider projectId={projectId} status={project.status} />
-          )}
-        </div>
-
         <div className='col s12 m12 l12 xl12'>
           <div className='card card-custom'>
             <div className='card-content'>
@@ -223,6 +220,20 @@ const ProjectDetail = ({ match, drizzle, account, draft }) => {
                   </div>
                 </div>
               </div>
+            </div>
+            <div className='card-action right-align project-card'>
+              {project && project.issuer === account && (
+                <div>
+                  <ActionsOwner projectId={projectId} status={project.status} />
+                </div>
+              )}
+
+              {project && project.issuer !== account && (
+                <ActionsProvider
+                  projectId={projectId}
+                  status={project.status}
+                />
+              )}
             </div>
           </div>
         </div>

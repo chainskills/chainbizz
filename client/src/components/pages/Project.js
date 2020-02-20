@@ -95,10 +95,7 @@ const Project = ({ drizzle, account }) => {
     setAction2({
       title: 'Cancel',
       visible: true,
-      handle: function() {
-        setModalProjectOpen(false);
-        clearCurrrentSelection();
-      }
+      handle: () => hideModalDialog()
     });
   };
 
@@ -122,10 +119,7 @@ const Project = ({ drizzle, account }) => {
     setAction2({
       title: 'No',
       visible: true,
-      handle: function() {
-        setModalConfirmationOpen(false);
-        clearCurrrentSelection();
-      }
+      handle: () => hideModalDialog()
     });
   };
 
@@ -150,10 +144,7 @@ const Project = ({ drizzle, account }) => {
     setAction2({
       title: 'No',
       visible: true,
-      handle: function() {
-        setModalConfirmationOpen(false);
-        clearCurrrentSelection();
-      }
+      handle: () => hideModalDialog()
     });
   };
 
@@ -181,10 +172,7 @@ const Project = ({ drizzle, account }) => {
     setAction2({
       title: 'Cancel',
       visible: true,
-      handle: function() {
-        setModalProjectOpen(false);
-        clearCurrrentSelection();
-      }
+      handle: () => hideModalDialog()
     });
   };
 
@@ -212,10 +200,7 @@ const Project = ({ drizzle, account }) => {
     setAction2({
       title: 'Cancel',
       visible: true,
-      handle: function() {
-        setModalProjectOpen(false);
-        clearCurrrentSelection();
-      }
+      handle: () => hideModalDialog()
     });
   };
 
@@ -240,10 +225,7 @@ const Project = ({ drizzle, account }) => {
     setAction2({
       title: 'No',
       visible: true,
-      handle: function() {
-        setModalConfirmationOpen(false);
-        clearCurrrentSelection();
-      }
+      handle: () => hideModalDialog()
     });
   };
 
@@ -267,10 +249,7 @@ const Project = ({ drizzle, account }) => {
     setAction2({
       title: 'No',
       visible: true,
-      handle: function() {
-        setModalConfirmationOpen(false);
-        clearCurrrentSelection();
-      }
+      handle: () => hideModalDialog()
     });
   };
 
@@ -321,10 +300,7 @@ const Project = ({ drizzle, account }) => {
     setAction2({
       title: 'No',
       visible: true,
-      handle: function() {
-        setModalConfirmationOpen(false);
-        clearCurrrentSelection();
-      }
+      handle: () => hideModalDialog()
     });
   };
 
@@ -350,10 +326,7 @@ const Project = ({ drizzle, account }) => {
     setAction2({
       title: 'No',
       visible: true,
-      handle: function() {
-        setModalConfirmationOpen(false);
-        clearCurrrentSelection();
-      }
+      handle: () => hideModalDialog()
     });
   };
 
@@ -379,10 +352,7 @@ const Project = ({ drizzle, account }) => {
     setAction2({
       title: 'No',
       visible: true,
-      handle: function() {
-        setModalConfirmationOpen(false);
-        clearCurrrentSelection();
-      }
+      handle: () => hideModalDialog()
     });
   };
 
@@ -408,10 +378,7 @@ const Project = ({ drizzle, account }) => {
     setAction2({
       title: 'No',
       visible: true,
-      handle: function() {
-        setModalConfirmationOpen(false);
-        clearCurrrentSelection();
-      }
+      handle: () => hideModalDialog()
     });
   };
 
@@ -437,10 +404,7 @@ const Project = ({ drizzle, account }) => {
     setAction2({
       title: 'No',
       visible: true,
-      handle: function() {
-        setModalConfirmationOpen(false);
-        clearCurrrentSelection();
-      }
+      handle: () => hideModalDialog()
     });
   };
 
@@ -466,10 +430,7 @@ const Project = ({ drizzle, account }) => {
     setAction2({
       title: 'No',
       visible: true,
-      handle: function() {
-        setModalConfirmationOpen(false);
-        clearCurrrentSelection();
-      }
+      handle: () => hideModalDialog()
     });
   };
 
@@ -495,10 +456,7 @@ const Project = ({ drizzle, account }) => {
     setAction2({
       title: 'No',
       visible: true,
-      handle: function() {
-        setModalConfirmationOpen(false);
-        clearCurrrentSelection();
-      }
+      handle: () => hideModalDialog()
     });
   };
 
@@ -524,10 +482,7 @@ const Project = ({ drizzle, account }) => {
     setAction2({
       title: 'No',
       visible: true,
-      handle: function() {
-        setModalConfirmationOpen(false);
-        clearCurrrentSelection();
-      }
+      handle: () => hideModalDialog()
     });
   };
 
@@ -553,10 +508,7 @@ const Project = ({ drizzle, account }) => {
     setAction2({
       title: 'No',
       visible: true,
-      handle: function() {
-        setModalConfirmationOpen(false);
-        clearCurrrentSelection();
-      }
+      handle: () => hideModalDialog()
     });
   };
 
@@ -582,14 +534,12 @@ const Project = ({ drizzle, account }) => {
     setAction2({
       title: 'No',
       visible: true,
-      handle: function() {
-        setModalConfirmationOpen(false);
-        clearCurrrentSelection();
-      }
+      handle: () => hideModalDialog()
     });
   };
 
-  const hideConfirmationDialog = () => {
+  const hideModalDialog = () => {
+    setModalProjectOpen(false);
     setModalConfirmationOpen(false);
     clearCurrrentSelection();
   };
@@ -676,7 +626,7 @@ const Project = ({ drizzle, account }) => {
           title={modalTitle}
           content={modalDescription}
           dataID={dataID}
-          onClose={() => hideConfirmationDialog()}
+          onClose={() => hideModalDialog()}
           action1={action1}
           action2={action2}
         />
