@@ -709,10 +709,11 @@ const ProjectState = props => {
     dispatch({ type: ON_CANCEL_MODAL });
   };
 
-  // Get a project
+  // Get a project published on Ethereum and IPFS
   const getProject = async (drizzle, account, projectId) => {
     const { ChainBizz } = drizzle.contracts;
 
+    // retrieve the project from the contract
     let project = await ChainBizz.methods.getProject(projectId).call({
       from: account
     });
@@ -721,9 +722,32 @@ const ProjectState = props => {
       project.price.toString(),
       'ether'
     );
+
+    if (project.ipfsHash.length === 0 || ipfs === null) {
+      return;
+    }
+
+    // retrieve the published project from IPFS
+    let data = '';
+    for await (const doc of ipfs.cat(project.ipfsHash)) {
+      data += doc;
+    }
+
+    const projectData = JSON.parse(data);
+    console.log(projectData);
+
+    const { description, creationDate, updateDate } = projectData;
+
+    const publishedProject = {
+      ...project,
+      description: description,
+      creationDate: creationDate,
+      updateDate: updateDate
+    };
+
     dispatch({
       type: GET_PROJECT,
-      payload: project
+      payload: publishedProject
     });
   };
 
