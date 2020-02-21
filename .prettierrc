@@ -11,5 +11,11 @@
         "explicitTypes": "always"
       }
     }
-  ]
+  ],
+  "editor.formatOnSave": true,
+    "prettier.singleQuote": true,
+    "prettier.jsxSingleQuote": true,
+    "emmet.includeLanguages": {
+      "javascript": "javascriptreact"
+    }
 }
