@@ -2,7 +2,7 @@
 .card-custom .material-icons {
   color: grey;
 }
-.card-custom .material-icons {
+.card-custom .material-icons:not(.close) {
   font-size: 18px;
   margin-top: 13px;
   position: relative;
