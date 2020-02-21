@@ -7,7 +7,7 @@ import ActionsProvider from "./ActionsProvider";
 
 import { projectStatus } from "./ProjectStatus";
 
-import styles from "./ProjectContractData.css";
+import "./ProjectContractData.css";
 
 const DraftProjectContractData = ({
   projectId,
@@ -58,13 +58,6 @@ const DraftProjectContractData = ({
                   >
                     text
                   </span>
-
-                  <div className="chips">
-                    <div className="chip">
-                      Toto
-                      <i className="close material-icons">close</i>
-                    </div>
-                  </div>
                 </div>
                 <div style={{ marginTop: "20px" }} className="avatar">
                   <JazzIcon
