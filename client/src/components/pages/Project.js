@@ -2,13 +2,20 @@ import React, { useState, useEffect, useContext } from 'react';
 
 import 'materialize-css/dist/css/materialize.min.css';
 
+import { firebaseAuth } from '../../firebase/firebase';
+
 import ProjectContext from '../context/projects/projectContext';
+import AuthContext from '../context/auth/authContext';
+
 import EventContext from '../context/events/eventContext';
 
 import ProjectModal from '../dialog/modal/project/ProjectModal';
 import ConfirmModal from '../dialog/modal/confirm/ConfirmModal';
 
 const Project = ({ drizzle, account }) => {
+  const authContext = useContext(AuthContext);
+  const { isAuthenticated } = authContext;
+
   const projectContext = useContext(ProjectContext);
   const {
     enabled,
@@ -610,16 +617,18 @@ const Project = ({ drizzle, account }) => {
 
   return (
     <div>
-      <div className='row container'>
-        <div className='col s12 m4'>
-          <a
-            className='waves-effect waves-light btn blue-grey lighten-1 new-project no-uppercase'
-            onClick={() => handleNewProject()}
-          >
-            <i className='material-icons left'>add</i>New Project
-          </a>
+      {isAuthenticated != null && isAuthenticated && (
+        <div className='row container'>
+          <div className='col s12 m4'>
+            <a
+              className='waves-effect waves-light btn blue-grey lighten-1 new-project no-uppercase'
+              onClick={() => handleNewProject()}
+            >
+              <i className='material-icons left'>add</i>New Project
+            </a>
+          </div>
         </div>
-      </div>
+      )}
 
       {modalConfirmationOpen && (
         <ConfirmModal
