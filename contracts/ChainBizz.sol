@@ -36,7 +36,6 @@ contract ChainBizz {
         address payable issuer;
         address payable fulfiller;
         string title;
-        string description;
         uint256 price; // price in Wei
         string ipfsHash;
         ProjectStatus status;
@@ -225,18 +224,13 @@ contract ChainBizz {
     //
 
     // Add a new project
-    function addProject(
-        string memory _title,
-        string memory _description,
-        uint256 _price
-    ) public onlyEnable {
+    function addProject(string memory _title, uint256 _price)
+        public
+        onlyEnable
+    {
         // a title is required
         bytes memory title = bytes(_title);
         require(title.length > 0, "A title is required");
-
-        // a description is required
-        bytes memory description = bytes(_description);
-        require(description.length > 0, "A description is required");
 
         // new project
         projectsCounter = projectsCounter.add(1);
@@ -247,7 +241,6 @@ contract ChainBizz {
             msg.sender,
             address(0x0),
             _title,
-            _description,
             _price,
             "",
             ProjectStatus.Draft
@@ -257,12 +250,10 @@ contract ChainBizz {
     }
 
     // Update an unpublished project
-    function updateProject(
-        uint256 _id,
-        string memory _title,
-        string memory _description,
-        uint256 _price
-    ) public onlyEnable {
+    function updateProject(uint256 _id, string memory _title, uint256 _price)
+        public
+        onlyEnable
+    {
         // retrieve the project
         ProjectItem storage project = projects[_id];
 
@@ -287,13 +278,8 @@ contract ChainBizz {
         bytes memory title = bytes(_title);
         require(title.length > 0, "A title is required");
 
-        // a description is required
-        bytes memory description = bytes(_description);
-        require(description.length > 0, "A description is required");
-
         // update the project
         project.title = _title;
-        project.description = _description;
         project.price = _price;
 
         emit UpdateProject(projectsCounter, msg.sender, _title, _price);
@@ -327,17 +313,12 @@ contract ChainBizz {
     // Publish the project to seek for fulfillers
     function publishProject(
         string memory _title,
-        string memory _description,
         uint256 _price,
         string memory _ipfsHash
     ) public onlyEnable {
         // a title is required
         bytes memory title = bytes(_title);
         require(title.length > 0, "A title is required");
-
-        // a description is required
-        bytes memory description = bytes(_description);
-        require(description.length > 0, "A description is required");
 
         // The hash to IPFS is required
         bytes memory ipfsHash = bytes(_ipfsHash);
@@ -352,7 +333,6 @@ contract ChainBizz {
             msg.sender,
             address(0x0),
             _title,
-            _description,
             _price,
             _ipfsHash,
             ProjectStatus.Available
@@ -775,7 +755,6 @@ contract ChainBizz {
             address issuer,
             address fulfiller,
             string memory title,
-            string memory description,
             uint256 price,
             string memory ipfsHash,
             ProjectStatus status
@@ -789,7 +768,6 @@ contract ChainBizz {
                 address(0x0),
                 address(0x0),
                 "",
-                "",
                 0,
                 "",
                 ProjectStatus.Unknown
@@ -800,7 +778,6 @@ contract ChainBizz {
             project.issuer,
             project.fulfiller,
             project.title,
-            project.description,
             project.price,
             project.ipfsHash,
             project.status

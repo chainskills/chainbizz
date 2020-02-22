@@ -331,7 +331,6 @@ const ProjectState = props => {
             ChainBizz.methods
               .publishProject(
                 project.data().title,
-                project.data().description,
                 project.data().price,
                 ipfsDoc.path
               )
@@ -370,9 +369,6 @@ const ProjectState = props => {
     }
 
     const { ChainBizz } = drizzle.contracts;
-
-    console.log('Project ID: ' + projectId);
-    console.log('Account: ' + account);
 
     // retrieve the ipfsHash of the contract
     const project = await ChainBizz.methods.getProject(projectId).call({
