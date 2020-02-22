@@ -39,6 +39,7 @@ contract ChainBizz {
         uint256 price; // price in Wei
         string ipfsHash;
         ProjectStatus status;
+        uint256[] ratings;
     }
 
     /*
@@ -150,7 +151,8 @@ contract ChainBizz {
         address indexed issuer,
         address indexed fulfiller,
         string title,
-        uint256 price
+        uint256 price,
+        uint256[] ratings
     );
     event DeliveryRejected(
         uint256 id,
@@ -243,7 +245,8 @@ contract ChainBizz {
             _title,
             _price,
             "",
-            ProjectStatus.Draft
+            ProjectStatus.Draft,
+            new uint256[](6)
         );
 
         emit NewProject(projectsCounter, msg.sender, _title, _price);
@@ -335,7 +338,8 @@ contract ChainBizz {
             _title,
             _price,
             _ipfsHash,
-            ProjectStatus.Available
+            ProjectStatus.Available,
+            new uint256[](6)
         );
 
         emit PublishedProject(
@@ -628,7 +632,10 @@ contract ChainBizz {
 
     // Accept the project delivery from the fulfiller
     // The issuer accepts the project delivered by the fulfiller
-    function acceptDelivery(uint256 _id) public onlyEnable {
+    function acceptDelivery(uint256 _id, uint256[] memory _ratings)
+        public
+        onlyEnable
+    {
         // retrieve the project
         ProjectItem storage project = projects[_id];
 
@@ -654,13 +661,15 @@ contract ChainBizz {
 
         // project is now completed
         project.status = ProjectStatus.Completed;
+        project.ratings = _ratings;
 
         emit DeliveryAccepted(
             _id,
             project.issuer,
             project.fulfiller,
             project.title,
-            project.price
+            project.price,
+            project.ratings
         );
     }
 

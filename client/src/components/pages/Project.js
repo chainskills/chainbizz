@@ -483,8 +483,7 @@ const Project = ({ drizzle, account }) => {
       visible: true,
       handle: function(id, ratings) {
         setModalAcceptOpen(false);
-        console.log('ratings: ' + ratings);
-        //acceptDelivery(drizzle, account, id);
+        acceptDelivery(drizzle, account, id, ratings);
         clearCurrrentSelection();
       }
     });

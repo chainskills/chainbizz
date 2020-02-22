@@ -581,12 +581,12 @@ const ProjectState = props => {
   };
 
   // Accept delivery sent by the provider
-  const acceptDelivery = (drizzle, account, projectId) => {
+  const acceptDelivery = (drizzle, account, projectId, ratings) => {
     const { ChainBizz } = drizzle.contracts;
 
     // accept delivery
     ChainBizz.methods
-      .acceptDelivery(projectId)
+      .acceptDelivery(projectId, ratings)
       .send({
         from: account,
         gas: 500000
