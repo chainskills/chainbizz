@@ -11,6 +11,7 @@ import EventContext from '../context/events/eventContext';
 
 import ProjectModal from '../dialog/modal/project/ProjectModal';
 import ConfirmModal from '../dialog/modal/confirm/ConfirmModal';
+import AcceptModal from '../dialog/modal/accept/AcceptModal';
 
 const Project = ({ drizzle, account }) => {
   const authContext = useContext(AuthContext);
@@ -69,6 +70,7 @@ const Project = ({ drizzle, account }) => {
 
   const [modalConfirmationOpen, setModalConfirmationOpen] = useState(false);
   const [modalProjectOpen, setModalProjectOpen] = useState(false);
+  const [modalAcceptOpen, setModalAcceptOpen] = useState(false);
 
   const [modalTitle, setModalTitle] = useState(null);
   const [modalDescription, setModalDescription] = useState(null);
@@ -469,7 +471,7 @@ const Project = ({ drizzle, account }) => {
 
   const handleAcceptDelivery = id => {
     setDataID(id);
-    setModalConfirmationOpen(true);
+    setModalAcceptOpen(true);
 
     setModalTitle('Accept Delivery');
     setModalDescription(
@@ -477,17 +479,18 @@ const Project = ({ drizzle, account }) => {
     );
 
     setAction1({
-      title: 'Yes',
+      title: 'Accept',
       visible: true,
-      handle: function(id) {
-        setModalConfirmationOpen(false);
-        acceptDelivery(drizzle, account, id);
+      handle: function(id, ratings) {
+        setModalAcceptOpen(false);
+        console.log('ratings: ' + ratings);
+        //acceptDelivery(drizzle, account, id);
         clearCurrrentSelection();
       }
     });
 
     setAction2({
-      title: 'No',
+      title: 'Cancel',
       visible: true,
       handle: () => hideModalDialog()
     });
@@ -548,6 +551,7 @@ const Project = ({ drizzle, account }) => {
   const hideModalDialog = () => {
     setModalProjectOpen(false);
     setModalConfirmationOpen(false);
+    setModalAcceptOpen(false);
     clearCurrrentSelection();
   };
 
@@ -632,6 +636,17 @@ const Project = ({ drizzle, account }) => {
 
       {modalConfirmationOpen && (
         <ConfirmModal
+          title={modalTitle}
+          content={modalDescription}
+          dataID={dataID}
+          onClose={() => hideModalDialog()}
+          action1={action1}
+          action2={action2}
+        />
+      )}
+
+      {modalAcceptOpen && (
+        <AcceptModal
           title={modalTitle}
           content={modalDescription}
           dataID={dataID}
