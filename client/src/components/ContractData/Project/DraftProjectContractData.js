@@ -7,7 +7,7 @@ import ActionsProvider from './ActionsProvider';
 
 import { projectStatus } from './ProjectStatus';
 
-import './ProjectContractData.css';
+import styles from './ContractData.module.css';
 
 const DraftProjectContractData = ({
   projectId,
@@ -23,7 +23,7 @@ const DraftProjectContractData = ({
 
   return (
     <div className='col s12 m12'>
-      <div className='card card-custom sticky-action'>
+      <div className={`card ${styles.cardCustom} sticky-action`}>
         <div className='card-content'>
           <div>
             <div className='row'>
@@ -59,7 +59,7 @@ const DraftProjectContractData = ({
                     text
                   </span>
                 </div>
-                <div style={{ marginTop: '20px' }} className='avatar'>
+                <div style={{ marginTop: '20px' }} className={styles.avatar}>
                   <JazzIcon
                     diameter={40}
                     seed={jsNumberForAddress(projectDetails.issuer)}
@@ -77,23 +77,29 @@ const DraftProjectContractData = ({
                   </p>
                 </div>
               </div>
-              <div className='col s12 m3 project-additional'>
+              <div className={`col s12 m3 ${styles.projectAdditional}`}>
                 <ul style={{ margin: '-10px 0 0 0' }}>
                   <li style={{ fontWeight: '600' }}>
-                    <i className='material-icons'>perm_data_setting</i>Beginner{' '}
-                    <span>difficulty</span>
+                    <i className={`material-icons ${styles.icons} right`}>
+                      perm_data_setting
+                    </i>
+                    Beginner <span>difficulty</span>
                   </li>
                   <li style={{ fontWeight: '600' }}>
-                    <i className='material-icons'>history</i>5{' '}
-                    <span>days remaining</span>
+                    <i className={`material-icons ${styles.icons} right`}>
+                      history
+                    </i>
+                    5 <span>days remaining</span>
                   </li>
                   <li style={{ fontWeight: '600' }}>
-                    <i className='material-icons'>thumb_up</i>0{' '}
-                    <span>submissions</span>
+                    <i className={`material-icons ${styles.icons} right`}>
+                      thumb_up
+                    </i>
+                    0 <span>submissions</span>
                   </li>
                 </ul>
               </div>
-              <div className='col s12 m3 project-additional'>
+              <div className={`col s12 m3 ${styles.projectAdditional}`}>
                 <p
                   className='right-align'
                   style={{ fontSize: '24px', color: '#546e7a' }}
