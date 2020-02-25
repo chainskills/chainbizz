@@ -3,45 +3,19 @@ const chainBizzContract = artifacts.require('ChainBizz');
 // test suite
 contract('ChainBizz', async accounts => {
   let contractInstance;
-  const projectId = 1;
   const title = 'Blockchain for Notary';
-  const description =
-    'We are looking for Ethereum developers to create a decentralised platform to notarize legal documents';
   const price = 10000000000000000000;
-  const ProjectStatus = {
-    Draft: 0,
-    Published: 1,
-    OnGoing: 2,
-    Completed: 3,
-    Canceled: 4,
-    Unknown: 5
-  };
-  const errorPublished = 'Cannot be published';
+  const errorPublished = 'A hash to IPFS is required';
 
   before('setup contract for each test', async () => {
     contractInstance = await chainBizzContract.deployed();
-
-    // add a first project
-    await contractInstance.addProject(
-      title,
-      description,
-      web3.utils.toBN(price),
-      {
-        from: accounts[1]
-      }
-    );
   });
 
-  
-  it('should throw an exception while re-publish a project', async () => {
-    // try to republish the same project
+  it('should throw an exception if IPFS hash is not defined', async () => {
     try {
-      // first, we publish the project
-    const receipt = await contractInstance.publishProject(projectId, {
-      from: accounts[1]
-    });
+      // try to publish a project with an IPFS hash
 
-      receipt = await contractInstance.publishProject(projectId, {
+      await contractInstance.publishProject(title, web3.utils.toBN(price), '', {
         from: accounts[1]
       });
       assert.fail();
@@ -49,7 +23,7 @@ contract('ChainBizz', async accounts => {
       assert.equal(
         err.reason,
         errorPublished,
-        'status must be ' + errorPublished
+        'error message should be: ' + errorPublished
       );
     }
   });
