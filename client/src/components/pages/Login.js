@@ -47,7 +47,9 @@ const Login = props => {
   return (
     <div className='row'>
       <div className='col s12 m6 offset-m3'>
-        <h4 className='center-align light'>Please login to manage your examination programs</h4>
+        <h4 className='center-align light'>
+          Please login to manage your draft projects on ChainBizz
+        </h4>
         <div className='row'>
           <form className='col s12' onSubmit={onSubmit}>
             <div className='row'>
