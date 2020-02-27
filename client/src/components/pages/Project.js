@@ -12,6 +12,7 @@ import EventContext from '../context/events/eventContext';
 import ProjectModal from '../dialog/modal/project/ProjectModal';
 import ConfirmModal from '../dialog/modal/confirm/ConfirmModal';
 import AcceptModal from '../dialog/modal/accept/AcceptModal';
+import RatingsModal from '../dialog/modal/ratings/RatingsFulfillerModal';
 
 const Project = ({ drizzle, account }) => {
   const authContext = useContext(AuthContext);
@@ -46,12 +47,14 @@ const Project = ({ drizzle, account }) => {
     cancelContract,
     disableContract,
     enableContract,
+    setRatingsFulfiller,
     showDeliverProject,
     showCancelServices,
     showAcceptDelivery,
     showRejectDelivery,
     showCancelContract,
-    clearCurrrentSelection,
+    showRatingsFulfiller,
+    clearCurrentSelection,
     getProject,
     getDraftProject,
     isEnabled,
@@ -71,6 +74,9 @@ const Project = ({ drizzle, account }) => {
   const [modalConfirmationOpen, setModalConfirmationOpen] = useState(false);
   const [modalProjectOpen, setModalProjectOpen] = useState(false);
   const [modalAcceptOpen, setModalAcceptOpen] = useState(false);
+  const [modalRatingsFulfillerOpen, setModalRatingsFulfillerOpen] = useState(
+    false
+  );
 
   const [modalTitle, setModalTitle] = useState(null);
   const [modalDescription, setModalDescription] = useState(null);
@@ -89,7 +95,7 @@ const Project = ({ drizzle, account }) => {
 
   const handleNewProject = () => {
     setDataID(null);
-    clearCurrrentSelection();
+    clearCurrentSelection();
     setModalProjectOpen(true);
     setAction1({
       title: 'Save',
@@ -97,7 +103,7 @@ const Project = ({ drizzle, account }) => {
       add: function(project) {
         setModalProjectOpen(false);
         addProject(drizzle, account, project);
-        clearCurrrentSelection();
+        clearCurrentSelection();
       }
     });
 
@@ -121,7 +127,7 @@ const Project = ({ drizzle, account }) => {
       handle: function(id) {
         setModalConfirmationOpen(false);
         disableContract(drizzle, account);
-        clearCurrrentSelection();
+        clearCurrentSelection();
       }
     });
 
@@ -146,7 +152,7 @@ const Project = ({ drizzle, account }) => {
       handle: function(id) {
         setModalConfirmationOpen(false);
         enableContract(drizzle, account);
-        clearCurrrentSelection();
+        clearCurrentSelection();
       }
     });
 
@@ -159,7 +165,7 @@ const Project = ({ drizzle, account }) => {
 
   const handleEditProject = id => {
     setDataID(id);
-    clearCurrrentSelection();
+    clearCurrentSelection();
     if (id !== null) {
       getProject(drizzle, account, id);
     } else {
@@ -174,7 +180,7 @@ const Project = ({ drizzle, account }) => {
       update: function(project) {
         setModalProjectOpen(false);
         updateProject(drizzle, account, id, project);
-        clearCurrrentSelection();
+        clearCurrentSelection();
       }
     });
 
@@ -187,7 +193,7 @@ const Project = ({ drizzle, account }) => {
 
   const handleEditDraftProject = id => {
     setDataID(id);
-    clearCurrrentSelection();
+    clearCurrentSelection();
     if (id !== null) {
       getDraftProject(drizzle, account, id);
     } else {
@@ -202,7 +208,7 @@ const Project = ({ drizzle, account }) => {
       update: function(project) {
         setModalProjectOpen(false);
         updateDraftProject(drizzle, account, id, project);
-        clearCurrrentSelection();
+        clearCurrentSelection();
       }
     });
 
@@ -227,7 +233,7 @@ const Project = ({ drizzle, account }) => {
       handle: function(id) {
         setModalConfirmationOpen(false);
         removeProject(drizzle, account, id);
-        clearCurrrentSelection();
+        clearCurrentSelection();
       }
     });
 
@@ -251,7 +257,7 @@ const Project = ({ drizzle, account }) => {
       handle: function(id) {
         setModalConfirmationOpen(false);
         removeDraftProject(id);
-        clearCurrrentSelection();
+        clearCurrentSelection();
       }
     });
 
@@ -275,7 +281,7 @@ const Project = ({ drizzle, account }) => {
       handle: function(id) {
         setModalConfirmationOpen(false);
         publishProject(drizzle, account, id);
-        clearCurrrentSelection();
+        clearCurrentSelection();
       }
     });
 
@@ -284,7 +290,7 @@ const Project = ({ drizzle, account }) => {
       visible: true,
       handle: function() {
         setModalConfirmationOpen(false);
-        clearCurrrentSelection();
+        clearCurrentSelection();
       }
     });
   };
@@ -302,7 +308,7 @@ const Project = ({ drizzle, account }) => {
       handle: function(id) {
         setModalConfirmationOpen(false);
         unpublishProject(drizzle, account, id);
-        clearCurrrentSelection();
+        clearCurrentSelection();
       }
     });
 
@@ -328,7 +334,7 @@ const Project = ({ drizzle, account }) => {
       handle: function(id) {
         setModalConfirmationOpen(false);
         submitOffer(drizzle, account, id);
-        clearCurrrentSelection();
+        clearCurrentSelection();
       }
     });
 
@@ -354,7 +360,7 @@ const Project = ({ drizzle, account }) => {
       handle: function(id) {
         setModalConfirmationOpen(false);
         cancelOffer(drizzle, account, id);
-        clearCurrrentSelection();
+        clearCurrentSelection();
       }
     });
 
@@ -380,7 +386,7 @@ const Project = ({ drizzle, account }) => {
       handle: function(id) {
         setModalConfirmationOpen(false);
         acceptProposal(drizzle, account, id);
-        clearCurrrentSelection();
+        clearCurrentSelection();
       }
     });
 
@@ -406,7 +412,7 @@ const Project = ({ drizzle, account }) => {
       handle: function(id) {
         setModalConfirmationOpen(false);
         rejectProposal(drizzle, account, id);
-        clearCurrrentSelection();
+        clearCurrentSelection();
       }
     });
 
@@ -432,7 +438,7 @@ const Project = ({ drizzle, account }) => {
       handle: function(id) {
         setModalConfirmationOpen(false);
         deliverProject(drizzle, account, id);
-        clearCurrrentSelection();
+        clearCurrentSelection();
       }
     });
 
@@ -458,7 +464,7 @@ const Project = ({ drizzle, account }) => {
       handle: function(id) {
         setModalConfirmationOpen(false);
         cancelServices(drizzle, account, id);
-        clearCurrrentSelection();
+        clearCurrentSelection();
       }
     });
 
@@ -481,10 +487,10 @@ const Project = ({ drizzle, account }) => {
     setAction1({
       title: 'Accept',
       visible: true,
-      handle: function(id, ratings) {
+      handle: function(id) {
         setModalAcceptOpen(false);
-        acceptDelivery(drizzle, account, id, ratings);
-        clearCurrrentSelection();
+        acceptDelivery(drizzle, account, id);
+        clearCurrentSelection();
       }
     });
 
@@ -510,7 +516,7 @@ const Project = ({ drizzle, account }) => {
       handle: function(id) {
         setModalConfirmationOpen(false);
         rejectDelivery(drizzle, account, id);
-        clearCurrrentSelection();
+        clearCurrentSelection();
       }
     });
 
@@ -536,7 +542,28 @@ const Project = ({ drizzle, account }) => {
       handle: function(id) {
         setModalConfirmationOpen(false);
         cancelContract(drizzle, account, id);
-        clearCurrrentSelection();
+        clearCurrentSelection();
+      }
+    });
+
+    setAction2({
+      title: 'No',
+      visible: true,
+      handle: () => hideModalDialog()
+    });
+  };
+
+  const handleRatingsFulfiller = id => {
+    setDataID(id);
+    setModalRatingsFulfillerOpen(true);
+
+    setAction1({
+      title: 'Yes',
+      visible: true,
+      handle: function(id, ratings) {
+        setModalRatingsFulfillerOpen(false);
+        setRatingsFulfiller(drizzle, account, id, ratings);
+        clearCurrentSelection();
       }
     });
 
@@ -551,7 +578,8 @@ const Project = ({ drizzle, account }) => {
     setModalProjectOpen(false);
     setModalConfirmationOpen(false);
     setModalAcceptOpen(false);
-    clearCurrrentSelection();
+    setModalRatingsFulfillerOpen(false);
+    clearCurrentSelection();
   };
 
   useEffect(() => {
@@ -572,6 +600,8 @@ const Project = ({ drizzle, account }) => {
   }, [enabled, account]);
 
   useEffect(() => {
+    console.log(projectId);
+    console.log(showRatingsFulfiller);
     if (projectId !== null) {
       if (showEdit === true) {
         handleEditDraftProject(projectId);
@@ -599,6 +629,9 @@ const Project = ({ drizzle, account }) => {
         handleRejectDelivery(projectId);
       } else if (showCancelContract === true) {
         handleCancelContract(projectId);
+      } else if (showRatingsFulfiller === true) {
+        console.log('Show Ratings');
+        handleRatingsFulfiller(projectId);
       }
     }
   }, [
@@ -615,7 +648,8 @@ const Project = ({ drizzle, account }) => {
     showCancelServices,
     showAcceptDelivery,
     showRejectDelivery,
-    showCancelContract
+    showCancelContract,
+    showRatingsFulfiller
   ]);
 
   return (
@@ -646,6 +680,17 @@ const Project = ({ drizzle, account }) => {
 
       {modalAcceptOpen && (
         <AcceptModal
+          title={modalTitle}
+          content={modalDescription}
+          dataID={dataID}
+          onClose={() => hideModalDialog()}
+          action1={action1}
+          action2={action2}
+        />
+      )}
+
+      {modalRatingsFulfillerOpen && (
+        <RatingsModal
           title={modalTitle}
           content={modalDescription}
           dataID={dataID}

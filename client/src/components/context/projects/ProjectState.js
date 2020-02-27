@@ -37,11 +37,13 @@ import {
   ACCEPT_DELIVERY,
   REJECT_DELIVERY,
   CANCEL_CONTRACT,
+  RATINGS_FULFILLER,
   ON_DELIVER_PROJECT,
   ON_CANCEL_SERVICES,
   ON_ACCEPT_DELIVERY,
   ON_REJECT_DELIVERY,
   ON_CANCEL_CONTRACT,
+  ON_RATINGS_FULFILLER,
   ON_CANCEL_MODAL,
   CLEAR_CURRENT_SELECTION,
   GET_PROJECT,
@@ -69,7 +71,8 @@ const ProjectState = props => {
     showCancelServices: false,
     showAcceptDelivery: false,
     showRejectDelivery: false,
-    showCancelContract: false
+    showCancelContract: false,
+    showRatingsFulfiller: false
   };
 
   const [ipfs, setIPFS] = useState(null);
@@ -581,12 +584,12 @@ const ProjectState = props => {
   };
 
   // Accept delivery sent by the provider
-  const acceptDelivery = (drizzle, account, projectId, ratings) => {
+  const acceptDelivery = (drizzle, account, projectId) => {
     const { ChainBizz } = drizzle.contracts;
 
     // accept delivery
     ChainBizz.methods
-      .acceptDelivery(projectId, ratings)
+      .acceptDelivery(projectId)
       .send({
         from: account,
         gas: 500000
@@ -631,6 +634,25 @@ const ProjectState = props => {
       })
       .on('receipt', receipt => {
         dispatch({ type: CANCEL_CONTRACT, payload: receipt });
+      })
+      .on('error', err => {
+        dispatch({ type: PROJECT_ERROR, payload: err });
+      });
+  };
+
+  // Set the ratings to the fulfiller
+  const setRatingsFulfiller = (drizzle, account, projectId, ratings) => {
+    const { ChainBizz } = drizzle.contracts;
+
+    // cancel contract
+    ChainBizz.methods
+      .setRatingsFulfiller(projectId, ratings)
+      .send({
+        from: account,
+        gas: 500000
+      })
+      .on('receipt', receipt => {
+        dispatch({ type: RATINGS_FULFILLER, payload: receipt });
       })
       .on('error', err => {
         dispatch({ type: PROJECT_ERROR, payload: err });
@@ -700,6 +722,12 @@ const ProjectState = props => {
   // Prepare to cancel the contract
   const onCancelContract = projectId => {
     dispatch({ type: ON_CANCEL_CONTRACT, payload: projectId });
+  };
+
+  // Prepare to ratings for the fulfiller
+  const onRatingsFulfiller = projectId => {
+    console.log('onratings');
+    dispatch({ type: ON_RATINGS_FULFILLER, payload: projectId });
   };
 
   // Cancel the modal form
@@ -791,7 +819,7 @@ const ProjectState = props => {
   };
 
   // Clear current selection
-  const clearCurrrentSelection = () => {
+  const clearCurrentSelection = () => {
     dispatch({ type: CLEAR_CURRENT_SELECTION });
   };
 
@@ -818,6 +846,7 @@ const ProjectState = props => {
         showAcceptDelivery: state.showAcceptDelivery,
         showRejectDelivery: state.showRejectDelivery,
         showCancelContract: state.showCancelContract,
+        showRatingsFulfiller: state.showRatingsFulfiller,
         addProject,
         updateProject,
         updateDraftProject,
@@ -842,15 +871,17 @@ const ProjectState = props => {
         acceptDelivery,
         rejectDelivery,
         cancelContract,
+        setRatingsFulfiller,
         onDeliverProject,
         onCancelServices,
         onAcceptDelivery,
         onRejectDelivery,
         onCancelContract,
+        onRatingsFulfiller,
         onCancelModal,
         getProject,
         getDraftProject,
-        clearCurrrentSelection,
+        clearCurrentSelection,
         isEnabled,
         disableContract,
         enableContract

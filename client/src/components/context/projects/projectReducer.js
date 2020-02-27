@@ -22,11 +22,13 @@ import {
   ACCEPT_DELIVERY,
   REJECT_DELIVERY,
   CANCEL_CONTRACT,
+  RATINGS_FULFILLER,
   ON_DELIVER_PROJECT,
   ON_CANCEL_SERVICES,
   ON_ACCEPT_DELIVERY,
   ON_REJECT_DELIVERY,
   ON_CANCEL_CONTRACT,
+  ON_RATINGS_FULFILLER,
   ON_CANCEL_MODAL,
   CLEAR_CURRENT_SELECTION,
   GET_PROJECT,
@@ -48,6 +50,7 @@ export default (state, action) => {
     case ACCEPT_DELIVERY:
     case REJECT_DELIVERY:
     case CANCEL_CONTRACT:
+    case RATINGS_FULFILLER:
       return {
         ...state,
         project: action.payload,
@@ -160,6 +163,15 @@ export default (state, action) => {
         showCancelContract: true,
         removed: false
       };
+    case ON_RATINGS_FULFILLER:
+      console.log('here');
+      console.log(action.payload);
+      return {
+        ...state,
+        projectId: action.payload,
+        showRatingsFulfiller: true,
+        removed: false
+      };
     case GET_PROJECT:
       return {
         ...state,
@@ -189,6 +201,7 @@ export default (state, action) => {
         showAcceptDelivery: false,
         showRejectDelivery: false,
         showCancelContract: false,
+        showRatingsFulfiller: false,
         removed: false
       };
     case CLEAR_CURRENT_SELECTION:
@@ -211,7 +224,8 @@ export default (state, action) => {
         showCancelServices: false,
         showAcceptDelivery: false,
         showRejectDelivery: false,
-        showCancelContract: false
+        showCancelContract: false,
+        showRatingsFulfiller: false
       };
     default:
       return state;

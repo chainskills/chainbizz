@@ -26,6 +26,23 @@ contract ChainBizz {
         Unknown
     }
 
+    // Defines the ratings for the fulfiller
+    enum RatingFulfiller {
+        OnTime,
+        OnBudget,
+        HardSkills,
+        SoftSkills,
+        Quality,
+        Recommend
+    }
+
+    uint256 constant MAX_RATINGS_FULFILLER = 6;
+
+    // Defines the ratings for the issuer
+    enum RatingIssuer {Precise, SoftSkills, Serious, Recommend}
+
+    uint256 constant MAX_RATINGS_ISSUER = 4;
+
     /*
    * Structs
    */
@@ -39,7 +56,10 @@ contract ChainBizz {
         uint256 price; // price in Wei
         string ipfsHash;
         ProjectStatus status;
-        uint256[] ratings;
+        bool ratingsIssuerDone;
+        bool ratingsFulFillerDone;
+        uint256[] ratingsIssuer;
+        uint256[] ratingsFulfiller;
     }
 
     /*
@@ -151,8 +171,7 @@ contract ChainBizz {
         address indexed issuer,
         address indexed fulfiller,
         string title,
-        uint256 price,
-        uint256[] ratings
+        uint256 price
     );
     event DeliveryRejected(
         uint256 id,
@@ -167,6 +186,16 @@ contract ChainBizz {
         address indexed fulfiller,
         string title,
         uint256 price
+    );
+    event RatingsIssuer(
+        uint256 id,
+        address indexed fulfiller,
+        uint256[] ratings
+    );
+    event RatingsFulFiller(
+        uint256 id,
+        address indexed issuer,
+        uint256[] ratings
     );
 
     /*
@@ -246,7 +275,10 @@ contract ChainBizz {
             _price,
             "",
             ProjectStatus.Draft,
-            new uint256[](6)
+            false,
+            false,
+            new uint256[](MAX_RATINGS_ISSUER),
+            new uint256[](MAX_RATINGS_FULFILLER)
         );
 
         emit NewProject(projectsCounter, msg.sender, _title, _price);
@@ -339,7 +371,10 @@ contract ChainBizz {
             _price,
             _ipfsHash,
             ProjectStatus.Available,
-            new uint256[](6)
+            false,
+            false,
+            new uint256[](MAX_RATINGS_ISSUER),
+            new uint256[](MAX_RATINGS_FULFILLER)
         );
 
         emit PublishedProject(
@@ -632,10 +667,7 @@ contract ChainBizz {
 
     // Accept the project delivery from the fulfiller
     // The issuer accepts the project delivered by the fulfiller
-    function acceptDelivery(uint256 _id, uint256[] memory _ratings)
-        public
-        onlyEnable
-    {
+    function acceptDelivery(uint256 _id) public onlyEnable {
         // retrieve the project
         ProjectItem storage project = projects[_id];
 
@@ -661,16 +693,102 @@ contract ChainBizz {
 
         // project is now completed
         project.status = ProjectStatus.Completed;
-        project.ratings = _ratings;
 
         emit DeliveryAccepted(
             _id,
             project.issuer,
             project.fulfiller,
             project.title,
-            project.price,
-            project.ratings
+            project.price
         );
+    }
+
+    // The issuer evaluates the fulfiller
+    function setRatingsFulfiller(uint256 _id, uint256[] memory _ratings)
+        public
+        onlyEnable
+    {
+        // retrieve the project
+        ProjectItem storage project = projects[_id];
+
+        // is the project completed or cancelled?
+        require(
+            (project.status == ProjectStatus.Canceled) ||
+                (project.status == ProjectStatus.Completed),
+            "Project not yet finalised"
+        );
+
+        // ensure that this project exists
+        if (project.issuer == address(0x0)) {
+            return;
+        }
+
+        // do we own this project?
+        require(
+            project.issuer == msg.sender,
+            "You are not the issuer of this project"
+        );
+
+        // do not allow changes on ratings
+        require(
+            project.ratingsFulFillerDone == false,
+            "You have already provided your ratings"
+        );
+
+        // avoid overflow
+        require(
+            _ratings.length <= MAX_RATINGS_FULFILLER,
+            "The number of ratings exceed the limit"
+        );
+
+        // save ratings from the issuer
+        project.ratingsFulfiller = _ratings;
+
+        emit RatingsFulFiller(_id, project.issuer, project.ratingsFulfiller);
+    }
+
+    // The fulfiller evaluates the issuer
+    function setRatingsIssuer(uint256 _id, uint256[] memory _ratings)
+        public
+        onlyEnable
+    {
+        // retrieve the project
+        ProjectItem storage project = projects[_id];
+
+        // is the project completed or cancelled?
+        require(
+            (project.status == ProjectStatus.Canceled) ||
+                (project.status == ProjectStatus.Completed),
+            "Project not yet finalised"
+        );
+
+        // ensure that this project exists
+        if (project.issuer == address(0x0)) {
+            return;
+        }
+
+        // do not allow changes on ratings
+        require(
+            project.ratingsIssuerDone == false,
+            "You have already provided your ratings"
+        );
+
+        // do we own this project?
+        require(
+            project.fulfiller == msg.sender,
+            "You are not the fulfiller of this project"
+        );
+
+        // avoid overflow
+        require(
+            _ratings.length <= MAX_RATINGS_ISSUER,
+            "The number of ratings exceed the limit"
+        );
+
+        // save ratings from the fulfiller
+        project.ratingsIssuer = _ratings;
+
+        emit RatingsIssuer(_id, project.fulfiller, project.ratingsIssuer);
     }
 
     // Reject the project delivery from the fulfiller

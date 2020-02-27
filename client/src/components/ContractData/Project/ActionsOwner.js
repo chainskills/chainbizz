@@ -15,7 +15,8 @@ const ActionsOwner = ({ projectId, status }) => {
     onRejectProposal,
     onAcceptDelivery,
     onRejectDelivery,
-    onCancelContract
+    onCancelContract,
+    onRatingsFulfiller,
   } = projectContext;
 
   return (
@@ -119,6 +120,21 @@ const ActionsOwner = ({ projectId, status }) => {
             title={'Accept the delivery'}
           >
             <i className='material-icons card-icon'>check</i>
+          </a>
+        </span>
+      )}
+
+      {(status === projectStatus.COMPLETED ||
+        status === projectStatus.CANCELED) && (
+        <span>
+          <a
+            href={null}
+            onClick={() => {
+              onRatingsFulfiller(projectId);
+            }}
+            title={'Set a rating to the fulfiller'}
+          >
+            <i className='material-icons card-icon'>star_half</i>
           </a>
         </span>
       )}
