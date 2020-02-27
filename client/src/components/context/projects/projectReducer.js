@@ -164,8 +164,6 @@ export default (state, action) => {
         removed: false
       };
     case ON_RATINGS_FULFILLER:
-      console.log('here');
-      console.log(action.payload);
       return {
         ...state,
         projectId: action.payload,

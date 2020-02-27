@@ -171,8 +171,6 @@ const ProjectState = props => {
           creationDate: new Date()
         });
 
-      console.log(dataRef.id);
-
       dispatch({ type: ADD_PROJECT, payload: project });
     } catch (error) {
       console.error(error);
@@ -256,7 +254,7 @@ const ProjectState = props => {
 
       dispatch({ type: UPDATE_PROJECT, payload: project });
     } catch (err) {
-      console.log(err);
+      console.error(err);
       dispatch({ type: PROJECT_ERROR, payload: err });
     }
   };
@@ -297,11 +295,9 @@ const ProjectState = props => {
         .doc(projectId)
         .delete();
 
-      console.log('project removed: ' + projectId);
-
       dispatch({ type: REMOVE_PROJECT });
     } catch (err) {
-      console.log(err.message);
+      console.error(err.message);
       dispatch({ type: PROJECT_ERROR, payload: err });
     }
   };
@@ -357,7 +353,7 @@ const ProjectState = props => {
         console.log('Not exist');
       }
     } catch (err) {
-      console.log(err);
+      console.error(err);
       dispatch({ type: PROJECT_ERROR, payload: err });
     }
   };
@@ -726,7 +722,6 @@ const ProjectState = props => {
 
   // Prepare to ratings for the fulfiller
   const onRatingsFulfiller = projectId => {
-    console.log('onratings');
     dispatch({ type: ON_RATINGS_FULFILLER, payload: projectId });
   };
 
@@ -813,7 +808,7 @@ const ProjectState = props => {
         console.log('Not exist');
       }
     } catch (err) {
-      console.log(err);
+      console.error(err);
       dispatch({ type: PROJECT_ERROR, payload: err });
     }
   };

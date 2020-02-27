@@ -220,7 +220,6 @@ const Project = ({ drizzle, account }) => {
   };
 
   const handleRemove = id => {
-    console.log('Into handleRemove');
     setDataID(id);
     setModalConfirmationOpen(true);
 
@@ -245,7 +244,6 @@ const Project = ({ drizzle, account }) => {
   };
 
   const handleDraftRemove = id => {
-    console.log('Into handleDraftRemove');
     setDataID(id);
     setModalTitle('Remove Project');
     setModalDescription('Are you sure to remove this project?');
@@ -600,8 +598,6 @@ const Project = ({ drizzle, account }) => {
   }, [enabled, account]);
 
   useEffect(() => {
-    console.log(projectId);
-    console.log(showRatingsFulfiller);
     if (projectId !== null) {
       if (showEdit === true) {
         handleEditDraftProject(projectId);
@@ -630,7 +626,6 @@ const Project = ({ drizzle, account }) => {
       } else if (showCancelContract === true) {
         handleCancelContract(projectId);
       } else if (showRatingsFulfiller === true) {
-        console.log('Show Ratings');
         handleRatingsFulfiller(projectId);
       }
     }
