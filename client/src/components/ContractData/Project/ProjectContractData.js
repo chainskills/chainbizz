@@ -145,11 +145,19 @@ const ProjectContractData = ({
         {hideAction === false && (
           <div className='card-action right-align project-card'>
             {projectDetails.issuer === account && (
-              <ActionsOwner projectId={projectId} status={status} />
+              <ActionsOwner
+                projectId={projectId}
+                status={status}
+                rated={projectDetails.ratingsFulfillerDone}
+              />
             )}
 
             {projectDetails.issuer !== account && (
-              <ActionsProvider projectId={projectId} status={status} />
+              <ActionsProvider
+                projectId={projectId}
+                status={status}
+                rated={projectDetails.ratingsIssuerDone}
+              />
             )}
           </div>
         )}

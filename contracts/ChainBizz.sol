@@ -57,7 +57,7 @@ contract ChainBizz {
         string ipfsHash;
         ProjectStatus status;
         bool ratingsIssuerDone;
-        bool ratingsFulFillerDone;
+        bool ratingsFulfillerDone;
         uint256[] ratingsIssuer;
         uint256[] ratingsFulfiller;
     }
@@ -731,7 +731,7 @@ contract ChainBizz {
 
         // do not allow changes on ratings
         require(
-            project.ratingsFulFillerDone == false,
+            project.ratingsFulfillerDone == false,
             "You have already provided your ratings"
         );
 
@@ -743,6 +743,7 @@ contract ChainBizz {
 
         // save ratings from the issuer
         project.ratingsFulfiller = _ratings;
+        project.ratingsFulfillerDone = true;
 
         emit RatingsFulFiller(_id, project.issuer, project.ratingsFulfiller);
     }
@@ -787,6 +788,7 @@ contract ChainBizz {
 
         // save ratings from the fulfiller
         project.ratingsIssuer = _ratings;
+        project.ratingsIssuerDone = true;
 
         emit RatingsIssuer(_id, project.fulfiller, project.ratingsIssuer);
     }
@@ -884,7 +886,9 @@ contract ChainBizz {
             string memory title,
             uint256 price,
             string memory ipfsHash,
-            ProjectStatus status
+            ProjectStatus status,
+            bool ratingsIssuerDone,
+            bool ratingsFulfillerDone
         )
     {
         ProjectItem memory project = projects[_id];
@@ -897,7 +901,9 @@ contract ChainBizz {
                 "",
                 0,
                 "",
-                ProjectStatus.Unknown
+                ProjectStatus.Unknown,
+                false,
+                false
             );
         }
 
@@ -907,7 +913,9 @@ contract ChainBizz {
             project.title,
             project.price,
             project.ipfsHash,
-            project.status
+            project.status,
+            project.ratingsIssuerDone,
+            project.ratingsFulfillerDone
         );
     }
 

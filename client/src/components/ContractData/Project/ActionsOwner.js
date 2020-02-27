@@ -4,7 +4,7 @@ import ProjectContext from '../../context/projects/projectContext';
 
 import { projectStatus } from './ProjectStatus';
 
-const ActionsOwner = ({ projectId, status }) => {
+const ActionsOwner = ({ projectId, status, rated }) => {
   const projectContext = useContext(ProjectContext);
   const {
     onEditProject,
@@ -16,7 +16,7 @@ const ActionsOwner = ({ projectId, status }) => {
     onAcceptDelivery,
     onRejectDelivery,
     onCancelContract,
-    onRatingsFulfiller,
+    onRatingsFulfiller
   } = projectContext;
 
   return (
@@ -125,19 +125,20 @@ const ActionsOwner = ({ projectId, status }) => {
       )}
 
       {(status === projectStatus.COMPLETED ||
-        status === projectStatus.CANCELED) && (
-        <span>
-          <a
-            href={null}
-            onClick={() => {
-              onRatingsFulfiller(projectId);
-            }}
-            title={'Set a rating to the fulfiller'}
-          >
-            <i className='material-icons card-icon'>star_half</i>
-          </a>
-        </span>
-      )}
+        status === projectStatus.CANCELED) &&
+        rated == false && (
+          <span>
+            <a
+              href={null}
+              onClick={() => {
+                onRatingsFulfiller(projectId);
+              }}
+              title={'Set a rating to the fulfiller'}
+            >
+              <i className='material-icons card-icon'>star_half</i>
+            </a>
+          </span>
+        )}
     </div>
   );
 };
