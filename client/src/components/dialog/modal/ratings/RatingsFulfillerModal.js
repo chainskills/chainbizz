@@ -6,6 +6,8 @@ import { useKeyPress, useLockBodyScroll } from '../../../../hooks/Hooks';
 
 import 'materialize-css/dist/css/materialize.min.css';
 import '../Modal.css';
+import starempty from '../../../../assets/images/starempty.png';
+import starfull from '../../../../assets/images/starfull.png';
 
 const RatingsModal = ({ dataID, onClose, action1, action2 }) => {
   const escPress = useKeyPress('Escape');
@@ -42,6 +44,12 @@ const RatingsModal = ({ dataID, onClose, action1, action2 }) => {
               <div className='col s6'>My project was delivered on-time:</div>
               <div className='col s6'>
                 <Rating
+                  emptySymbol={
+                    <img src={starempty} className='icon ratingsIcon' />
+                  }
+                  fullSymbol={
+                    <img src={starfull} className='icon ratingsIcon' />
+                  }
                   onChange={value => onChangeRating(0, value)}
                   initialRating={ratings[0]}
                 />
@@ -51,6 +59,12 @@ const RatingsModal = ({ dataID, onClose, action1, action2 }) => {
               <div className='col s6'>My project was delivered on-budget:</div>
               <div className='col s6'>
                 <Rating
+                  emptySymbol={
+                    <img src={starempty} className='icon ratingsIcon' />
+                  }
+                  fullSymbol={
+                    <img src={starfull} className='icon ratingsIcon' />
+                  }
                   onChange={value => onChangeRating(1, value)}
                   initialRating={ratings[1]}
                 />
@@ -62,6 +76,12 @@ const RatingsModal = ({ dataID, onClose, action1, action2 }) => {
               </div>
               <div className='col s6'>
                 <Rating
+                  emptySymbol={
+                    <img src={starempty} className='icon ratingsIcon' />
+                  }
+                  fullSymbol={
+                    <img src={starfull} className='icon ratingsIcon' />
+                  }
                   onChange={value => onChangeRating(2, value)}
                   initialRating={ratings[2]}
                 />
@@ -73,6 +93,12 @@ const RatingsModal = ({ dataID, onClose, action1, action2 }) => {
               </div>
               <div className='col s6'>
                 <Rating
+                  emptySymbol={
+                    <img src={starempty} className='icon ratingsIcon' />
+                  }
+                  fullSymbol={
+                    <img src={starfull} className='icon ratingsIcon' />
+                  }
                   onChange={value => onChangeRating(3, value)}
                   initialRating={ratings[3]}
                 />
@@ -82,6 +108,12 @@ const RatingsModal = ({ dataID, onClose, action1, action2 }) => {
               <div className='col s6'>The quality have been meet:</div>
               <div className='col s6'>
                 <Rating
+                  emptySymbol={
+                    <img src={starempty} className='icon ratingsIcon' />
+                  }
+                  fullSymbol={
+                    <img src={starfull} className='icon ratingsIcon' />
+                  }
                   onChange={value => onChangeRating(4, value)}
                   initialRating={ratings[4]}
                 />
@@ -91,6 +123,12 @@ const RatingsModal = ({ dataID, onClose, action1, action2 }) => {
               <div className='col s6'>I will recommend this fulfiller:</div>
               <div className='col s6'>
                 <Rating
+                  emptySymbol={
+                    <img src={starempty} className='icon ratingsIcon' />
+                  }
+                  fullSymbol={
+                    <img src={starfull} className='icon ratingsIcon' />
+                  }
                   onChange={value => onChangeRating(5, value)}
                   initialRating={ratings[5]}
                 />
