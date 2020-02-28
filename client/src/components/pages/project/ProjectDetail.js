@@ -62,7 +62,6 @@ const ProjectDetail = ({ match, drizzle, account, draft }) => {
   }, [lastChanged, removed]);
 
   useEffect(() => {
-    console.log(lastChanged);
     if (current !== null) {
       // get the status
       const statusNames = Object.keys(projectStatus);
