@@ -760,6 +760,7 @@ const ProjectState = props => {
 
     const publishedProject = {
       ...project,
+      id: projectId,
       description: description,
       creationDate: creationDate,
       updateDate: updateDate

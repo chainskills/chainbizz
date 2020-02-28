@@ -1,6 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import JazzIcon, { jsNumberForAddress } from 'react-jazzicon';
 import { NavLink } from 'react-router-dom';
+
+import ProjectContext from '../../context/projects/projectContext';
+
+import { projectStatus } from '../../ContractData/Project/ProjectStatus';
 
 import ActionsOwner from './ActionsOwner';
 import ActionsProvider from './ActionsProvider';
@@ -14,34 +18,40 @@ const ProjectContractData = ({
   account,
   hideAction = false
 }) => {
-  const [dataKey, setDataKey] = useState(null);
+  const [project, setProject] = useState({
+    id: null,
+    title: '',
+    description: '',
+    price: 0
+  });
+
+  const projectContext = useContext(ProjectContext);
+  const { getProject, current, lastChanged } = projectContext;
 
   useEffect(() => {
-    const { ChainBizz } = drizzle.contracts;
-    setDataKey(
-      ChainBizz.methods.getProject.cacheCall(projectId, {
-        from: account
-      })
-    );
-
-    //eslint-disable-next-line
+    getProject(drizzle, account, projectId);
   }, []);
 
-  // Retrieve project details only if the information is available
-  let projectDetails = null;
-  if (
-    drizzleState.contracts.ChainBizz.getProject[dataKey] &&
-    drizzleState.contracts.ChainBizz.getProject[dataKey].value
-  ) {
-    projectDetails = drizzleState.contracts.ChainBizz.getProject[dataKey].value;
-  }
+  useEffect(() => {
+    console.log(current);
+    if (current !== null && current.id === projectId) {
+      console.log('Into useEffect: ' + projectId);
+      // get the status
+      const statusNames = Object.keys(projectStatus);
+
+      // apply the current project with its status in plain english
+      setProject({
+        ...current,
+        status: Number(current.status),
+        statusName: statusNames[current.status]
+      });
+    }
+  }, [lastChanged]);
 
   // project not yet ready or not found
-  if (projectDetails === null || typeof projectDetails === 'undefined') {
+  if (project === null || typeof project === 'undefined') {
     return <span>Initializing...</span>;
   }
-
-  const status = Number(projectDetails.status);
 
   return (
     <div className='col s12 m12'>
@@ -55,7 +65,7 @@ const ProjectContractData = ({
                     activeClassName='chosen'
                     to={`/project/${projectId}`}
                   >
-                    {projectDetails.title}
+                    {project.title}
                   </NavLink>
                   <i className='material-icons right'>more_vert</i>
                 </span>
@@ -81,23 +91,25 @@ const ProjectContractData = ({
                     text
                   </span>
                 </div>
-                <div style={{ marginTop: '20px' }} className='avatar'>
-                  <JazzIcon
-                    diameter={40}
-                    seed={jsNumberForAddress(projectDetails.issuer)}
-                  />
-                  <p
-                    className='truncate'
-                    style={{
-                      position: 'relative',
-                      top: '7px',
-                      width: '130px',
-                      paddingLeft: '10px'
-                    }}
-                  >
-                    {projectDetails.issuer}
-                  </p>
-                </div>
+                {project && project.issuer && (
+                  <div style={{ marginTop: '20px' }} className='avatar'>
+                    <JazzIcon
+                      diameter={40}
+                      seed={jsNumberForAddress(project.issuer)}
+                    />
+                    <p
+                      className='truncate'
+                      style={{
+                        position: 'relative',
+                        top: '7px',
+                        width: '130px',
+                        paddingLeft: '10px'
+                      }}
+                    >
+                      {project.issuer}
+                    </p>
+                  </div>
+                )}
               </div>
               <div className='col s12 m3 project-additional'>
                 <ul style={{ margin: '-10px 0 0 0' }}>
@@ -120,11 +132,7 @@ const ProjectContractData = ({
                   className='right-align'
                   style={{ fontSize: '24px', color: '#546e7a' }}
                 >
-                  {drizzle.web3.utils.fromWei(
-                    projectDetails.price.toString(),
-                    'ether'
-                  )}{' '}
-                  ETH
+                  {project.price.toString()} ETH
                 </p>
               </div>
             </div>
@@ -136,27 +144,27 @@ const ProjectContractData = ({
               activeClassName='chosen'
               to={`/project/draft/${projectId}`}
             >
-              {projectDetails.title}
+              {project.title}
             </NavLink>
             <i className='material-icons right'>close</i>
           </span>
-          <p>{projectDetails.description}</p>
+          <p>{project.description}</p>
         </div>
         {hideAction === false && (
           <div className='card-action right-align project-card'>
-            {projectDetails.issuer === account && (
+            {project.issuer === account && (
               <ActionsOwner
                 projectId={projectId}
-                status={status}
-                rated={projectDetails.ratingsFulfillerDone}
+                status={project.status}
+                rated={project.ratingsFulfillerDone}
               />
             )}
 
-            {projectDetails.issuer !== account && (
+            {project.issuer !== account && (
               <ActionsProvider
                 projectId={projectId}
-                status={status}
-                rated={projectDetails.ratingsIssuerDone}
+                status={project.status}
+                rated={project.ratingsIssuerDone}
               />
             )}
           </div>

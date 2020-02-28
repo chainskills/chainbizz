@@ -175,6 +175,7 @@ export default (state, action) => {
         ...state,
         current: action.payload,
         loading: false,
+        lastChanged: Date.now(),
         removed: false
       };
     case PROJECT_ERROR:
