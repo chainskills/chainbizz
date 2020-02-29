@@ -888,7 +888,9 @@ contract ChainBizz {
             string memory ipfsHash,
             ProjectStatus status,
             bool ratingsIssuerDone,
-            bool ratingsFulfillerDone
+            bool ratingsFulfillerDone,
+            uint256[] memory ratingsIssuer,
+            uint256[] memory ratingsFulfiller
         )
     {
         ProjectItem memory project = projects[_id];
@@ -903,7 +905,9 @@ contract ChainBizz {
                 "",
                 ProjectStatus.Unknown,
                 false,
-                false
+                false,
+                new uint256[](MAX_RATINGS_ISSUER),
+                new uint256[](MAX_RATINGS_FULFILLER)
             );
         }
 
@@ -915,7 +919,9 @@ contract ChainBizz {
             project.ipfsHash,
             project.status,
             project.ratingsIssuerDone,
-            project.ratingsFulfillerDone
+            project.ratingsFulfillerDone,
+            project.ratingsIssuer,
+            project.ratingsFulfiller
         );
     }
 
