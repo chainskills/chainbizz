@@ -245,89 +245,44 @@ const ProjectDetail = ({ match, drizzle, account, draft }) => {
         </div>
         {project && project.id && (
           <div className='row'>
-            {project.ratingsIssuerDone === true && (
-              <div className='col s12 m12 l12 xl12'>
-                <h5>Ratings given to the issuer:</h5>
-
-                <div className='row'>
-                  <div className='col s6'>
-                    The requests were clearly described and precise:
-                  </div>
-                  <div className='col s6'>
-                    <Rating
-                      emptySymbol={
-                        <img src={starempty} className='icon ratingsIcon' />
-                      }
-                      fullSymbol={
-                        <img src={starfull} className='icon ratingsIcon' />
-                      }
-                      readonly
-                      initialRating={project.ratingsIssuer[0]}
-                    />
-                  </div>
-                </div>
-
-                <div className='row'>
-                  <div className='col s6'>
-                    The issuer has the right soft-skills:
-                  </div>
-                  <div className='col s6'>
-                    <Rating
-                      emptySymbol={
-                        <img src={starempty} className='icon ratingsIcon' />
-                      }
-                      fullSymbol={
-                        <img src={starfull} className='icon ratingsIcon' />
-                      }
-                      readonly
-                      initialRating={project.ratingsIssuer[1]}
-                    />
-                  </div>
-                </div>
-                <div className='row'>
-                  <div className='col s6'>
-                    The requests and the communication with the issuer were
-                    serious:
-                  </div>
-                  <div className='col s6'>
-                    <Rating
-                      emptySymbol={
-                        <img src={starempty} className='icon ratingsIcon' />
-                      }
-                      fullSymbol={
-                        <img src={starfull} className='icon ratingsIcon' />
-                      }
-                      readonly
-                      initialRating={project.ratingsIssuer[2]}
-                    />
-                  </div>
-                </div>
-                <div className='row'>
-                  <div className='col s6'>I will recommend this issuer:</div>
-                  <div className='col s6'>
-                    <Rating
-                      emptySymbol={
-                        <img src={starempty} className='icon ratingsIcon' />
-                      }
-                      fullSymbol={
-                        <img src={starfull} className='icon ratingsIcon' />
-                      }
-                      readonly
-                      initialRating={project.ratingsIssuer[3]}
-                    />
-                  </div>
-                </div>
-              </div>
-            )}
             {project.ratingsFulfillerDone === true && (
-              <div className='col s12 m12 l12 xl12'>
-                <h5>Ratings given to the fulfiller:</h5>
+              <div className='col s12 m12 l6 xl6'>
+                <h5>Ratings given by the issuer:</h5>
+                <div className='row'>
+                  <div className='col'>
+                    <p>I will recommend this fulfiller:</p>
+                    <Rating
+                      emptySymbol={
+                        <img src={starempty} className='icon ratingsIcon' />
+                      }
+                      fullSymbol={
+                        <img src={starfull} className='icon ratingsIcon' />
+                      }
+                      readonly
+                      initialRating={project.ratingsFulfiller[5]}
+                    />
+                  </div>
+                </div>
+                <div className='row'>
+                  <div className='col'>
+                    <p>The quality have been meet:</p>
+
+                    <Rating
+                      emptySymbol={
+                        <img src={starempty} className='icon ratingsIcon' />
+                      }
+                      fullSymbol={
+                        <img src={starfull} className='icon ratingsIcon' />
+                      }
+                      readonly
+                      initialRating={project.ratingsFulfiller[4]}
+                    />
+                  </div>
+                </div>
 
                 <div className='row'>
-                  <div className='col s6'>
-                    My project was delivered on-time:
-                  </div>
-                  <div className='col s6'>
+                  <div className='col'>
+                    <p>My project was delivered on-time:</p>
                     <Rating
                       emptySymbol={
                         <img src={starempty} className='icon ratingsIcon' />
@@ -341,10 +296,8 @@ const ProjectDetail = ({ match, drizzle, account, draft }) => {
                   </div>
                 </div>
                 <div className='row'>
-                  <div className='col s6'>
-                    My project was delivered on-budget:
-                  </div>
-                  <div className='col s6'>
+                  <div className='col'>
+                    <p>My project was delivered on-budget:</p>
                     <Rating
                       emptySymbol={
                         <img src={starempty} className='icon ratingsIcon' />
@@ -358,10 +311,8 @@ const ProjectDetail = ({ match, drizzle, account, draft }) => {
                   </div>
                 </div>
                 <div className='row'>
-                  <div className='col s6'>
-                    The fulfiller has the right hard-skills:
-                  </div>
-                  <div className='col s6'>
+                  <div className='col'>
+                    <p>The fulfiller has the right hard-skills:</p>
                     <Rating
                       emptySymbol={
                         <img src={starempty} className='icon ratingsIcon' />
@@ -375,10 +326,8 @@ const ProjectDetail = ({ match, drizzle, account, draft }) => {
                   </div>
                 </div>
                 <div className='row'>
-                  <div className='col s6'>
-                    The fulfiller has the right soft-skills:
-                  </div>
-                  <div className='col s6'>
+                  <div className='col'>
+                    <p>The fulfiller has the right soft-skills:</p>
                     <Rating
                       emptySymbol={
                         <img src={starempty} className='icon ratingsIcon' />
@@ -391,9 +340,14 @@ const ProjectDetail = ({ match, drizzle, account, draft }) => {
                     />
                   </div>
                 </div>
+              </div>
+            )}
+            {project.ratingsIssuerDone === true && (
+              <div className='col s12 m12 l6 xl6'>
+                <h5>Ratings given by the fulfiller:</h5>
                 <div className='row'>
-                  <div className='col s6'>The quality have been meet:</div>
-                  <div className='col s6'>
+                  <div className='col'>
+                    <p>I will recommend this issuer:</p>
                     <Rating
                       emptySymbol={
                         <img src={starempty} className='icon ratingsIcon' />
@@ -402,13 +356,13 @@ const ProjectDetail = ({ match, drizzle, account, draft }) => {
                         <img src={starfull} className='icon ratingsIcon' />
                       }
                       readonly
-                      initialRating={project.ratingsFulfiller[4]}
+                      initialRating={project.ratingsIssuer[3]}
                     />
                   </div>
                 </div>
                 <div className='row'>
-                  <div className='col s6'>I will recommend this fulfiller:</div>
-                  <div className='col s6'>
+                  <div className='col'>
+                    <p>The requests were clearly described and precise:</p>
                     <Rating
                       emptySymbol={
                         <img src={starempty} className='icon ratingsIcon' />
@@ -417,7 +371,40 @@ const ProjectDetail = ({ match, drizzle, account, draft }) => {
                         <img src={starfull} className='icon ratingsIcon' />
                       }
                       readonly
-                      initialRating={project.ratingsFulfiller[5]}
+                      initialRating={project.ratingsIssuer[0]}
+                    />
+                  </div>
+                </div>
+                <div className='row'>
+                  <div className='col'>
+                    <p>The issuer has the right soft-skills:</p>
+                    <Rating
+                      emptySymbol={
+                        <img src={starempty} className='icon ratingsIcon' />
+                      }
+                      fullSymbol={
+                        <img src={starfull} className='icon ratingsIcon' />
+                      }
+                      readonly
+                      initialRating={project.ratingsIssuer[1]}
+                    />
+                  </div>
+                </div>
+                <div className='row'>
+                  <div className='col'>
+                    <p>
+                      The requests and the communication with the issuer were
+                      serious:
+                    </p>
+                    <Rating
+                      emptySymbol={
+                        <img src={starempty} className='icon ratingsIcon' />
+                      }
+                      fullSymbol={
+                        <img src={starfull} className='icon ratingsIcon' />
+                      }
+                      readonly
+                      initialRating={project.ratingsIssuer[2]}
                     />
                   </div>
                 </div>
