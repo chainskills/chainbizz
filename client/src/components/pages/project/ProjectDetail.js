@@ -54,7 +54,6 @@ const ProjectDetail = ({ match, drizzle, account, draft }) => {
     }
 
     if (draft === true) {
-      console.log(projectId);
       getDraftProject(drizzle, account, projectId);
     } else {
       getProject(drizzle, account, projectId);

@@ -60,6 +60,7 @@ const DraftProjectContractData = ({
                   </span>
                 </div>
                 <div style={{ marginTop: '20px' }} className='avatar'>
+                <span className='single__metaAddress'>Issuer</span>
                   <JazzIcon
                     diameter={40}
                     seed={jsNumberForAddress(projectDetails.issuer)}

@@ -33,9 +33,6 @@ const ProjectContractData = ({
   }, []);
 
   useEffect(() => {
-    console.log('Project Id: ' + projectId);
-    console.log(current);
-    console.log(lastChanged);
     if (current !== null && current.id === projectId) {
       // get the status
       const statusNames = Object.keys(projectStatus);
@@ -94,6 +91,7 @@ const ProjectContractData = ({
                 </div>
                 {project && project.issuer && (
                   <div style={{ marginTop: '20px' }} className='avatar'>
+                    <span className='single__metaAddress'>Issuer</span>
                     <JazzIcon
                       diameter={40}
                       seed={jsNumberForAddress(project.issuer)}
@@ -108,6 +106,26 @@ const ProjectContractData = ({
                       }}
                     >
                       {project.issuer}
+                    </p>
+                  </div>
+                )}
+                {project && project.fulfiller && (
+                  <div style={{ marginTop: '30px' }} className='avatar'>
+                    <span className='single__metaAddress'>Fulfiller</span>
+                    <JazzIcon
+                      diameter={40}
+                      seed={jsNumberForAddress(project.fulfiller)}
+                    />
+                    <p
+                      className='truncate'
+                      style={{
+                        position: 'relative',
+                        top: '7px',
+                        width: '130px',
+                        paddingLeft: '10px'
+                      }}
+                    >
+                      {project.fulfiller}
                     </p>
                   </div>
                 )}

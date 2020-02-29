@@ -785,12 +785,16 @@ const ProjectState = props => {
 
     const { description, creationDate, updateDate } = projectData;
 
+    // check of empty fulfiller address
+    const emptyAddress = /^0x0+$/.test(project.fulfiller);
+    
     const publishedProject = {
       ...project,
       id: projectId,
       description: description,
       creationDate: creationDate,
-      updateDate: updateDate
+      updateDate: updateDate,
+      fulfiller: emptyAddress ? null : project.fulfiller
     };
 
     dispatch({
