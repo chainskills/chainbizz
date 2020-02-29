@@ -33,9 +33,10 @@ const ProjectContractData = ({
   }, []);
 
   useEffect(() => {
+    console.log('Project Id: ' + projectId);
     console.log(current);
+    console.log(lastChanged);
     if (current !== null && current.id === projectId) {
-      console.log('Into useEffect: ' + projectId);
       // get the status
       const statusNames = Object.keys(projectStatus);
 

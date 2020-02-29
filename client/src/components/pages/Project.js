@@ -12,7 +12,8 @@ import EventContext from '../context/events/eventContext';
 import ProjectModal from '../dialog/modal/project/ProjectModal';
 import ConfirmModal from '../dialog/modal/confirm/ConfirmModal';
 import AcceptModal from '../dialog/modal/accept/AcceptModal';
-import RatingsModal from '../dialog/modal/ratings/RatingsFulfillerModal';
+import RatingsFulfillerModal from '../dialog/modal/ratings/RatingsFulfillerModal';
+import RatingsIssuerModal from '../dialog/modal/ratings/RatingsIssuerModal';
 
 const Project = ({ drizzle, account }) => {
   const authContext = useContext(AuthContext);
@@ -47,12 +48,14 @@ const Project = ({ drizzle, account }) => {
     cancelContract,
     disableContract,
     enableContract,
+    setRatingsIssuer,
     setRatingsFulfiller,
     showDeliverProject,
     showCancelServices,
     showAcceptDelivery,
     showRejectDelivery,
     showCancelContract,
+    showRatingsIssuer,
     showRatingsFulfiller,
     clearCurrentSelection,
     getProject,
@@ -74,6 +77,7 @@ const Project = ({ drizzle, account }) => {
   const [modalConfirmationOpen, setModalConfirmationOpen] = useState(false);
   const [modalProjectOpen, setModalProjectOpen] = useState(false);
   const [modalAcceptOpen, setModalAcceptOpen] = useState(false);
+  const [modalRatingsIssuerOpen, setModalRatingsIssuerOpen] = useState(false);
   const [modalRatingsFulfillerOpen, setModalRatingsFulfillerOpen] = useState(
     false
   );
@@ -572,10 +576,32 @@ const Project = ({ drizzle, account }) => {
     });
   };
 
+  const handleRatingsIssuer = id => {
+    setDataID(id);
+    setModalRatingsIssuerOpen(true);
+
+    setAction1({
+      title: 'Yes',
+      visible: true,
+      handle: function(id, ratings) {
+        setModalRatingsIssuerOpen(false);
+        setRatingsIssuer(drizzle, account, id, ratings);
+        clearCurrentSelection();
+      }
+    });
+
+    setAction2({
+      title: 'No',
+      visible: true,
+      handle: () => hideModalDialog()
+    });
+  };
+
   const hideModalDialog = () => {
     setModalProjectOpen(false);
     setModalConfirmationOpen(false);
     setModalAcceptOpen(false);
+    setModalRatingsIssuerOpen(false);
     setModalRatingsFulfillerOpen(false);
     clearCurrentSelection();
   };
@@ -625,6 +651,8 @@ const Project = ({ drizzle, account }) => {
         handleRejectDelivery(projectId);
       } else if (showCancelContract === true) {
         handleCancelContract(projectId);
+      } else if (showRatingsIssuer === true) {
+        handleRatingsIssuer(projectId);
       } else if (showRatingsFulfiller === true) {
         handleRatingsFulfiller(projectId);
       }
@@ -644,6 +672,7 @@ const Project = ({ drizzle, account }) => {
     showAcceptDelivery,
     showRejectDelivery,
     showCancelContract,
+    showRatingsIssuer,
     showRatingsFulfiller
   ]);
 
@@ -683,9 +712,8 @@ const Project = ({ drizzle, account }) => {
           action2={action2}
         />
       )}
-
-      {modalRatingsFulfillerOpen && (
-        <RatingsModal
+      {modalRatingsIssuerOpen && (
+        <RatingsIssuerModal
           title={modalTitle}
           content={modalDescription}
           dataID={dataID}
@@ -694,7 +722,16 @@ const Project = ({ drizzle, account }) => {
           action2={action2}
         />
       )}
-
+      {modalRatingsFulfillerOpen && (
+        <RatingsFulfillerModal
+          title={modalTitle}
+          content={modalDescription}
+          dataID={dataID}
+          onClose={() => hideModalDialog()}
+          action1={action1}
+          action2={action2}
+        />
+      )}
       {modalProjectOpen && (
         <ProjectModal
           dataID={dataID}

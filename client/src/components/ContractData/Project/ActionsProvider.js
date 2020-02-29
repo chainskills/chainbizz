@@ -4,13 +4,14 @@ import ProjectContext from '../../context/projects/projectContext';
 
 import { projectStatus } from './ProjectStatus';
 
-const ActionsProvider = ({ projectId, status }) => {
+const ActionsProvider = ({ projectId, status, rated }) => {
   const projectContext = useContext(ProjectContext);
   const {
     onSubmitOffer,
     onCancelOffer,
     onDeliverProject,
-    onCancelServices
+    onCancelServices,
+    onRatingsIssuer
   } = projectContext;
 
   return (
@@ -62,6 +63,22 @@ const ActionsProvider = ({ projectId, status }) => {
           </a>
         </span>
       )}
+
+      {(status === projectStatus.COMPLETED ||
+        status === projectStatus.CANCELED) &&
+        rated == false && (
+          <span>
+            <a
+              href={null}
+              onClick={() => {
+                onRatingsIssuer(projectId);
+              }}
+              title={'Set a rating to the issuer'}
+            >
+              <i className='material-icons card-icon'>star_half</i>
+            </a>
+          </span>
+        )}
     </div>
   );
 };

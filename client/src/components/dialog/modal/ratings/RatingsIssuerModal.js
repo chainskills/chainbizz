@@ -12,7 +12,7 @@ import starfull from '../../../../assets/images/starfull.png';
 const RatingsIssuerModal = ({ dataID, onClose, action1, action2 }) => {
   const escPress = useKeyPress('Escape');
 
-  const [ratings, setRatings] = useState([3, 3, 3, 3, 3, 3]);
+  const [ratings, setRatings] = useState([3, 3, 3, 3]);
 
   useEffect(() => {
     if (escPress) {
@@ -41,7 +41,9 @@ const RatingsIssuerModal = ({ dataID, onClose, action1, action2 }) => {
           </p>
           <div>
             <div className='row'>
-              <div className='col s6'>The requests were clearly described and precise:</div>
+              <div className='col s6'>
+                The requests were clearly described and precise:
+              </div>
               <div className='col s6'>
                 <Rating
                   emptySymbol={
@@ -55,7 +57,7 @@ const RatingsIssuerModal = ({ dataID, onClose, action1, action2 }) => {
                 />
               </div>
             </div>
-            
+
             <div className='row'>
               <div className='col s6'>
                 The issuer has the right soft-skills:
@@ -69,12 +71,14 @@ const RatingsIssuerModal = ({ dataID, onClose, action1, action2 }) => {
                     <img src={starfull} className='icon ratingsIcon' />
                   }
                   onChange={value => onChangeRating(1, value)}
-                  initialRating={ratings[3]}
+                  initialRating={ratings[1]}
                 />
               </div>
             </div>
             <div className='row'>
-              <div className='col s6'>The requests and the communication with the issuer were serious:</div>
+              <div className='col s6'>
+                The requests and the communication with the issuer were serious:
+              </div>
               <div className='col s6'>
                 <Rating
                   emptySymbol={
@@ -84,7 +88,7 @@ const RatingsIssuerModal = ({ dataID, onClose, action1, action2 }) => {
                     <img src={starfull} className='icon ratingsIcon' />
                   }
                   onChange={value => onChangeRating(2, value)}
-                  initialRating={ratings[4]}
+                  initialRating={ratings[2]}
                 />
               </div>
             </div>
@@ -99,7 +103,7 @@ const RatingsIssuerModal = ({ dataID, onClose, action1, action2 }) => {
                     <img src={starfull} className='icon ratingsIcon' />
                   }
                   onChange={value => onChangeRating(3, value)}
-                  initialRating={ratings[5]}
+                  initialRating={ratings[3]}
                 />
               </div>
             </div>

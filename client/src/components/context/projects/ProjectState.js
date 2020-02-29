@@ -37,12 +37,14 @@ import {
   ACCEPT_DELIVERY,
   REJECT_DELIVERY,
   CANCEL_CONTRACT,
+  RATINGS_ISSUER,
   RATINGS_FULFILLER,
   ON_DELIVER_PROJECT,
   ON_CANCEL_SERVICES,
   ON_ACCEPT_DELIVERY,
   ON_REJECT_DELIVERY,
   ON_CANCEL_CONTRACT,
+  ON_RATINGS_ISSUER,
   ON_RATINGS_FULFILLER,
   ON_CANCEL_MODAL,
   CLEAR_CURRENT_SELECTION,
@@ -72,6 +74,7 @@ const ProjectState = props => {
     showAcceptDelivery: false,
     showRejectDelivery: false,
     showCancelContract: false,
+    showRatingsIssuer: false,
     showRatingsFulfiller: false
   };
 
@@ -636,11 +639,30 @@ const ProjectState = props => {
       });
   };
 
+  // Set the ratings to the issuer
+  const setRatingsIssuer = (drizzle, account, projectId, ratings) => {
+    const { ChainBizz } = drizzle.contracts;
+
+    // set the ratings
+    ChainBizz.methods
+      .setRatingsIssuer(projectId, ratings)
+      .send({
+        from: account,
+        gas: 500000
+      })
+      .on('receipt', receipt => {
+        dispatch(getProject(drizzle, account, projectId));
+      })
+      .on('error', err => {
+        dispatch({ type: PROJECT_ERROR, payload: err });
+      });
+  };
+
   // Set the ratings to the fulfiller
   const setRatingsFulfiller = (drizzle, account, projectId, ratings) => {
     const { ChainBizz } = drizzle.contracts;
 
-    // cancel contract
+    // set the ratings
     ChainBizz.methods
       .setRatingsFulfiller(projectId, ratings)
       .send({
@@ -648,7 +670,7 @@ const ProjectState = props => {
         gas: 500000
       })
       .on('receipt', receipt => {
-        dispatch({ type: RATINGS_FULFILLER, payload: receipt });
+        dispatch(getProject(drizzle, account, projectId));
       })
       .on('error', err => {
         dispatch({ type: PROJECT_ERROR, payload: err });
@@ -718,6 +740,11 @@ const ProjectState = props => {
   // Prepare to cancel the contract
   const onCancelContract = projectId => {
     dispatch({ type: ON_CANCEL_CONTRACT, payload: projectId });
+  };
+
+  // Prepare to ratings for the issuer
+  const onRatingsIssuer = projectId => {
+    dispatch({ type: ON_RATINGS_ISSUER, payload: projectId });
   };
 
   // Prepare to ratings for the fulfiller
@@ -842,6 +869,7 @@ const ProjectState = props => {
         showAcceptDelivery: state.showAcceptDelivery,
         showRejectDelivery: state.showRejectDelivery,
         showCancelContract: state.showCancelContract,
+        showRatingsIssuer: state.showRatingsIssuer,
         showRatingsFulfiller: state.showRatingsFulfiller,
         addProject,
         updateProject,
@@ -867,12 +895,14 @@ const ProjectState = props => {
         acceptDelivery,
         rejectDelivery,
         cancelContract,
+        setRatingsIssuer,
         setRatingsFulfiller,
         onDeliverProject,
         onCancelServices,
         onAcceptDelivery,
         onRejectDelivery,
         onCancelContract,
+        onRatingsIssuer,
         onRatingsFulfiller,
         onCancelModal,
         getProject,
