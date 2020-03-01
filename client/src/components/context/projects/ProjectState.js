@@ -797,6 +797,7 @@ const ProjectState = props => {
       fulfiller: emptyAddress ? null : project.fulfiller
     };
 
+
     dispatch({
       type: GET_PROJECT,
       payload: publishedProject

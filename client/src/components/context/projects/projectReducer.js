@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 import {
   IS_ENABLED,
   ADD_PROJECT,
@@ -54,12 +56,13 @@ export default (state, action) => {
     case CANCEL_CONTRACT:
     case RATINGS_ISSUER:
     case RATINGS_FULFILLER:
-      console.log('Into reducer');
       return {
         ...state,
         project: action.payload,
         loading: false,
-        lastChanged: Date.now(),
+        lastChanged: _.isEqual(state.project, action.payload)
+          ? state.lastChanged
+          : new Date(),
         removed: false
       };
     case REMOVE_PROJECT:
@@ -188,7 +191,9 @@ export default (state, action) => {
         ...state,
         current: action.payload,
         loading: false,
-        lastChanged: Date.now(),
+        lastChanged: _.isEqual(state.current, action.payload)
+          ? state.lastChanged
+          : new Date(),
         removed: false
       };
     case PROJECT_ERROR:

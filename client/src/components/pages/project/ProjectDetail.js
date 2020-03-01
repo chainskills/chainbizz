@@ -81,8 +81,6 @@ const ProjectDetail = ({ match, drizzle, account, draft }) => {
     }
   }, [current]);
 
-  console.log(project);
-
   return (
     <div>
       <div>
