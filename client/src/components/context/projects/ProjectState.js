@@ -787,7 +787,7 @@ const ProjectState = props => {
 
     // check of empty fulfiller address
     const emptyAddress = /^0x0+$/.test(project.fulfiller);
-    
+
     const publishedProject = {
       ...project,
       id: projectId,

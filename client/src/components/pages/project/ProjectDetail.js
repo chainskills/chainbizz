@@ -5,6 +5,8 @@ import JazzIcon, { jsNumberForAddress } from 'react-jazzicon';
 
 import Rating from 'react-rating';
 
+import _ from 'lodash';
+
 import ProjectContext from '../../context/projects/projectContext';
 
 import { projectStatus } from '../../ContractData/Project/ProjectStatus';
@@ -245,109 +247,18 @@ const ProjectDetail = ({ match, drizzle, account, draft }) => {
         </div>
         {project && project.id && (
           <div className='row'>
-            {project.ratingsFulfillerDone === true && (
-              <div className='col s12 m12 l6 xl6'>
-                <h5>Ratings given by the issuer:</h5>
-                <div className='row'>
-                  <div className='col'>
-                    <p>I will recommend this fulfiller:</p>
-                    <Rating
-                      emptySymbol={
-                        <img src={starempty} className='icon ratingsIcon' />
-                      }
-                      fullSymbol={
-                        <img src={starfull} className='icon ratingsIcon' />
-                      }
-                      readonly
-                      initialRating={project.ratingsFulfiller[5]}
-                    />
-                  </div>
-                </div>
-                <div className='row'>
-                  <div className='col'>
-                    <p>The quality have been meet:</p>
-
-                    <Rating
-                      emptySymbol={
-                        <img src={starempty} className='icon ratingsIcon' />
-                      }
-                      fullSymbol={
-                        <img src={starfull} className='icon ratingsIcon' />
-                      }
-                      readonly
-                      initialRating={project.ratingsFulfiller[4]}
-                    />
-                  </div>
-                </div>
-
-                <div className='row'>
-                  <div className='col'>
-                    <p>My project was delivered on-time:</p>
-                    <Rating
-                      emptySymbol={
-                        <img src={starempty} className='icon ratingsIcon' />
-                      }
-                      fullSymbol={
-                        <img src={starfull} className='icon ratingsIcon' />
-                      }
-                      readonly
-                      initialRating={project.ratingsFulfiller[0]}
-                    />
-                  </div>
-                </div>
-                <div className='row'>
-                  <div className='col'>
-                    <p>My project was delivered on-budget:</p>
-                    <Rating
-                      emptySymbol={
-                        <img src={starempty} className='icon ratingsIcon' />
-                      }
-                      fullSymbol={
-                        <img src={starfull} className='icon ratingsIcon' />
-                      }
-                      readonly
-                      initialRating={project.ratingsFulfiller[1]}
-                    />
-                  </div>
-                </div>
-                <div className='row'>
-                  <div className='col'>
-                    <p>The fulfiller has the right hard-skills:</p>
-                    <Rating
-                      emptySymbol={
-                        <img src={starempty} className='icon ratingsIcon' />
-                      }
-                      fullSymbol={
-                        <img src={starfull} className='icon ratingsIcon' />
-                      }
-                      readonly
-                      initialRating={project.ratingsFulfiller[2]}
-                    />
-                  </div>
-                </div>
-                <div className='row'>
-                  <div className='col'>
-                    <p>The fulfiller has the right soft-skills:</p>
-                    <Rating
-                      emptySymbol={
-                        <img src={starempty} className='icon ratingsIcon' />
-                      }
-                      fullSymbol={
-                        <img src={starfull} className='icon ratingsIcon' />
-                      }
-                      readonly
-                      initialRating={project.ratingsFulfiller[3]}
-                    />
-                  </div>
-                </div>
-              </div>
-            )}
             {project.ratingsIssuerDone === true && (
               <div className='col s12 m12 l6 xl6'>
-                <h5>Ratings given by the fulfiller:</h5>
+                <h5>
+                  Ratings given to the issuer:{' '}
+                  {_.mean(
+                    Array.from(project.ratingsIssuer, value => Number(value))
+                  ).toFixed(1)}{' '}
+                  / 5
+                </h5>
                 <div className='row'>
                   <div className='col'>
-                    <p>I will recommend this issuer:</p>
+                    <p>We recommend this issuer:</p>
                     <Rating
                       emptySymbol={
                         <img src={starempty} className='icon ratingsIcon' />
@@ -377,7 +288,7 @@ const ProjectDetail = ({ match, drizzle, account, draft }) => {
                 </div>
                 <div className='row'>
                   <div className='col'>
-                    <p>The issuer has the right soft-skills:</p>
+                    <p>The issuer had the right soft-skills:</p>
                     <Rating
                       emptySymbol={
                         <img src={starempty} className='icon ratingsIcon' />
@@ -392,10 +303,7 @@ const ProjectDetail = ({ match, drizzle, account, draft }) => {
                 </div>
                 <div className='row'>
                   <div className='col'>
-                    <p>
-                      The requests and the communication with the issuer were
-                      serious:
-                    </p>
+                    <p>The issuer was serious:</p>
                     <Rating
                       emptySymbol={
                         <img src={starempty} className='icon ratingsIcon' />
@@ -405,6 +313,109 @@ const ProjectDetail = ({ match, drizzle, account, draft }) => {
                       }
                       readonly
                       initialRating={project.ratingsIssuer[2]}
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
+            {project.ratingsFulfillerDone === true && (
+              <div className='col s12 m12 l6 xl6'>
+                <h5>
+                  Ratings given to the fulfiller:{' '}
+                  {_.mean(
+                    Array.from(project.ratingsFulfiller, value => Number(value))
+                  ).toFixed(1)}{' '}
+                  / 5
+                </h5>
+                <div className='row'>
+                  <div className='col'>
+                    <p>We recommend this fulfiller:</p>
+                    <Rating
+                      emptySymbol={
+                        <img src={starempty} className='icon ratingsIcon' />
+                      }
+                      fullSymbol={
+                        <img src={starfull} className='icon ratingsIcon' />
+                      }
+                      readonly
+                      initialRating={project.ratingsFulfiller[5]}
+                    />
+                  </div>
+                </div>
+                <div className='row'>
+                  <div className='col'>
+                    <p>The delivery reached the expected level of quality:</p>
+
+                    <Rating
+                      emptySymbol={
+                        <img src={starempty} className='icon ratingsIcon' />
+                      }
+                      fullSymbol={
+                        <img src={starfull} className='icon ratingsIcon' />
+                      }
+                      readonly
+                      initialRating={project.ratingsFulfiller[4]}
+                    />
+                  </div>
+                </div>
+
+                <div className='row'>
+                  <div className='col'>
+                    <p>The project has been delivered on-time:</p>
+                    <Rating
+                      emptySymbol={
+                        <img src={starempty} className='icon ratingsIcon' />
+                      }
+                      fullSymbol={
+                        <img src={starfull} className='icon ratingsIcon' />
+                      }
+                      readonly
+                      initialRating={project.ratingsFulfiller[0]}
+                    />
+                  </div>
+                </div>
+                <div className='row'>
+                  <div className='col'>
+                    <p>The budget has been respected:</p>
+                    <Rating
+                      emptySymbol={
+                        <img src={starempty} className='icon ratingsIcon' />
+                      }
+                      fullSymbol={
+                        <img src={starfull} className='icon ratingsIcon' />
+                      }
+                      readonly
+                      initialRating={project.ratingsFulfiller[1]}
+                    />
+                  </div>
+                </div>
+                <div className='row'>
+                  <div className='col'>
+                    <p>The fulfiller had the right hard-skills:</p>
+                    <Rating
+                      emptySymbol={
+                        <img src={starempty} className='icon ratingsIcon' />
+                      }
+                      fullSymbol={
+                        <img src={starfull} className='icon ratingsIcon' />
+                      }
+                      readonly
+                      initialRating={project.ratingsFulfiller[2]}
+                    />
+                  </div>
+                </div>
+                <div className='row'>
+                  <div className='col'>
+                    <p>The fulfiller had the right soft-skills:</p>
+                    <Rating
+                      emptySymbol={
+                        <img src={starempty} className='icon ratingsIcon' />
+                      }
+                      fullSymbol={
+                        <img src={starfull} className='icon ratingsIcon' />
+                      }
+                      readonly
+                      initialRating={project.ratingsFulfiller[3]}
                     />
                   </div>
                 </div>
