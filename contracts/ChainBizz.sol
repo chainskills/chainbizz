@@ -98,19 +98,6 @@ contract ChainBizz {
     /*
    * Events
    */
-    event NewProject(
-        uint256 id,
-        address indexed issuer,
-        string title,
-        uint256 price
-    );
-    event UpdateProject(
-        uint256 id,
-        address indexed issuer,
-        string title,
-        uint256 price
-    );
-    event RemoveProject(uint256 id, address indexed issuer, string title);
     event PublishedProject(
         uint256 id,
         address indexed issuer,
@@ -253,97 +240,6 @@ contract ChainBizz {
     //
     // Setters
     //
-
-    // Add a new project
-    function addProject(string memory _title, uint256 _price)
-        public
-        onlyEnable
-    {
-        // a title is required
-        bytes memory title = bytes(_title);
-        require(title.length > 0, "A title is required");
-
-        // new project
-        projectsCounter = projectsCounter.add(1);
-
-        // store the new project
-        projects[projectsCounter] = ProjectItem(
-            projectsCounter,
-            msg.sender,
-            address(0x0),
-            _title,
-            _price,
-            "",
-            ProjectStatus.Draft,
-            false,
-            false,
-            new uint256[](MAX_RATINGS_ISSUER),
-            new uint256[](MAX_RATINGS_FULFILLER)
-        );
-
-        emit NewProject(projectsCounter, msg.sender, _title, _price);
-    }
-
-    // Update an unpublished project
-    function updateProject(uint256 _id, string memory _title, uint256 _price)
-        public
-        onlyEnable
-    {
-        // retrieve the project
-        ProjectItem storage project = projects[_id];
-
-        // ensure that this project exists
-        if (project.issuer == address(0x0)) {
-            return;
-        }
-
-        // do we own this project?
-        require(
-            project.issuer == msg.sender,
-            "You are not the issuer of this project"
-        );
-
-        // ready to be published?
-        require(
-            project.status == ProjectStatus.Draft,
-            "Cannot be updated while published"
-        );
-
-        // a title is required
-        bytes memory title = bytes(_title);
-        require(title.length > 0, "A title is required");
-
-        // update the project
-        project.title = _title;
-        project.price = _price;
-
-        emit UpdateProject(projectsCounter, msg.sender, _title, _price);
-    }
-
-    // Remove an unpublished project
-    function removeProject(uint256 _id) public onlyEnable {
-        // retrieve the project
-        ProjectItem memory project = projects[_id];
-
-        // ensure that this project exists
-        if (project.issuer == address(0x0)) {
-            return;
-        }
-
-        // do we own this project?
-        require(
-            project.issuer == msg.sender,
-            "You are not the issuer of this project"
-        );
-
-        // keep title for future use
-        string memory title = project.title;
-
-        // remove the project
-        delete projects[_id];
-
-        emit RemoveProject(_id, msg.sender, title);
-    }
 
     // Publish the project to seek for fulfillers
     function publishProject(

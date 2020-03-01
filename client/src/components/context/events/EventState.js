@@ -12,9 +12,6 @@ const EventState = props => {
 
   const [state, dispatch] = useReducer(eventReducer, initialState);
 
-  const [eventNewProject, setEventNewProject] = useState(null);
-  const [eventUpdateProject, setEventUpdateProject] = useState(null);
-  const [eventRemoveProject, setEventRemoveProject] = useState(null);
   const [eventPublishedProject, setEventPublishedProject] = useState(null);
   const [eventUnpublishedProject, setEventUnpublishedProject] = useState(null);
   const [eventOfferSubmitted, setEventOfferSubmitted] = useState(null);
@@ -33,9 +30,6 @@ const EventState = props => {
   const setupEvents = async (drizzle, account) => {
     // default values
     let eventSettings = {
-      newProject: false,
-      updateProject: false,
-      removeProject: false,
       publishedProject: false,
       unpublishedProject: false,
       offerSubmitted: false,
@@ -66,21 +60,6 @@ const EventState = props => {
 
     // first we unsubscribe to all running events
     unsubscribeAllEvents();
-
-    // New project event
-    if (eventSettings.newProject === true) {
-      subscribeNewProjectEvent(drizzle, account);
-    }
-
-    // Updated project event
-    if (eventSettings.updateProject === true) {
-      subscribeUpdateProjectEvent(drizzle, account);
-    }
-
-    // Removed project event
-    if (eventSettings.removeProject === true) {
-      subscribeRemoveProjectEvent(drizzle, account);
-    }
 
     // Published project event
     if (eventSettings.publishedProject === true) {
@@ -138,133 +117,6 @@ const EventState = props => {
     }
 
     dispatch({ type: SETUP_EVENT });
-  };
-
-  // subscribe to the new project event
-  const subscribeNewProjectEvent = (drizzle, account) => {
-    if (eventNewProject !== null) {
-      // event already registered
-      return;
-    }
-    const { ChainBizz } = drizzle.contracts;
-
-    const event = ChainBizz.events
-      .NewProject({
-        fromBlock: 'latest',
-        toBlock: 'latest',
-        filter: { issuer: [account] }
-      })
-      .on('data', function(event) {
-        if (typeof eventMap.get(event.id) === 'undefined') {
-          const eventMessage =
-            'id: ' +
-            event.returnValues.id +
-            ', issuer: ' +
-            event.returnValues.issuer +
-            ', title: ' +
-            event.returnValues.title +
-            ', price: ' +
-            event.returnValues.price;
-
-          eventMap.set(event.id, {
-            key: event.id,
-            name: event.event,
-            message: eventMessage
-          });
-          setEventMap(eventMap);
-
-          dispatch({ type: NEW_EVENT, payload: eventMap, eventId: event.id });
-        }
-      })
-      .on('error', function(error) {
-        console.error(error);
-      });
-
-    setEventNewProject(event);
-  };
-
-  // subscribe to the update project event
-  const subscribeUpdateProjectEvent = (drizzle, account) => {
-    if (eventUpdateProject !== null) {
-      // event already registered
-      return;
-    }
-    const { ChainBizz } = drizzle.contracts;
-
-    const event = ChainBizz.events
-      .UpdateProject({
-        fromBlock: 'latest',
-        toBlock: 'latest',
-        filter: { issuer: [account] }
-      })
-      .on('data', function(event) {
-        if (typeof eventMap.get(event.id) === 'undefined') {
-          const eventMessage =
-            'id: ' +
-            event.returnValues.id +
-            ', issuer: ' +
-            event.returnValues.issuer +
-            ', title: ' +
-            event.returnValues.title +
-            ', price: ' +
-            event.returnValues.price;
-
-          eventMap.set(event.id, {
-            key: event.id,
-            name: event.event,
-            message: eventMessage
-          });
-          setEventMap(eventMap);
-
-          dispatch({ type: NEW_EVENT, payload: eventMap, eventId: event.id });
-        }
-      })
-      .on('error', function(error) {
-        console.error(error);
-      });
-
-    setEventUpdateProject(event);
-  };
-
-  // subscribe to the remove project event
-  const subscribeRemoveProjectEvent = (drizzle, account) => {
-    if (eventRemoveProject !== null) {
-      // event already registered
-      return;
-    }
-    const { ChainBizz } = drizzle.contracts;
-
-    const event = ChainBizz.events
-      .RemoveProject({
-        fromBlock: 'latest',
-        toBlock: 'latest',
-        filter: { issuer: [account] }
-      })
-      .on('data', function(event) {
-        if (typeof eventMap.get(event.id) === 'undefined') {
-          const eventMessage =
-            'id: ' +
-            event.returnValues.id +
-            ', issuer: ' +
-            event.returnValues.issuer +
-            ', title: ' +
-            event.returnValues.title;
-
-          eventMap.set(event.id, {
-            key: event.id,
-            name: event.event,
-            message: eventMessage
-          });
-          setEventMap(eventMap);
-
-          dispatch({ type: NEW_EVENT, payload: eventMap, eventId: event.id });
-        }
-      })
-      .on('error', function(error) {
-        console.error(error);
-      });
-
-    setEventRemoveProject(event);
   };
 
   // subscribe to the published project event
@@ -760,21 +612,6 @@ const EventState = props => {
 
   // Unsubscribe to events
   const unsubscribeAllEvents = () => {
-    if (eventNewProject !== null) {
-      eventNewProject.unsubscribe();
-      setEventNewProject(null);
-    }
-
-    if (eventUpdateProject !== null) {
-      eventPublishedProject.unsubscribe();
-      setEventPublishedProject(null);
-    }
-
-    if (eventRemoveProject !== null) {
-      eventRemoveProject.unsubscribe();
-      setEventRemoveProject(null);
-    }
-
     if (eventPublishedProject !== null) {
       eventPublishedProject.unsubscribe();
       setEventPublishedProject(null);

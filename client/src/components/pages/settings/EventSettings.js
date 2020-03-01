@@ -10,9 +10,6 @@ import './EventSettings.css';
 
 const EventSettings = ({ drizzle }) => {
   const [settings, setSettings] = useState({
-    newProject: false,
-    updateProject: false,
-    removeProject: false,
     publishedProject: false,
     unpublishedProject: false,
     offerSubmitted: false,
@@ -77,57 +74,7 @@ const EventSettings = ({ drizzle }) => {
         Select the events you want to listen. Each event is related to a journey
         that follows each project.
       </p>
-      <div className='row'>
-        <div className='col s8 m6'>A new project is created</div>
 
-        <div className='col s4 m6 switch'>
-          <label>
-            Off
-            <input
-              type='checkbox'
-              name='newProject'
-              checked={settings !== null ? settings.newProject : false}
-              onChange={onChange}
-            />
-            <span className='lever'></span>
-            On
-          </label>
-        </div>
-      </div>
-      <div className='row'>
-        <div className='col s8 m6'>A project is updated</div>
-
-        <div className='col s4 m6 switch'>
-          <label>
-            Off
-            <input
-              type='checkbox'
-              name='updateProject'
-              checked={settings !== null ? settings.updateProject : false}
-              onChange={onChange}
-            />
-            <span className='lever'></span>
-            On
-          </label>
-        </div>
-      </div>
-      <div className='row'>
-        <div className='col s8 m6'>A project is removed</div>
-
-        <div className='col s4 m6 switch'>
-          <label>
-            Off
-            <input
-              type='checkbox'
-              name='removeProject'
-              checked={settings !== null ? settings.removeProject : false}
-              onChange={onChange}
-            />
-            <span className='lever'></span>
-            On
-          </label>
-        </div>
-      </div>
       <div className='row'>
         <div className='col s8 m6'>A project is published</div>
 

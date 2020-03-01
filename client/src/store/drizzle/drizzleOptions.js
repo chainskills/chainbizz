@@ -12,9 +12,6 @@ const drizzleOptions = {
   contracts: [ChainBizz],
   events: {
     ChainBizz: [
-      'NewProject',
-      'UpdateProject',
-      'RemoveProject',
       'PublishedProject',
       'UnpublishedProject',
       'OfferSubmitted',
