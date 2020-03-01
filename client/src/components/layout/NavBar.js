@@ -141,7 +141,7 @@ const NavBar = ({ account }) => {
           <div className='user-view'>
             <ul id='menu-dropdown' className='dropdown-content'>
               <li>
-                <NavLink to='/'>Profile</NavLink>
+                <NavLink to='/profile'>Profile</NavLink>
               </li>
 
               <li>
@@ -202,34 +202,37 @@ const NavBar = ({ account }) => {
           }}
         ></li>
         <li>
-          <NavLink to='/' className='sidenav-close'>
-            Available projects
+          <NavLink to='/myprojects' className='sidenav-close'>
+            My draft
           </NavLink>
         </li>
         <li>
           <div className='divider'></div>
         </li>
         <li>
-          <NavLink to='/myprojects' className='sidenav-close'>
-            My projects
+          <NavLink to='/' className='sidenav-close'>
+            Published
           </NavLink>
+        </li>
+        <li>
+          <div className='divider'></div>
+        </li>
+        <li>
+          <NavLink to='/myoffers' className='sidenav-close'>
+            My proposals
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to='/myreviews' className='sidenav-close'>
+            Proposals to review
+          </NavLink>
+        </li>
+        <li>
+          <div className='divider'></div>
         </li>
         <li>
           <NavLink to='/mycontracts' className='sidenav-close'>
             My ongoing contracts
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to='/myoffers' className='sidenav-close'>
-            My offers
-          </NavLink>
-        </li>
-        <li>
-          <div className='divider'></div>
-        </li>
-        <li>
-          <NavLink to='/myreviews' className='sidenav-close'>
-            Offers to review
           </NavLink>
         </li>
         <li>

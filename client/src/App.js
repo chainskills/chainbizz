@@ -28,6 +28,7 @@ import Completed from './components/pages/Completed';
 import Canceled from './components/pages/Canceled';
 
 import history from './components/pages/route/history';
+import UserProfile from './components/pages/profile/UserProfile';
 
 const App = ({ drizzleContext }) => {
   const { drizzleState, drizzle, initialized } = drizzleContext;
@@ -121,6 +122,14 @@ const App = ({ drizzleContext }) => {
                       <Route exact path='/login' component={Login} />
 
                       <Route exact path='/register' component={Register} />
+
+                      <Route
+                        exact
+                        path='/profile'
+                        render={() => (
+                          <UserProfile drizzle={drizzle} account={account} />
+                        )}
+                      />
 
                       <Route
                         exact
