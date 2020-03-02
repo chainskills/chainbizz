@@ -3,6 +3,8 @@ import React, { useState, useContext, useEffect } from 'react';
 import { createBrowserHistory } from 'history';
 import JazzIcon, { jsNumberForAddress } from 'react-jazzicon';
 
+import { NavLink } from 'react-router-dom';
+
 import Rating from 'react-rating';
 
 import _ from 'lodash';
@@ -154,7 +156,9 @@ const ProjectDetail = ({ match, drizzle, account, draft }) => {
                           paddingLeft: '10px'
                         }}
                       >
-                        {project.issuer}
+                        <NavLink to={`/profile/${project.issuer}`}>
+                          {project.issuer}
+                        </NavLink>
                       </p>
                     </div>
                   </div>
@@ -179,7 +183,9 @@ const ProjectDetail = ({ match, drizzle, account, draft }) => {
                               paddingLeft: '10px'
                             }}
                           >
-                            {project.fulfiller}
+                            <NavLink to={`/profile/${project.fulfiller}`}>
+                              {project.fulfiller}
+                            </NavLink>
                           </p>
                         </div>
                       </div>

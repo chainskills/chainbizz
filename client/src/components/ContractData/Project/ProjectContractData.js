@@ -105,7 +105,9 @@ const ProjectContractData = ({
                         paddingLeft: '10px'
                       }}
                     >
-                      {project.issuer}
+                      <NavLink to={`/profile/${project.issuer}`}>
+                        {project.issuer}
+                      </NavLink>
                     </p>
                   </div>
                 )}
@@ -125,7 +127,9 @@ const ProjectContractData = ({
                         paddingLeft: '10px'
                       }}
                     >
-                      {project.fulfiller}
+                      <NavLink to={`/profile/${project.fulfiller}`}>
+                        {project.fulfiller}
+                      </NavLink>
                     </p>
                   </div>
                 )}
