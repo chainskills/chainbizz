@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 
+import { createBrowserHistory } from 'history';
+
 import _ from 'lodash';
 
 import JazzIcon, { jsNumberForAddress } from 'react-jazzicon';
@@ -15,7 +17,24 @@ import starempty from '../../../assets/images/starempty.png';
 
 import './UserProfile.css';
 
-const UserProfile = ({ drizzle, account }) => {
+const UserProfile = ({ match, drizzle }) => {
+  let account = null;
+  try {
+    account = match.params.account;
+  } catch (error) {
+    // unable to process input argument
+  }
+
+  const goBack = () => {
+    // go back to the previous page
+    const history = createBrowserHistory();
+    history.goBack();
+  };
+
+  if (account === null) {
+    goBack();
+  }
+
   const [balance, setBalance] = useState(0);
 
   const profileContext = useContext(ProfileContext);
@@ -44,6 +63,19 @@ const UserProfile = ({ drizzle, account }) => {
   return (
     <div>
       <div className='row'>
+        <div className='col s12 m12'>
+
+        <div className='single__header'>
+          <a
+            className='btn-flat waves-effect waves-light no-uppercase back-button'
+            style={{ width: '150px' }}
+            onClick={() => goBack()}
+          >
+            <i className='material-icons'>arrow_back</i>
+            <span>Back</span>
+          </a>
+          </div>
+        </div>
         <div className='col s12 center-align'>
           <JazzIcon diameter={60} seed={jsNumberForAddress(account)} />
         </div>

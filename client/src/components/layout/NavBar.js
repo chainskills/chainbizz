@@ -141,7 +141,7 @@ const NavBar = ({ account }) => {
           <div className='user-view'>
             <ul id='menu-dropdown' className='dropdown-content'>
               <li>
-                <NavLink to='/profile'>Profile</NavLink>
+                <NavLink to={`/profile/${account}`}>Profile</NavLink>
               </li>
 
               <li>

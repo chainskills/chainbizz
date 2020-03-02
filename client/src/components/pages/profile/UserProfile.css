@@ -1,3 +1,22 @@
 .save-settings {
   margin-top: 20px;
 }
+
+.back-button {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  color: #4fa6da;
+}
+
+.back-button span {
+  position: relative;
+  top: -4px;
+  font-size: 16px;
+  left: 5px;
+}
+
+.single__header {
+  padding: 40px 0 20px 0;
+  position: relative;
+}

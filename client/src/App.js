@@ -129,9 +129,9 @@ const App = ({ drizzleContext }) => {
 
                         <Route
                           exact
-                          path='/profile'
-                          render={() => (
-                            <UserProfile drizzle={drizzle} account={account} />
+                          path='/profile/:account'
+                          render={({ match }) => (
+                            <UserProfile match={match} drizzle={drizzle} />
                           )}
                         />
 
