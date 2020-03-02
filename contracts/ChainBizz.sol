@@ -849,6 +849,66 @@ contract ChainBizz {
         return allProjects;
     }
 
+    // return all projects published as issued
+    function getAllProjectsAsIssuer() public view returns (uint256[] memory) {
+        if (projectsCounter == 0) {
+            return new uint256[](0);
+        }
+
+        // prepare output array
+        uint256[] memory projectIDs = new uint256[](projectsCounter);
+
+        // iterate over projects
+        uint256 numberOfProjects = 0;
+        for (uint256 i = 1; i <= projectsCounter; i++) {
+            // skip deleted projects
+            if (projects[i].issuer == msg.sender) {
+                projectIDs[numberOfProjects] = projects[i].id;
+                numberOfProjects = numberOfProjects.add(1);
+            }
+        }
+
+        // copy the project ID array into a smaller array
+        uint256[] memory allProjects = new uint256[](numberOfProjects);
+        for (uint256 j = 0; j < numberOfProjects; j++) {
+            allProjects[j] = projectIDs[j];
+        }
+
+        return allProjects;
+    }
+
+    // return all projects performed by the fulfiller
+    function getAllProjectsAsFulfiller()
+        public
+        view
+        returns (uint256[] memory)
+    {
+        if (projectsCounter == 0) {
+            return new uint256[](0);
+        }
+
+        // prepare output array
+        uint256[] memory projectIDs = new uint256[](projectsCounter);
+
+        // iterate over projects
+        uint256 numberOfProjects = 0;
+        for (uint256 i = 1; i <= projectsCounter; i++) {
+            // skip deleted projects
+            if (projects[i].fulfiller == msg.sender) {
+                projectIDs[numberOfProjects] = projects[i].id;
+                numberOfProjects = numberOfProjects.add(1);
+            }
+        }
+
+        // copy the project ID array into a smaller array
+        uint256[] memory allProjects = new uint256[](numberOfProjects);
+        for (uint256 j = 0; j < numberOfProjects; j++) {
+            allProjects[j] = projectIDs[j];
+        }
+
+        return allProjects;
+    }
+
     // return all published projects
     function getPublishedProjects() public view returns (uint256[] memory) {
         if (projectsCounter == 0) {
@@ -1105,4 +1165,81 @@ contract ChainBizz {
 
         return myCanceled;
     }
+
+    // retrieve sum of ratings for all projects for the issuer
+    function getRatingsAsIssuer()
+        public
+        view
+        returns (uint256[] memory ratings, uint256 nbProjects)
+    {
+        if (projectsCounter == 0) {
+            return (new uint256[](MAX_RATINGS_ISSUER), 0);
+        }
+
+        // prepare output array
+        uint256[] memory allRatings = new uint256[](MAX_RATINGS_ISSUER);
+
+        // iterate over projects to get all ratings
+        uint256 numberOfProjects = 0;
+        for (uint256 i = 1; i <= projectsCounter; i++) {
+            // get only projects issued by the issuer
+            if (
+                (projects[i].issuer == msg.sender) &&
+                (projects[i].ratingsIssuerDone == true)
+            ) {
+                for (
+                    uint256 indexRating = 0;
+                    indexRating < MAX_RATINGS_ISSUER;
+                    indexRating++
+                ) {
+                    allRatings[indexRating] = allRatings[indexRating].add(
+                        projects[i].ratingsIssuer[indexRating]
+                    );
+                }
+
+                numberOfProjects = numberOfProjects.add(1);
+            }
+        }
+
+        return (allRatings, numberOfProjects);
+    }
+
+    // retrieve sum of ratings for all projects for the fulfiller
+    function getRatingsAsFulfiller()
+        public
+        view
+        returns (uint256[] memory ratings, uint256 nbProjects)
+    {
+        if (projectsCounter == 0) {
+            return (new uint256[](MAX_RATINGS_FULFILLER), 0);
+        }
+
+        // prepare output array
+        uint256[] memory allRatings = new uint256[](MAX_RATINGS_FULFILLER);
+
+        // iterate over projects to get all ratings
+        uint256 numberOfProjects = 0;
+        for (uint256 i = 1; i <= projectsCounter; i++) {
+            // get only projects issued by the fulfiller
+            if (
+                (projects[i].fulfiller == msg.sender) &&
+                (projects[i].ratingsFulfillerDone == true)
+            ) {
+                for (
+                    uint256 indexRating = 0;
+                    indexRating < MAX_RATINGS_FULFILLER;
+                    indexRating++
+                ) {
+                    allRatings[indexRating] = allRatings[indexRating].add(
+                        projects[i].ratingsFulfiller[indexRating]
+                    );
+                }
+
+                numberOfProjects = numberOfProjects.add(1);
+            }
+        }
+
+        return (allRatings, numberOfProjects);
+    }
+
 }

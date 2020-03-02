@@ -10,6 +10,7 @@ import ProjectState from './components/context/projects/ProjectState';
 import EventState from './components/context/events/EventState';
 import AuthState from './components/context/auth/AuthState';
 import NotificationState from './components/context/notifications/NotificationState';
+import ProfileState from './components/context/profile/ProfileState';
 
 import NavBar from './components/layout/NavBar';
 import Login from './components/pages/Login';
@@ -53,22 +54,24 @@ const App = ({ drizzleContext }) => {
       <NotificationState>
         <AuthState>
           <EventState>
-            <Router history={history}>
-              <Fragment>
-                <NavBar account={account} />
+            <ProfileState>
+              <Router history={history}>
+                <Fragment>
+                  <NavBar account={account} />
 
-                <div className='container'>
-                  {!initialized && (
-                    <div>
-                      <h2>Preparing the Dapp</h2>
-                      <div className='progress'>
-                        <div className='indeterminate' />
+                  <div className='container'>
+                    {!initialized && (
+                      <div>
+                        <h2>Preparing the Dapp</h2>
+                        <div className='progress'>
+                          <div className='indeterminate' />
+                        </div>
                       </div>
-                    </div>
-                  )}
-                </div>
-              </Fragment>
-            </Router>
+                    )}
+                  </div>
+                </Fragment>
+              </Router>
+            </ProfileState>
           </EventState>
         </AuthState>
       </NotificationState>
@@ -89,179 +92,181 @@ const App = ({ drizzleContext }) => {
       <AuthState>
         <EventState>
           <ProjectState>
-            <Router history={history}>
-              <Fragment>
-                <NavBar account={account} />
+            <ProfileState>
+              <Router history={history}>
+                <Fragment>
+                  <NavBar account={account} />
 
-                <Project drizzle={drizzle} account={account} />
+                  <Project drizzle={drizzle} account={account} />
 
-                <div className='container'>
-                  {!initialized && (
-                    <div>
-                      <h2>Preparing the Dapp</h2>
-                      <div className='progress'>
-                        <div className='indeterminate' />
+                  <div className='container'>
+                    {!initialized && (
+                      <div>
+                        <h2>Preparing the Dapp</h2>
+                        <div className='progress'>
+                          <div className='indeterminate' />
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
 
-                  {initialized && (
-                    <Switch>
-                      <Route
-                        exact
-                        path='/'
-                        render={() => (
-                          <PublishedProjects
-                            drizzle={drizzle}
-                            drizzleState={drizzleState}
-                            account={account}
-                          />
-                        )}
-                      />
+                    {initialized && (
+                      <Switch>
+                        <Route
+                          exact
+                          path='/'
+                          render={() => (
+                            <PublishedProjects
+                              drizzle={drizzle}
+                              drizzleState={drizzleState}
+                              account={account}
+                            />
+                          )}
+                        />
 
-                      <Route exact path='/login' component={Login} />
+                        <Route exact path='/login' component={Login} />
 
-                      <Route exact path='/register' component={Register} />
+                        <Route exact path='/register' component={Register} />
 
-                      <Route
-                        exact
-                        path='/profile'
-                        render={() => (
-                          <UserProfile drizzle={drizzle} account={account} />
-                        )}
-                      />
+                        <Route
+                          exact
+                          path='/profile'
+                          render={() => (
+                            <UserProfile drizzle={drizzle} account={account} />
+                          )}
+                        />
 
-                      <Route
-                        exact
-                        path='/events'
-                        render={() => <EventSettings drizzle={drizzle} />}
-                      />
+                        <Route
+                          exact
+                          path='/events'
+                          render={() => <EventSettings drizzle={drizzle} />}
+                        />
 
-                      <Route
-                        exact
-                        path='/project/:id'
-                        render={({ match }) => (
-                          <ProjectDetail
-                            drizzle={drizzle}
-                            account={account}
-                            match={match}
-                            draft={false}
-                          />
-                        )}
-                      />
+                        <Route
+                          exact
+                          path='/project/:id'
+                          render={({ match }) => (
+                            <ProjectDetail
+                              drizzle={drizzle}
+                              account={account}
+                              match={match}
+                              draft={false}
+                            />
+                          )}
+                        />
 
-                      <Route
-                        exact
-                        path='/project/draft/:id'
-                        render={({ match }) => (
-                          <ProjectDetail
-                            drizzle={drizzle}
-                            account={account}
-                            match={match}
-                            draft={true}
-                          />
-                        )}
-                      />
+                        <Route
+                          exact
+                          path='/project/draft/:id'
+                          render={({ match }) => (
+                            <ProjectDetail
+                              drizzle={drizzle}
+                              account={account}
+                              match={match}
+                              draft={true}
+                            />
+                          )}
+                        />
 
-                      <Route
-                        exact
-                        path='/myprojects'
-                        render={() => (
-                          <MyDraftProjects
-                            drizzle={drizzle}
-                            drizzleState={drizzleState}
-                            account={account}
-                          />
-                        )}
-                      />
+                        <Route
+                          exact
+                          path='/myprojects'
+                          render={() => (
+                            <MyDraftProjects
+                              drizzle={drizzle}
+                              drizzleState={drizzleState}
+                              account={account}
+                            />
+                          )}
+                        />
 
-                      <Route
-                        exact
-                        path='/myoffers'
-                        render={() => (
-                          <MyOffers
-                            drizzle={drizzle}
-                            drizzleState={drizzleState}
-                            account={account}
-                          />
-                        )}
-                      />
+                        <Route
+                          exact
+                          path='/myoffers'
+                          render={() => (
+                            <MyOffers
+                              drizzle={drizzle}
+                              drizzleState={drizzleState}
+                              account={account}
+                            />
+                          )}
+                        />
 
-                      <Route
-                        exact
-                        path='/myreviews'
-                        render={() => (
-                          <OffersReview
-                            drizzle={drizzle}
-                            drizzleState={drizzleState}
-                            account={account}
-                          />
-                        )}
-                      />
+                        <Route
+                          exact
+                          path='/myreviews'
+                          render={() => (
+                            <OffersReview
+                              drizzle={drizzle}
+                              drizzleState={drizzleState}
+                              account={account}
+                            />
+                          )}
+                        />
 
-                      <Route
-                        exact
-                        path='/mycontracts'
-                        render={() => (
-                          <MyContracts
-                            drizzle={drizzle}
-                            drizzleState={drizzleState}
-                            account={account}
-                          />
-                        )}
-                      />
+                        <Route
+                          exact
+                          path='/mycontracts'
+                          render={() => (
+                            <MyContracts
+                              drizzle={drizzle}
+                              drizzleState={drizzleState}
+                              account={account}
+                            />
+                          )}
+                        />
 
-                      <Route
-                        exact
-                        path='/deliveries'
-                        render={() => (
-                          <DeliveriesReview
-                            drizzle={drizzle}
-                            drizzleState={drizzleState}
-                            account={account}
-                          />
-                        )}
-                      />
+                        <Route
+                          exact
+                          path='/deliveries'
+                          render={() => (
+                            <DeliveriesReview
+                              drizzle={drizzle}
+                              drizzleState={drizzleState}
+                              account={account}
+                            />
+                          )}
+                        />
 
-                      <Route
-                        exact
-                        path='/completed'
-                        render={() => (
-                          <Completed
-                            drizzle={drizzle}
-                            drizzleState={drizzleState}
-                            account={account}
-                          />
-                        )}
-                      />
+                        <Route
+                          exact
+                          path='/completed'
+                          render={() => (
+                            <Completed
+                              drizzle={drizzle}
+                              drizzleState={drizzleState}
+                              account={account}
+                            />
+                          )}
+                        />
 
-                      <Route
-                        exact
-                        path='/canceled'
-                        render={() => (
-                          <Canceled
-                            drizzle={drizzle}
-                            drizzleState={drizzleState}
-                            account={account}
-                          />
-                        )}
-                      />
+                        <Route
+                          exact
+                          path='/canceled'
+                          render={() => (
+                            <Canceled
+                              drizzle={drizzle}
+                              drizzleState={drizzleState}
+                              account={account}
+                            />
+                          )}
+                        />
 
-                      <Route
-                        exact
-                        path='/home'
-                        render={() => (
-                          <PublishedProjects
-                            drizzle={drizzle}
-                            drizzleState={drizzleState}
-                          />
-                        )}
-                      />
-                    </Switch>
-                  )}
-                </div>
-              </Fragment>
-            </Router>
+                        <Route
+                          exact
+                          path='/home'
+                          render={() => (
+                            <PublishedProjects
+                              drizzle={drizzle}
+                              drizzleState={drizzleState}
+                            />
+                          )}
+                        />
+                      </Switch>
+                    )}
+                  </div>
+                </Fragment>
+              </Router>
+            </ProfileState>
           </ProjectState>
         </EventState>
       </AuthState>
