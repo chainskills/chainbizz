@@ -19,7 +19,6 @@ import ProjectDetail from './components/pages/project/ProjectDetail';
 import EventSettings from './components/pages/settings/EventSettings';
 import Project from './components/pages/Project';
 import MyDraftProjects from './components/pages/MyDraftProjects';
-import MyProjects from './components/pages/MyProjects';
 import PublishedProjects from './components/pages/PublishedProjects';
 import MyOffers from './components/pages/MyOffers';
 import OffersReview from './components/pages/OffersReview';
@@ -59,12 +58,12 @@ const App = ({ drizzleContext }) => {
                 <Fragment>
                   <NavBar account={account} />
 
-                  <div className='container'>
+                  <div className="container">
                     {!initialized && (
                       <div>
                         <h2>Preparing the Dapp</h2>
-                        <div className='progress'>
-                          <div className='indeterminate' />
+                        <div className="progress">
+                          <div className="indeterminate" />
                         </div>
                       </div>
                     )}
@@ -99,12 +98,12 @@ const App = ({ drizzleContext }) => {
 
                   <Project drizzle={drizzle} account={account} />
 
-                  <div className='container'>
+                  <div className="container">
                     {!initialized && (
                       <div>
                         <h2>Preparing the Dapp</h2>
-                        <div className='progress'>
-                          <div className='indeterminate' />
+                        <div className="progress">
+                          <div className="indeterminate" />
                         </div>
                       </div>
                     )}
@@ -113,7 +112,7 @@ const App = ({ drizzleContext }) => {
                       <Switch>
                         <Route
                           exact
-                          path='/'
+                          path="/"
                           render={() => (
                             <PublishedProjects
                               drizzle={drizzle}
@@ -123,27 +122,41 @@ const App = ({ drizzleContext }) => {
                           )}
                         />
 
-                        <Route exact path='/login' component={Login} />
-
-                        <Route exact path='/register' component={Register} />
+                        <Route
+                          exact
+                          path="/login"
+                          component={Login}
+                        />
 
                         <Route
                           exact
-                          path='/profile/:account'
+                          path="/register"
+                          component={Register}
+                        />
+
+                        <Route
+                          exact
+                          path="/profile/:account"
                           render={({ match }) => (
-                            <UserProfile match={match} drizzle={drizzle} />
+                            <UserProfile
+                              match={match}
+                              drizzleState={drizzleState}
+                              drizzle={drizzle}
+                            />
                           )}
                         />
 
                         <Route
                           exact
-                          path='/events'
-                          render={() => <EventSettings drizzle={drizzle} />}
+                          path="/events"
+                          render={() => (
+                            <EventSettings drizzle={drizzle} />
+                          )}
                         />
 
                         <Route
                           exact
-                          path='/project/:id'
+                          path="/project/:id"
                           render={({ match }) => (
                             <ProjectDetail
                               drizzle={drizzle}
@@ -156,7 +169,7 @@ const App = ({ drizzleContext }) => {
 
                         <Route
                           exact
-                          path='/project/draft/:id'
+                          path="/project/draft/:id"
                           render={({ match }) => (
                             <ProjectDetail
                               drizzle={drizzle}
@@ -169,7 +182,7 @@ const App = ({ drizzleContext }) => {
 
                         <Route
                           exact
-                          path='/myprojects'
+                          path="/myprojects"
                           render={() => (
                             <MyDraftProjects
                               drizzle={drizzle}
@@ -181,7 +194,7 @@ const App = ({ drizzleContext }) => {
 
                         <Route
                           exact
-                          path='/myoffers'
+                          path="/myoffers"
                           render={() => (
                             <MyOffers
                               drizzle={drizzle}
@@ -193,7 +206,7 @@ const App = ({ drizzleContext }) => {
 
                         <Route
                           exact
-                          path='/myreviews'
+                          path="/myreviews"
                           render={() => (
                             <OffersReview
                               drizzle={drizzle}
@@ -205,7 +218,7 @@ const App = ({ drizzleContext }) => {
 
                         <Route
                           exact
-                          path='/mycontracts'
+                          path="/mycontracts"
                           render={() => (
                             <MyContracts
                               drizzle={drizzle}
@@ -217,7 +230,7 @@ const App = ({ drizzleContext }) => {
 
                         <Route
                           exact
-                          path='/deliveries'
+                          path="/deliveries"
                           render={() => (
                             <DeliveriesReview
                               drizzle={drizzle}
@@ -229,7 +242,7 @@ const App = ({ drizzleContext }) => {
 
                         <Route
                           exact
-                          path='/completed'
+                          path="/completed"
                           render={() => (
                             <Completed
                               drizzle={drizzle}
@@ -241,7 +254,7 @@ const App = ({ drizzleContext }) => {
 
                         <Route
                           exact
-                          path='/canceled'
+                          path="/canceled"
                           render={() => (
                             <Canceled
                               drizzle={drizzle}
@@ -253,7 +266,7 @@ const App = ({ drizzleContext }) => {
 
                         <Route
                           exact
-                          path='/home'
+                          path="/home"
                           render={() => (
                             <PublishedProjects
                               drizzle={drizzle}
