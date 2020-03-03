@@ -48,24 +48,15 @@ const ProfileState = props => {
       from: account
     });
 
-    console.log('fulfiller ...');
-    console.log(fulfiller);
-
     let ratingsFulfiller = Array.from(fulfiller.ratings, value =>
       Number(value)
     );
-
-    console.log('ratingsFulfiller ...');
-    console.log(ratingsFulfiller);
 
     for (let i = 0; i < fulfiller.nbProjects; i++) {
       ratingsFulfiller[i] = ratingsFulfiller[i] / fulfiller.nbProjects;
     }
 
     const avgRatingsFulfiller = _.mean(ratingsFulfiller).toFixed(1);
-
-    console.log('avgRatingsFulfiller ...');
-    console.log(avgRatingsFulfiller);
 
     dispatch({
       type: GET_AVG_RATINGS_FULFILLER,
