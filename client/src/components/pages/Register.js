@@ -1,6 +1,6 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 import NotificationContext from '../context/notifications/notificationContext';
 import AuthContext from '../context/auth/authContext';
@@ -9,10 +9,10 @@ import 'materialize-css/dist/css/materialize.min.css';
 
 const Register = props => {
   const notificationContext = useContext(NotificationContext);
-  const { setAlert, clearNotifications } = notificationContext;
+  const {setAlert, clearNotifications} = notificationContext;
 
   const authContext = useContext(AuthContext);
-  const { register, isAuthenticated } = authContext;
+  const {register, isAuthenticated} = authContext;
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -22,18 +22,19 @@ const Register = props => {
   }, [
     Object.values(notificationContext),
     Object.values(authContext),
-    props.history
+    props.history,
   ]);
 
   const [user, setUser] = useState({
     name: '',
     email: '',
     password: '',
-    password2: ''
+    password2: '',
   });
-  const { name, email, password, password2 } = user;
+  const {name, email, password, password2} = user;
 
-  const onChange = e => setUser({ ...user, [e.target.name]: e.target.value });
+  const onChange = e =>
+    setUser({...user, [e.target.name]: e.target.value});
 
   const onSubmit = e => {
     e.preventDefault();
@@ -50,78 +51,81 @@ const Register = props => {
   };
 
   return (
-    <div className='row'>
-      <div className='col s12 m6 offset-m3'>
-        <h4 className='center-align light'>
-          An account is required to manage and publish examination programs
+    <div className="row">
+      <div className="col s12 m6 offset-m3">
+        <h4 className="center-align light">
+          An account is required to manage and publish examination
+          programs
         </h4>
-        <div className='row'>
-          <form className='col s12' onSubmit={onSubmit}>
-            <div className='row'>
-              <div className='input-field col s12'>
+        <div className="row">
+          <form className="col s12" onSubmit={onSubmit}>
+            <div className="row">
+              <div className="input-field col s12">
                 <input
-                  type='text'
-                  name='name'
+                  type="text"
+                  name="name"
                   value={name}
                   onChange={onChange}
                   required
                 />
-                <label htmlFor='name'>Name</label>
+                <label htmlFor="name">Name</label>
               </div>
             </div>
-            <div className='row'>
-              <div className='input-field col s12'>
+            <div className="row">
+              <div className="input-field col s12">
                 <input
-                  type='email'
-                  name='email'
+                  type="email"
+                  name="email"
                   value={email}
                   onChange={onChange}
                   required
                 />
-                <label htmlFor='email'>Email</label>
+                <label htmlFor="email">Email</label>
               </div>
             </div>
-            <div className='row'>
-              <div className='input-field col s12'>
+            <div className="row">
+              <div className="input-field col s12">
                 <input
-                  type='password'
-                  name='password'
+                  type="password"
+                  name="password"
                   value={password}
                   onChange={onChange}
                   required
-                  minLength='6'
+                  minLength="6"
                 />
-                <label htmlFor='password'>Password</label>
+                <label htmlFor="password">Password</label>
               </div>
             </div>
-            <div className='row'>
-              <div className='input-field col s12'>
+            <div className="row">
+              <div className="input-field col s12">
                 <input
-                  type='password'
-                  name='password2'
+                  type="password"
+                  name="password2"
                   value={password2}
                   onChange={onChange}
                   required
-                  minLength='6'
+                  minLength="6"
                 />
-                <label htmlFor='password2'>Retype your password</label>
+                <label htmlFor="password2">
+                  Retype your password
+                </label>
               </div>
             </div>
-            <div className='row'>
-              <div className='col s12'>
-                <p className='right-align'>
+            <div className="row">
+              <div className="col s12">
+                <p className="right-align">
                   <button
-                    className='btn btn-large waves-effect waves-light'
-                    type='submit'
-                    name='action'
+                    className="btn btn-large waves-effect waves-light"
+                    type="submit"
+                    name="action"
                   >
                     Register
                   </button>
                 </p>
               </div>
             </div>
-            <div className='row'>
-              <div className='col s12 center-align'>
+            <div className="row">
+              <div className="col s12 center-align">
                 You already have an account?{' '}
                 <Link to={`/login`}>
                   <span>Login</span>

@@ -16,7 +16,7 @@ const MyProjects = ({ drizzle, drizzleState, account }) => {
     );
 
     //eslint-disable-next-line
-  }, []);
+  }, [account]);
 
   // Retrieve all projects IDs linked to the current owner
 

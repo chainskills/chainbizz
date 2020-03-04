@@ -1,22 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 
 import 'materialize-css/dist/css/materialize.min.css';
 
 import ProjectContractData from '../ContractData/Project/ProjectContractData';
 
-const Completed = ({ drizzle, drizzleState, account }) => {
+const Completed = ({drizzle, drizzleState, account}) => {
   const [dataKeys, setDataKeys] = useState(null);
 
   useEffect(() => {
-    const { ChainBizz } = drizzle.contracts;
+    const {ChainBizz} = drizzle.contracts;
     setDataKeys(
       ChainBizz.methods.getCompleted.cacheCall({
-        from: account
-      })
+        from: account,
+      }),
     );
 
     //eslint-disable-next-line
-  }, []);
+  }, [account]);
 
   // Retrieve all projects IDs linked to the current owner
 
@@ -56,15 +56,18 @@ const Completed = ({ drizzle, drizzleState, account }) => {
 
   return (
     <div>
-      <div className='row'>
-        <div className='col s12 m12'>
+      <div className="row">
+        <div className="col s12 m12">
           <h5>
-            <span className='number-projects'>{nbProjects}</span>
-            <span> {nbProjects > 1 ? ' Projects' : ' Project'} completed</span>
+            <span className="number-projects">{nbProjects}</span>
+            <span>
+              {' '}
+              {nbProjects > 1 ? ' Projects' : ' Project'} completed
+            </span>
           </h5>
         </div>
       </div>
-      <div className='row'>{allProjects}</div>
+      <div className="row">{allProjects}</div>
     </div>
   );
 };
