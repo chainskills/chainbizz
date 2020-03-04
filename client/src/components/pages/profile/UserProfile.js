@@ -15,7 +15,7 @@ import 'materialize-css/dist/css/materialize.min.css';
 import starfull from '../../../assets/images/starfull.png';
 import starempty from '../../../assets/images/starempty.png';
 
-import PublishedProjects from '../PublishedProjects';
+import MyProjects from '../MyProjects';
 import Completed from '../Completed';
 import Canceled from '../Canceled';
 
@@ -40,8 +40,8 @@ const UserProfile = ({ match, drizzleState, drizzle }) => {
   }
 
   const [balance, setBalance] = useState(0);
-  const [listProjects, setListProjects] = useState("published");
-  
+  const [listProjects, setListProjects] = useState('published');
+
   const profileContext = useContext(ProfileContext);
   const {
     nbProjectsIssuer,
@@ -68,15 +68,15 @@ const UserProfile = ({ match, drizzleState, drizzle }) => {
   }, [account]);
 
   const onSelectPublished = e => {
-    setListProjects("published");
+    setListProjects('published');
   };
 
   const onSelectCompleted = e => {
-    setListProjects("completed");
+    setListProjects('completed');
   };
 
   const onSelectCanceled = e => {
-    setListProjects("canceled");
+    setListProjects('canceled');
   };
 
   return (
@@ -221,15 +221,15 @@ const UserProfile = ({ match, drizzleState, drizzle }) => {
             </label>
           </div> */}
         </div>
-        {listProjects === "published" && (
-          <PublishedProjects
+        {listProjects === 'published' && (
+          <MyProjects
             drizzle={drizzle}
             drizzleState={drizzleState}
             account={account}
           />
         )}
 
-        {listProjects === "completed" && (
+        {listProjects === 'completed' && (
           <Completed
             drizzle={drizzle}
             drizzleState={drizzleState}
@@ -237,7 +237,7 @@ const UserProfile = ({ match, drizzleState, drizzle }) => {
           />
         )}
 
-        {listProjects === "canceled" && (
+        {listProjects === 'canceled' && (
           <Canceled
             drizzle={drizzle}
             drizzleState={drizzleState}
