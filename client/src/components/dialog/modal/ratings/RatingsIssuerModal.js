@@ -12,7 +12,7 @@ import starfull from '../../../../assets/images/starfull.png';
 const RatingsIssuerModal = ({ dataID, onClose, action1, action2 }) => {
   const escPress = useKeyPress('Escape');
 
-  const [ratings, setRatings] = useState([3, 3, 3, 3]);
+  const [ratings, setRatings] = useState([0, 0, 0, 0]);
 
   useEffect(() => {
     if (escPress) {
