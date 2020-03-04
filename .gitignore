@@ -55,3 +55,6 @@ pids
 
 # IDEA files
 .idea
+
+# VSC
+.vscode
